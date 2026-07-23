@@ -1,5 +1,5 @@
 # dq4frankenstein Progress ~95%
-DQ4/DW7 Frankenstein Project
+DQ4/DW7 Frankenstein Project V.9
 ===============================================================
   FRANKENSTEIN PIPELINE — DQ4/DW7 Binary Re-authoring Toolkit
 ===============================================================
