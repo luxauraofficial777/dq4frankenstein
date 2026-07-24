@@ -8,8 +8,9 @@ DQ4/DW7 Frankenstein Project V.9
   for the Dragon Quest IV / Dragon Warrior VII Frankenstein
   translation project.
 
-  Created by Lux Aura with the help of previous work by Markus Projects, awilles, and ChickenKnife.
+  Created by Lux Aura with the help of previous work by Markus Projects, Mandy Wilkens, and ChickenKnife.
   http://markus-projects.net/dragon-hackst-iv/
+  https://github.com/mwilkens/dq4psxtrans
   https://www.romhacking.net/hacks/4275/
   https://luxaura.bandcamp.com
   https://www.facebook.com/LuxAuraOfficial
