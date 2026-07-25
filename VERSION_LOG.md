@@ -58,7 +58,7 @@ Game stalls at BIOS POST 03. EXE file size (680,100 bytes) not a multiple of 204
 
 ---
 
-## V96 — Current (Jul 24, 2026)
+## V96 (Jul 24, 2026)
 
 **FMV stubs re-enabled + GPU display enable. Black screen persists — state machine blocker identified.**
 
@@ -99,3 +99,48 @@ The GPU display enable turns on output, but the game never sets up a frame buffe
 3. Compare working DW7 boot log with hybrid boot log
 4. Consider: only stub MDEC init (not XA/STR) to let CD-ROM seek complete
 5. Consider: patch the wait loop that checks FMV status
+
+---
+
+## V97 — Released (Jul 25, 2026)
+
+**Pipeline audit complete. Two bugs fixed. Pipeline structurally verified. Packaged as frankenstein_pipeline_v097.zip.**
+
+### Changes from V96
+- **Fixed `DQ4_HBD_END` constant** (`psx_binary_ops.h:124`): Changed from `HBD_LBA + DQ4_HBD_SECTORS` (355+155975=156330) to `DQ4_HBD_DISC_START + DQ4_HBD_SECTORS` (362+155975=156337). The constant was using the DW7 HBD LBA (355) instead of the DQ4 HBD LBA (362). Latent bug — constant was unused but would produce incorrect results if referenced.
+- **Fixed `update_pvd` Volume Space Size** (`psx_binary_ops.cpp:1312-1328`): Added Volume Space Size field update at PVD offset 80 (both-endian 32-bit). Previously only the Volume ID was patched. The DQ4 disc has a different total sector count than DW7, so the PVD's Volume Space Size was stale. DuckStation tolerates this but real hardware or stricter emulators may reject reads beyond the declared size.
+
+### Audit Results
+Full 25-step pipeline audit completed. 5 findings identified:
+1. **BSS clear range overlaps trampoline** — Already mitigated by step 5b re-patch. No fix needed.
+2. **`DQ4_HBD_END` wrong LBA base** — **FIXED** in V97.
+3. **`update_pvd` missing Volume Space Size** — **FIXED** in V97.
+4. **`write_raw_data` sector advance** — No impact (EXE always sector-aligned). No fix needed.
+5. **Boot stub GPU enable timing** — Runtime concern, not a pipeline bug. No fix needed.
+
+All 25 steps verified correct. All constant cross-references validated. RAM address map confirmed consistent.
+
+### Key Files Modified
+- `cybergrime/psx_binary_ops.h` — `DQ4_HBD_END` constant fix (line 124)
+- `cybergrime/psx_binary_ops.cpp` — `update_pvd` Volume Space Size update (lines 1312-1328)
+- `frankenstein_pipeline/docs/PIPELINE_AUDIT_REPORT.md` — Full audit report (new)
+
+### Result
+Pipeline is structurally sound. Black screen is not caused by a pipeline bug — it's a runtime issue (GPU init, FMV callback expectations, or HBD parsing). See audit report for detailed analysis.
+
+### Next Steps
+1. Investigate GPU initialization failure in game code
+2. Test without FMV stubs (let CD-ROM seek complete with error)
+3. Verify thread blob execution with debug write
+4. Compare working DW7 boot log with hybrid boot log for GPU register state
+
+### Build
+```powershell
+.\scripts\build_v097.ps1                # Build + verify
+.\scripts\build_v097.ps1 -RunTests      # Build + verify + regression
+.\scripts\build_v097.ps1 -SkipCompile   # Skip C++ compilation
+```
+
+### Package
+- `frankenstein_pipeline_v097.zip` — Full pipeline source, scripts, data, docs
+- No compiled binaries, no ROM data, no copyrighted material
