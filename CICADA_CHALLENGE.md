@@ -1,9 +1,9 @@
-# The Cicada Challenge
+# The REAL Cicada Challenge
 ## DQ4 PSX Reverse Translation — Frankenstein Build Black Screen Audit
 
 ## The Challenge
 
-The Cicada Challenge: boot a hybrid PlayStation disc that pairs Dragon Warrior 7's 32-bit engine (EXE) with Dragon Quest IV's Japanese game data (HBD), producing an English-translated DQ4 that runs on real hardware and emulators.
+The REAL Cicada Challenge: boot a hybrid PlayStation disc that pairs Dragon Warrior 7's 32-bit engine (EXE) with Dragon Quest IV's Japanese game data (HBD), producing an English-translated DQ4 that runs on real hardware and emulators.
 
 The disc **boots successfully** — BIOS POST completes, the EXE loads, HBD data is read from CD-ROM, and the game runs at a steady 59.82 FPS. But the screen is **black**. No Enix logo, no title screen, no visual output.
 
