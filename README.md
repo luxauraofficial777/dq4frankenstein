@@ -1,5 +1,77 @@
 # dq4frankenstein Progress ~97%
-DQ4/DW7 Frankenstein Project V.9,V.95,V.96,V.97
+DQ4/DW7 Frankenstein Project V.9,V.95,V.96,V.97 (New Version coming soon)
+
+Dragon Quest IV PSX: "Lost Translation"
+StatusTranslationArchitecture
+
+A monolithic reverse-engineering, dynamic translation, and ISO rebuilding suite. This project aims to create a fully playable English localization of Dragon Quest IV (PSX) by grafting the Dragon Warrior VII (US) executable onto the DQ4 disc (the "Frankenstein" approach).
+
+⚠️ Why Frankenstein?
+While modifying the native DQ4 Japanese executable is possible, extending the hardcoded text buffers to accommodate English without crashing at Chapter 1 is extremely difficult. More importantly, the native engine stores battle, item, and world dialogue indices internally in a way that makes full localization virtually impossible without source access.
+
+By transplanting the DW7 (US) executable into Sector 24 of the DQ4 disc ("Reverse Option A"), we inherit an engine already equipped to handle English text, variable-width fonts, and global Huffman tree parsing. The challenge shifts from expanding buffers to bridging data formats—specifically, patching the DW7 engine in MIPS assembly to parse DQ4's per-block Huffman trees and HBD archive structures.
+
+🛠️ The Architecture & Toolchain
+This is not a simple ROM hack. It is a closed-loop, autonomous reverse-engineering pipeline.
+
+1. The Core Builder (cybergrime/)
+A custom C++ compiler (frankenstein_build.exe) that operates directly on the PSX binaries and ISO files.
+
+MIPS Patching: Injects surgical assembly patches to resolve delay-slot hazards, bypass strict CD-ROM intercepts, and handle BSS zero-filling boundaries.
+HBD Re-encoder: Reads the DQ4 per-block text archives and re-encodes them on-the-fly into the DW7 global hybrid tree format to prevent PSX heap overflows.
+EDC/ECC Generation: Automatically corrects sector checksums post-modification.
+2. The Build Orchestrator (pipeline.py)
+The Python backbone that manages the build lifecycle, applies hotfixes, manages FastBoot INI files, and interfaces with the C++ builder without mutating staging files destructively (--disasm-only).
+
+3. PSX Matrix & Hydra Loop (PSXMatrix/)
+Testing across a single emulator is a trap. The Hydra loop (hydra_loop.py) automatically runs the compiled .bin against a multi-emulator matrix:
+
+DuckStation: Validates strict hardware constraints, accurate CD-ROM FIFO timings, and BIOS execution.
+CyberGrime: A custom headless emulator core built for deep telemetry logging, VBlank manipulation, and memory hooking.
+StarPSX: Provides a lightweight secondary baseline for raw execution flow.
+4. Digital Twin Diagnostics (verify/)
+A 4-phase automated quality assurance framework that closes the loop between build failures and code remediation:
+
+Phase 1 (Static Analysis): Inspects the built ISO for valid PVDs, correctly patched PC0 offsets, and descriptor table alignments.
+Phase 2 (Dynamic Telemetry): Parses CyberGrime and DuckStation stdout to detect heap over-allocations and missing thread execution (probe_heap.py, probe_thread.py).
+Phases 3 & 4 (Checkpoints & Triage): Maps execution telemetry against the "Golden Mile" boot sequence to auto-classify crashes.
+🚀 Current Project Status: The Golden Mile
+The project maps boot progression across a "Golden Mile".
+
+BIOS POST 
+→
+→ kernel init (Done)
+CD-ROM init (Done)
+EXE load 
+→
+→ BSS clear (Done)
+HBD data load (Current Blocker)
+Enix logo
+Title screen
+Game start
+The Final Obstacles (As of Aug 2026):
+
+MISS-1 (Thread Blob Injection): The DW7 engine requires a specific 2KB CD-ROM I/O thread. A boot copy stub is being injected to load this thread into RAM 0x800D9E80 before engine initialization.
+Heap Over-Allocation: DQ4's per-block Huffman trees confuse the DW7 parser, causing it to over-allocate RAM beyond the 8MB limit. The C++ HbdReencoder is being deployed to re-encode the text data to match the parser's exact expectations.
+💻 Usage
+Due to the strict pipeline dependencies, execution must be performed in PowerShell using the exact absolute path for the Python environment:
+
+powershell
+
+# 1. Compile the Builder
+cd cybergrime
+.\build_frank.bat
+cd ..
+# 2. Forge the Reverse Frankenstein Disc
+ pipeline.py --reverse
+# 3. Verify Static Integrity
+ verify_reverse_disc.py
+# 4. Run Matrix Hydra Loop
+ PSXMatrix/hydra_loop.py --smoke-test --multi-emulator
+Developed as part of the VoidWalkers Project.
+
+
+
 ===============================================================
   FRANKENSTEIN PIPELINE — DQ4/DW7 Binary Re-authoring Toolkit
 ===============================================================
