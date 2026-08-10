@@ -1,9 +1,9 @@
-# dq4frankenstein Progress ~97%
+# dq4frankenstein Progress ~99%
 <img width="1024" height="1024" alt="dq4frank" src="https://github.com/user-attachments/assets/3ac9afc3-0cec-4a48-aab4-8b5e086aed73" />
-DQ4/DW7 Frankenstein Project V.9,V.95,V.96,V.97 (New Version coming soon)
+DQ4/DW7 Frankenstein Project V.9,V.95,V.96,V.97,V.98,V.99
 
 Dragon Quest IV PSX: "Lost Translation"
-StatusTranslationArchitecture
+Created by Lux Aura with the help of previous work by Markus Projects, Mandy Wilkens, and ChickenKnife. http://markus-projects.net/dragon-hackst-iv/ https://github.com/mwilkens/dq4psxtrans https://www.romhacking.net/hacks/4275/ https://luxaura.bandcamp.com https://www.facebook.com/LuxAuraOfficial https://www.youtube.com/LuxAuraOfficial
 
 A monolithic reverse-engineering, dynamic translation, and ISO rebuilding suite. This project aims to create a fully playable English localization of Dragon Quest IV (PSX) by grafting the Dragon Warrior VII (US) executable onto the DQ4 disc (the "Frankenstein" approach).
 
@@ -39,258 +39,270 @@ Phases 3 & 4 (Checkpoints & Triage): Maps execution telemetry against the "Golde
 🚀 Current Project Status: The Golden Mile
 The project maps boot progression across a "Golden Mile".
 
-BIOS POST 
-→
-→ kernel init (Done)
-CD-ROM init (Done)
-EXE load 
-→
-→ BSS clear (Done)
-HBD data load (Current Blocker)
-Enix logo
-Title screen
-Game start
-The Final Obstacles (As of Aug 2026):
+Frankenstein Pipeline V.99 — Documentation
+Version: V.99 (Pre-release / Release Candidate) Date: August 10, 2026 Author: VoidWalkers Project
 
-MISS-1 (Thread Blob Injection): The DW7 engine requires a specific 2KB CD-ROM I/O thread. A boot copy stub is being injected to load this thread into RAM 0x800D9E80 before engine initialization.
-Heap Over-Allocation: DQ4's per-block Huffman trees confuse the DW7 parser, causing it to over-allocate RAM beyond the 8MB limit. The C++ HbdReencoder is being deployed to re-encode the text data to match the parser's exact expectations.
-💻 Usage
-Due to the strict pipeline dependencies, execution must be performed in PowerShell using the exact absolute path for the Python environment:
+1. Overview
+The Frankenstein Pipeline is a build system that creates a playable English-translated Dragon Quest IV (PSX) disc by grafting a Dragon Warrior VII (PSX) executable onto a DQ4 (Japan) disc base. The DW7 EXE provides English-compatible text rendering and game logic; the DQ4 disc provides the HBD (Huffman Block Data) archive which is re-encoded with English text using a hybrid Huffman tree.
 
-powershell
+Build Strategy: Reverse Frankenstein (Option A)
+Take the DQ4 Japan disc as the base (351 MB, Mode 2 Form 1)
+Swap in the DW7 US executable (SLUSP012.06_clean.bin)
+Apply 127+ binary patches to the EXE:
+Disc-check bypass (3 sites)
+LBA table relocation (1 site)
+Sequence table adjustment (44 sites)
+Tree pointer redirection (24 sites)
+BSS clear range narrowing (3 sites)
+Malloc clamp trampoline (9 words)
+Decomp root ID runtime JAL (2 sites)
+Tree hook JAL (1 site)
+FIFO drain jump (1 site)
+XA stub (D1 fix — Flag A poll loop)
+MISS-1 boot copy stub (D2 fix — load-delay slot)
+VBlank bypass (3 sites)
+FMV XA stub NOP (1 site)
+Re-encode the HBD at sector 362 with English text using the hybrid Huffman tree
+Run EDC/ECC repair and verification on the output disc
+Verify all 19 hard gates pass
+2. Folder Structure
+frankenstein_pipeline/
+├── builder/                    # C++ builder (source + binary)
+│   ├── frankenstein_build.exe       # Pre-compiled builder (483 KB)
+│   ├── frankenstein_build_main.cpp  # Main entry point
+│   ├── psx_binary_ops.cpp           # Core PSX binary operations
+│   ├── psx_binary_ops.h             # Header (BuildResult, MIPS encoders, structs)
+│   ├── hotfixes_empty.txt           # Empty hotfix file (no runtime patches)
+│   ├── offset_registry.json         # Canonical patch address registry (M3)
+│   ├── FROZEN_INPUTS.json           # SHA-256 hashes of all build inputs (M1)
+│   ├── thread_code_blob.bin         # MISS-1 thread blob (2048 bytes)
+│   ├── translation_map.bin          # Binary translation map (TXMP format)
+│   ├── reencode_manifest.json       # HBD re-encoding results manifest
+│   ├── reencode_pipeline.py         # HBD pre-processing script
+│   ├── gen_translation_map.py       # Translation map generator
+│   ├── verify_thread_blob.py        # F-2: Thread blob verification
+│   └── dw7_exe_surgical_patcher.py  # Standalone EXE patcher
+├── translation/                # Translation data + patcher inputs
+│   ├── SLUSP012.06_clean.bin        # DW7 US EXE (675 KB)
+│   ├── dw7_hybrid_tree.bin          # Hybrid Huffman tree (1472 bytes)
+│   ├── dw7_encoded_translation.json # Pre-encoded English text (3.2 MB)
+│   ├── full_translation_hybrid_playable.json  # Full translation (1.4 MB)
+│   ├── folder_mapping.json          # DW7→DQ4 sector mapping (290 KB)
+│   └── checksums.txt                # Frozen input checksums
+├── edcre/                      # EDC/ECC repair tool
+│   └── edcre.exe                    # edcre v1.1.0 (53 KB)
+├── duckstation/                # Emulator for boot testing
+│   ├── duckstation-qt-x64-ReleaseLTCG.exe  # DuckStation (10 MB)
+│   ├── bios/US/SCPH1001.BIN         # SCPH-1001 US BIOS (512 KB)
+│   ├── settings/duckstation-qt.ini  # DuckStation config
+│   ├── portable.ini                 # Portable mode flag
+│   ├── qt.conf                      # Qt plugin config
+│   ├── *.dll                        # Required DLLs (~120 MB)
+│   ├── QtPlugins/                   # Qt platform plugins
+│   ├── resources/                   # UI resources
+│   └── translations/                # Qt translations
+├── docs/                       # Documentation (this file)
+├── compile.bat                 # Compile builder from source
+├── build.bat                   # Build Frankenstein disc
+├── build_comparison.bat        # F-3: Build with/without XA stub
+└── boot_test.bat               # Launch DuckStation boot test
+Total footprint: ~168 MB (158 MB is DuckStation + DLLs; builder/translation/edcre = ~7 MB)
 
-# 1. Compile the Builder
-cd cybergrime
-.\build_frank.bat
-cd ..
-# 2. Forge the Reverse Frankenstein Disc
- pipeline.py --reverse
-# 3. Verify Static Integrity
- verify_reverse_disc.py
-# 4. Run Matrix Hydra Loop
- PSXMatrix/hydra_loop.py --smoke-test --multi-emulator
-Developed as part of the VoidWalkers Project.
+3. Prerequisites
+For Building (compile.bat)
+Visual Studio 2022 Build Tools (vcvars64.bat)
+Install: https://visualstudio.microsoft.com/visual-cpp-build-tools/
+Select: "Desktop development with C++"
+The compiler path must be: C:\Progra~2\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvars64.bat
+For Building (pre-compiled)
+None. frankenstein_build.exe is a standalone Windows x64 binary.
+For Boot Testing
+DuckStation is included in the duckstation/ folder
+SCPH-1001 BIOS is included at duckstation/bios/US/SCPH1001.BIN
+MD5: 924E392ED05558FFDB115408C263DCCF
+Source Disc (NOT included — too large for repo)
+Place the DQ4 Japan disc at:
 
+frankenstein_pipeline/disc/Dragon Quest IV - Michibikareshi Mono Tachi (Japan).bin
+Expected SHA-256: 100D87DB9DEADF8F9FA4BB891D3A5D0BB112ACBF5ADBCBC93C637848ED9C7531 Size: 368,057,424 bytes (351 MB)
 
+4. Quick Start
+Build the disc (using pre-compiled builder)
+cd frankenstein_pipeline
+build.bat
+Output: build_staging/dq4_frankenstein_v109.bin + .cue
 
-===============================================================
-  FRANKENSTEIN PIPELINE — DQ4/DW7 Binary Re-authoring Toolkit
-===============================================================
+Build from source
+cd frankenstein_pipeline
+compile.bat
+build.bat
+Boot test
+cd frankenstein_pipeline
+boot_test.bat build_staging\dq4_frankenstein_v109.cue
+F-3 Comparison (with/without XA stub)
+cd frankenstein_pipeline
+build_comparison.bat
+5. Builder Architecture
+5.1 frankenstein_build_main.cpp
+Entry point: parses CLI args, validates inputs, orchestrates build
+Build modes: Forward (DW7 base) and Reverse (DQ4 base, Option A)
+Verification gates: 19 hard gates that abort the build on failure
+Manifest: writes build_hash_manifest.json with SHA-256, build time, argv, patch counts
+5.2 psx_binary_ops.cpp
+ExePatcher class: sector-aware EXE extraction and patching
+HBD re-encoder: decodes DQ4 text, re-encodes with hybrid tree
+Patch functions: disc-check bypass, LBA table, tree pointers, BSS clear, malloc clamp, XA stub (D1), MISS-1 stub (D2), tree hook, FIFO drain, VBlank bypass
+EDC/ECC: two-phase edcre call (repair + verify)
+5.3 Key Constants
+Constant	Value	Description
+EXE_LBA	24	EXE start sector on disc
+EXE_LOAD_ADDR	0x80017F00	PSX RAM load address
+ORIGINAL_PC0	0x8008E284	DW7 original entry point
+NEW_PC0	0x800BDF00	Patched entry point (MISS-1 stub)
+HBD_TARGET_SECTOR	362	HBD location on output disc
+SECTOR_SIZE	2352	Mode 2 Form 1 raw sector
+SECTOR_DATA	2048	User data per sector
+SECTOR_HEADER	24	Header + subheader bytes
+6. Verification Gates (19 total)
+Gate	Description	Type
+1	EXE magic (PS-X EXE)	Metadata
+2	Output disc exists	Metadata
+3	CUE sheet exists	Metadata
+4	Disc size > 350 MB	Metadata
+5	Tree patches > 0	Count
+6	Disc-check patches == 3	Count
+7	HBD blocks processed > 0	Count
+8	HBD blocks converted > 0	Count
+9	XA stub sw_2038 (D1 guard)	Sector-aware readback
+10	MISS-1 stub[7] ADDIU (D2 guard)	Sector-aware readback
+11	Disc-check 3 sites == 0x24020001	Sector-aware readback
+12	Malloc clamp trampoline (9 words)	Sector-aware readback
+13	Tree hook JAL at 0x800562B8	Sector-aware readback
+14	FIFO drain J at 0x8008B65C	Sector-aware readback
+15	Decomp root ID JAL at 0x80057FEC	Sector-aware readback
+16	BSS clear range (3 words)	Sector-aware readback
+17	LBA ref at 0x8001B194 == 0x16A	Sector-aware readback
+18	Seq table[0] at 0x800BB0AA	Sector-aware readback
+19	Decomp tree ptr LUI at 0x800562EC	Sector-aware readback
+Gates 9-19 use sector-aware reads: LBA = 24 + file_off/2048, offset = file_off%2048, read at LBA*2352 + 24 + sec_off.
 
-  A PlayStation EXE patching and disc re-authoring framework
-  for the Dragon Quest IV / Dragon Warrior VII Frankenstein
-  translation project.
+7. Audit Fixes Applied (V.99)
+All open findings from BUILDER_CONSOLIDATED_AUDIT_Aug10_2026.md have been addressed:
 
-  Created by Lux Aura with the help of previous work by Markus Projects, Mandy Wilkens, and ChickenKnife.
-  http://markus-projects.net/dragon-hackst-iv/
-  https://github.com/mwilkens/dq4psxtrans
-  https://www.romhacking.net/hacks/4275/
-  https://luxaura.bandcamp.com
-  https://www.facebook.com/LuxAuraOfficial
-  https://www.youtube.com/LuxAuraOfficial
+Finding	Severity	Fix
+F-2	MEDIUM	Thread blob verification script (verify_thread_blob.py)
+F-3	HIGH	--no-xa-stub comparison disc support, Gate 9 skip logic
+F-5	MEDIUM	WARNING guards promoted to hard aborts (2 sites in psx_binary_ops.cpp)
+F-7	MEDIUM	run_edcre refactored: BIN file, two-phase (repair + verify), exit 1 distinct
+F-8	MEDIUM	Banner context-aware: only prints relevant flags in reverse mode
+F-9	MEDIUM	__TIMESTAMP__ replaced with time(), argv, patch counts in manifest
+8. Build Output
+v109 (latest)
+SHA-256: AFED72C6416844D6DE6EE4A350670A9D7C2A9DA5C7535FD205E0BAB8CEEA8B85
+Size: 368,057,424 bytes (351.0 MB)
+Patches: tree=24, disc=3, lba=1, seq=44, trampoline=2
+HBD: 3573 blocks processed, 1527 converted, 3148 sub-block swaps
+Gates: 19/19 PASS
+Determinism: byte-identical across multiple builds with same inputs
+v109-no-xa (F-3 comparison)
+SHA-256: A220D3A8B57B119A4B75E9541EB8A668E9F3DEF33F2F3C8F72B6FFFEECDA91A7
+Gates: 18/19 PASS (Gate 9 SKIP as expected)
+9. Translation Pipeline
+Input Files
+File	Size	Description
+dw7_encoded_translation.json	3.2 MB	Pre-encoded English text in Huffman-encoded format
+full_translation_hybrid_playable.json	1.4 MB	Human-readable translation entries
+dw7_hybrid_tree.bin	1472 bytes	Hybrid Huffman tree (DQ4+DW7 character set)
+folder_mapping.json	290 KB	DW7→DQ4 sector/folder mapping
+SLUSP012.06_clean.bin	675 KB	DW7 US EXE (unpatched)
+Translation Map Generation
+cd builder
+python gen_translation_map.py
+Reads dw7_encoded_translation.json, outputs translation_map.bin (TXMP format).
 
+HBD Re-encoding
+The builder's C++ HbdReencoder:
 
-  ===============================================================================
-    REVERSE FRANKENSTEIN BUILD PIPELINE — DQ4 PSX TRANSLATION
-    Dragon Quest IV (PSX, SLPM-869.16) → English Translated Disc
-===============================================================================
-https://github.com/luxauraofficial777/dq4frankenstein
-CONCEPT
--------
-The DQ4 PSX translation is COMPLETE — all text strings are translated and
-packed into the HBD archive in the Japanese DQ4 disc. The problem is that
-the DQ4 executable (SLPM_869.16) uses a different Huffman tree format than
-the DW7 US executable (SLUS-012.06). The "Reverse Frankenstein" approach
-swaps the DW7 US EXE onto the DQ4 translated disc, then patches the EXE
-to bridge the format differences. Think of it as: "Use the American engine
-to drive the Japanese data — but the data is already in English."
+Reads DQ4 HBD blocks from the source disc at sector 362
+For each block: decode using per-block Huffman tree
+Re-encode using the global hybrid tree
+Inject pre-encoded English text from translation_map.bin
+Strip per-block tree, set hts=24, treeEnd=0, textEnd=0
+Blocks that fail re-encoding get verbatim fallback (DW7 format headers, original text)
+Standalone Patcher
+dw7_exe_surgical_patcher.py can apply patches independently:
 
-    ┌─────────────────────┐       ┌─────────────────────┐
-    │   DW7 US Disc       │       │   DQ4 JP Disc       │
-    │   SLUS-012.06       │       │   SLPM-869.16       │
-    │                     │       │                     │
-    │  ┌───────────────┐  │       │  ┌───────────────┐  │
-    │  │ DW7 US EXE    │──┼──┐    │  │ DQ4 JP EXE    │  │  (discarded)
-    │  │ PC0:8008E284  │  │  │    │  │ PC0:800918F4  │  │
-    │  │ Size:0xA5000  │  │  │    │  └───────────────┘  │
-    │  └───────────────┘  │  │    │                     │
-    │                     │  │    │  ┌───────────────┐  │
-    │  ┌───────────────┐  │  │    │  │ HBD1PS1D.Q41  │──┼──┐
-    │  │ HBD1PS1D.W71  │  │  │    │  │ (TRANSLATED)  │  │  │
-    │  │ (English)     │  │  │    │  │ LBA: 362      │  │  │
-    │  └───────────────┘  │  │    │  └───────────────┘  │  │
-    └─────────────────────┘  │    └─────────────────────┘  │
-                             │                             │
-                             ▼                             │
-    ┌─────────────────────────────────────────────────────┐ │
-    │           FRANKENSTEIN BUILD TOOL                    │ │
-    │           (frankenstein_build.exe --reverse)         │ │
-    │                                                     │ │
-    │  INPUTS:  DW7 US EXE  +  Hybrid Tree  +  DQ4 Disc   │◄┘
-    │  OUTPUT:  dq4_reverse.bin / dq4_reverse.cue         │
-    └─────────────────────────────────────────────────────┘
-                             │
-                             ▼
-    ┌─────────────────────────────────────────────────────┐
-    │           PATCHED OUTPUT DISC                       │
-    │                                                     │
-    │  Sector 16: PVD (volume ID)                         │
-    │  Sector 22: ISO Directory (EXE renamed, LBA updated)│
-    │  Sector 23: SYSTEM.CNF (boot=SLUSP012.06)           │
-    │  Sector 24: DW7 US EXE (patched, 680,100 bytes)     │
-    │  Sector 362: HBD1PS1D.Q41 (UNMODIFIED — translated) │
-    └─────────────────────────────────────────────────────┘
+python dw7_exe_surgical_patcher.py <disc.bin> --apply-all
+python dw7_exe_surgical_patcher.py <disc.bin> --verify-only
+10. Known Issues & Limitations
+Boot stall at ~18s: The EXE reads sectors 154-174 (ISO dir + SYSTEM.CNF + EXE start), then stalls. Likely HBD format incompatibility or CD-ROM polling loop. The XA stub (D1 fix) and MISS-1 stub (D2 fix) are designed to address this but have not been boot-tested with v109 yet.
 
+Low MIPS density in thread blob: The MISS-1 thread blob (thread_code_blob.bin) has only 8% MIPS instruction density (43/512 words). The remaining 91% is zeros. This may indicate the blob is mostly data, not executable code. Runtime verification via DuckStation memory dump is needed.
 
-EXE PATCH PIPELINE (25 STEPS) FRANKENSTEIN V0.95 (REV_FRANK) --reverse
-=============================
+HBD re-encoding partial: Of 3573 HBD blocks processed, only 1527 are converted. The rest use verbatim fallback. Some text may garble but the parser should not crash.
 
- ┌─────────────────────────────────────────────────────────────────┐
- │  STEP  WHAT IT DOES                          RAM/FILE ADDR     │
- ├─────┼─────────────────────────────────────────────────────────┤
- │  1  │ Load DW7 US EXE into patcher           0x80017F00 load   │
- │  2  │ Load hybrid Huffman tree (bridge       0x800BC700 target │
- │     │   DQ4 per-block format → DW7 global)                     │
- │  2b │ Set trampoline base past tree          0x800BCF00        │
- │  3  │ Append hybrid tree to EXE payload      file 0xA5000      │
- │     │   Pad to sector boundary               +2048 align       │
- │     │   Update text_size in EXE header       offset 0x1C       │
- │  4  │ Patch all tree pointer references      0x800EF1C8→BC700  │
- │     │   (LUI/ADDIU pairs, N sites)                             │
- │  5  │ Narrow BSS clear range to preserve     START: 0x800BD100 │
- │     │   tree + trampolines + thread blob     END:   0x800D9E80 │
- │  6  │ Zero pre-tree BSS region (file bytes)  0xA5000 backfill  │
- │  7  │ Decompressor patches (3 targets):                        │
- │     │   T4: tree pointer variable init       0x800BC6F8        │
- │     │   T5: root_id +1 (DQ4 offset format)   decomp site 3     │
- │     │   T6: offset_b mask (16-bit vs 15-bit) decomp site 1&2   │
- │  8  │ Disc check bypass (9 surgical NOPs     0x6112C etc.     │
- │     │   + 1 variable patch, NO brute force)  0x387CC           │
- │  9  │ CD-ROM stall bypass — SKIPPED          (removed BAD-3)  │
- │     │   (was causing FIFO overflow in        DuckStation)      │
- │ 10  │ HBD type trampoline                    0x800BCF00        │
- │     │   (intercepts HBD header parsing)                         │
- │ 11  │ FMV stubs (replace XA/STR + MDEC)      0x8008AEF4,       │
- │     │   (BAD-2: function stubs, not Setmode) 0x8008CAD0        │
- │ 12  │ CD-ROM command intercept — SKIPPED     (removed BAD-1)  │
- │ 12b │ Patch HBD filename string in EXE:      file 0xF600       │
- │     │   'hbd1ps1d.w71' → 'hbd1ps1d.q41'      RAM 0x80026D00    │
- │     │   (MISS-2: 3-byte edit, no ISO rename)                   │
- │ 12c │ THREAD BLOB INJECTION (MISS-1):                          │
- │     │   Append thread blob (2048 bytes)      RAM 0x800BCF6C    │
- │     │   Append boot copy stub (56 bytes)     RAM 0x800BD76C    │
- │     │   Redirect PC0 → boot stub            0x8008E284→BD76C   │
- │     │   Stub copies blob → 0x800D9E80        (BSS region)      │
- │     │   then jumps to original PC0          → 0x8008E284       │
- │     │   BSS clear [BD100, D9E80) PRESERVES   the blob copy     │
- │ 12d │ UPDATE text_size in EXE header         offset 0x1C       │
- │     │   (CRITICAL: must include blob+stub    0xA506C→A58A4)    │
- │ 12e │ Record final EXE size                  680,100 bytes     │
- │ 13  │ Patch LBA references: 354→362          (HBD sector)      │
- │     │   Broad scan for immediate values                        │
- │ 14  │ Patch sequential sector table:         354→362           │
- │     │   (contiguous HBD read table)                            │
- │ 15  │ Verify EXE fits before HBD overlap     max 692,224 bytes │
- │ 16  │ Copy DQ4 disc as base (unmodified)     → dq4_reverse.bin │
- │ 17  │ Write patched DW7 EXE at sector 24     680,100 bytes     │
- │ 18  │ Update SYSTEM.CNF: boot filename       SLPM_869.16→      │
- │     │                                       SLUSP012.06       │
- │ 19  │ Update ISO directory:                                    │
- │     │   EXE: rename + LBA=24 + size          SLPM→SLUSP        │
- │     │   HBD: LBA=362 + size (no rename)      HBD1PS1D.Q41      │
- │ 20  │ Update PVD volume descriptor           sector 16         │
- │ 21  │ Write CUE sheet                         dq4_reverse.cue  │
- │ 22  │ Run EDC/ECC regeneration (edcre.exe)   all Mode 2 sects  │
- │ 23  │ Record final disc size                  ~368 MB          │
- │ 24  │ Record new PC0                          0x800BD76C       │
- │ 25  │ Integrity verification + patch summary  post-build check │
- └─────┴─────────────────────────────────────────────────────────┘
+DuckStation DLLs: The duckstation/ folder is ~158 MB due to Qt6 and DirectX DLLs. This is the minimum required for DuckStation to run. If boot testing is not needed, this folder can be omitted.
 
+Source disc not included: The DQ4 Japan disc (351 MB) is too large for the repo. It must be placed at disc/Dragon Quest IV - Michibikareshi Mono Tachi (Japan).bin before building.
 
-MEMORY MAP AFTER PATCHING
-=========================
+11. File Inventory (with checksums)
+Builder (1.2 MB)
+File	Size	Purpose
+frankenstein_build.exe	483 KB	Pre-compiled builder binary
+frankenstein_build_main.cpp	42 KB	Builder source (main)
+psx_binary_ops.cpp	187 KB	Builder source (ops)
+psx_binary_ops.h	26 KB	Builder header
+offset_registry.json	9 KB	Patch address registry
+FROZEN_INPUTS.json	2.5 KB	Input checksums
+translation_map.bin	445 KB	Binary translation map
+thread_code_blob.bin	2 KB	MISS-1 thread blob
+hotfixes_empty.txt	119 B	Empty hotfix file
+reencode_manifest.json	3 KB	Re-encoding results
+reencode_pipeline.py	17 KB	HBD pre-processor
+gen_translation_map.py	2 KB	Translation map generator
+verify_thread_blob.py	10 KB	F-2 verification
+dw7_exe_surgical_patcher.py	35 KB	Standalone EXE patcher
+Translation (5.6 MB)
+File	Size	Purpose
+SLUSP012.06_clean.bin	675 KB	DW7 US EXE
+dw7_encoded_translation.json	3.2 MB	Pre-encoded English text
+full_translation_hybrid_playable.json	1.4 MB	Full translation
+folder_mapping.json	290 KB	Sector mapping
+dw7_hybrid_tree.bin	1.5 KB	Hybrid Huffman tree
+checksums.txt	1 KB	Frozen checksums
+EDC/ECC (53 KB)
+File	Size	Purpose
+edcre.exe	53 KB	EDC/ECC repair + verify
+DuckStation (158.5 MB)
+File	Size	Purpose
+duckstation-qt-x64-ReleaseLTCG.exe	10 MB	Emulator
+SCPH1001.BIN	512 KB	US BIOS
+*.dll + resources	~148 MB	Qt6, DirectX, SDL3, etc.
+12. CLI Reference
+frankenstein_build.exe
+Usage:
+  frankenstein_build.exe --reverse [options]
 
-  RAM ADDR         CONTENTS                     SOURCE
-  ───────────────  ───────────────────────────  ──────────────────
-  0x80017F00       DW7 US EXE text (code)       Loaded from sector 24
-  0x8008E284       Original PC0 (DW7 entry)     Jumps here after stub
-  0x8008AEF4       FMV stub 1 (XA/STR skip)     BAD-2 patch
-  0x8008CAD0       FMV stub 2 (MDEC skip)       BAD-2 patch
-  0x800BC700       Hybrid Huffman tree           Appended payload
-  0x800BCF00       HBD type trampoline           Step 10 patch
-  0x800BCF6C       Thread blob (2048 bytes)      MISS-1 injection
-  0x800BD100       BSS clear START               Narrowed from 0x800BCCC8
-  0x800BD76C       Boot copy stub (new PC0)      14 MIPS instructions
-  0x800D9E80       Thread blob destination       Copied here by stub
-                   (BSS clear END — preserved)   BSS stops before this
-  0x800EF1C8       Old tree pointer (patched)    → 0x800BC700
+Required (reverse mode):
+  --dq4-hbd <path>       DQ4 Japan disc (.bin)
+  --dw7-exe <path>       DW7 US EXE (SLUSP012.06_clean.bin)
+  --hybrid-tree <path>   Hybrid Huffman tree (dw7_hybrid_tree.bin)
+  --edcre <path>         edcre.exe path
+  --output <path>        Output .bin path
+  --output-cue <path>    Output .cue path
 
+Optional:
+  --no-xa-stub           Skip XA stub patch (F-3 comparison)
+  --reencode-hbd         Enable HBD re-encoding
+  --skip-hash-check      Skip FROZEN_INPUTS hash verification
+  --duckstation          Enable DuckStation compatibility patches
+  --hotfixes <path>      Runtime hotfix file (default: none)
+  --staging-dir <path>   Build staging directory
+  --tree-mode <0-3>      Tree mode (forward build only)
+Exit Codes
+0: Build complete, all gates passed
+1: Build failed or gate failure
 
-BOOT SEQUENCE
-=============
-
-  1. BIOS loads EXE from CD-ROM sector 24 into RAM at 0x80017F00
-     └─ Loads text_size (0xA58A4) bytes = 678,052 bytes
-
-  2. BIOS sets PC = PC0 = 0x800BD76C (boot copy stub)
-     │
-     ▼
-  3. BOOT COPY STUB executes (14 instructions):
-     │  lui  t0, <blob_src_hi>     # source = blob in loaded EXE
-     │  addiu t0, t0, <src_lo>
-     │  lui  t1, 0x800D            # dest = 0x800D9E80 (BSS region)
-     │  addiu t1, t1, 0x9E80
-     │  addiu t2, t0, <blob_size>  # end = src + 2048
-     │  loop:
-     │    lw   t3, 0(t0)           # load word from blob
-     │    nop
-     │    sw   t3, 0(t1)           # store to 0x800D9E80+
-     │    addiu t0, t0, 4          # advance src
-     │    addiu t1, t1, 4          # advance dst
-     │    bne  t0, t2, loop        # until done
-     │    nop
-     │  j    0x8008E284            # jump to original DW7 entry point
-     │  nop
-     │
-     ▼
-  4. DW7 EXE INITIALIZATION (PC=0x8008E284):
-     │  BSS clear: zero [0x800BD100, 0x800D9E80)
-     │  └─ Thread blob at 0x800D9E80 SURVIVES (outside clear range)
-     │  └─ Hybrid tree at 0x800BC700 SURVIVES (before clear start)
-     │  └─ Trampolines at 0x800BCF00 SURVIVE (before clear start)
-     │
-     ▼
-  5. DW7 game logic starts:
-     │  CD-ROM init → reads SYSTEM.CNF → finds SLUSP012.06
-     │  Opens HBD1PS1D.Q41 at LBA 362 (patched string 'q41')
-     │  HBD parser uses hybrid tree (patched pointers)
-     │  Decompressor bridges DQ4 per-block → DW7 global format
-     │
-     ▼
-  6. GAME RUNS — translated text displays via DW7 engine
-
-
-CURRENT STATUS
-==============
-
-  ✅ Translation: COMPLETE (all text in HBD1PS1D.Q41)
-  ✅ EXE patches: ALL 25 steps applied and verified
-  ✅ text_size fix: Header updated to 0xA58A4 (includes blob+stub)
-  ✅ Boot stub: EXECUTES correctly (BSS clear runs full range)
-  ✅ DuckStation: US BIOS (SCPH-5501) loads, POST sequence passes
-  ✅ CyberGrime: 50M instruction stress test, no crash
-  ✅ EDC/ECC: Regenerated, passes validation
-
-  ❌ DuckStation: Stalls after BSS clear at PC=0xBFC0E5E8
-     └─ BIOS exception handler area — likely disc region mismatch
-  ❌ PVD volume ID: Still 'DRAGONQUEST4_EN' (Japanese)
-     └─ DuckStation reports: disc=NTSC-J, console=NTSC-U
-     └─ DW7 CD-ROM driver may reject disc based on region
-
-  REMAINING WORK:
-  1. Patch PVD volume ID to US-compatible string
-  2. Trace 0xBFC0E5E8 exception (enable TTY logging)
-  3. Possibly patch disc region check in DW7 EXE
 
 
 WHY THIS IS HARD
