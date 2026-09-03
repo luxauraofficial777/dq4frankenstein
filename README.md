@@ -3,25 +3,19 @@
 DQ4/DW7 Frankenstein Project V.9,V.95,V.96,V.97,V.98,V.99
 
 Dragon Quest IV PSX: "Lost Translation"
-Created by Lux Aura with the help of previous work by Markus Projects, Mandy Wilkens, and ChickenKnife. http://markus-projects.net/dragon-hackst-iv/ https://github.com/mwilkens/dq4psxtrans https://www.romhacking.net/hacks/4275/ https://luxaura.bandcamp.com https://www.facebook.com/LuxAuraOfficial https://www.youtube.com/LuxAuraOfficial RadMage
-
 Created by **Lux Aura** with the help of previous work by Markus Projects, Mandy Wilkens, and RadMage.
 
 - http://markus-projects.net/dragon-hackst-iv/
 - https://github.com/mwilkens/dq4psxtrans
-- https://www.romhacking.net/hacks/4275/
+- https://github.com/RadMageIRL/DQIV_PSX_TOOLS/tree/dev
 - https://luxaura.bandcamp.com
 - https://www.youtube.com/LuxAuraOfficial
 
 Dragon Quest IV: The Zenithian Chronicles (Multi-Generational Localization Suite)
 Platform: PSX
- 
 Platform: SNES
- 
-Architecture: Multi-Generational Study
- 
+Architecture: Multi-Generational Study 
 Status: Playability-First Sprint
-
 A monolithic reverse-engineering suite, asset bridge, and dual-platform localization pipeline for Dragon Quest IV: Michibikareshi Mono Tachi (ドラゴンクエストIV 導かれし者たち).
 
 This project studies and bridges the data architecture of Dragon Quest IV across four console generations—Famicom/NES (1990), Super Famicom (1996 DQ3 Engine), PlayStation 1 (2001 HeartBeat Engine), and Nintendo DS (2007 Remake)—to deliver hardware-accurate, complete English editions.
