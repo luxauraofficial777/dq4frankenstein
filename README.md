@@ -1,8 +1,6 @@
 # dq4frankenstein Progress ~99%
 <img width="1024" height="1024" alt="dq4frank" src="https://github.com/user-attachments/assets/3ac9afc3-0cec-4a48-aab4-8b5e086aed73" />
-DQ4/DW7 Frankenstein Project V.9,V.95,V.96,V.97,V.98,V.99
-
-Dragon Quest IV PSX: "Lost Translation"
+Dragon Quest IV Frankenstein Project NES/SNES/PSX: "Lost Translation"
 Created by **Lux Aura** with the help of previous work by Markus Projects, Mandy Wilkens, and RadMage.
 
 - http://markus-projects.net/dragon-hackst-iv/
