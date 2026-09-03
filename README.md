@@ -29,9 +29,6 @@ This suite represents the synthesis of hundreds of hours of low-level MIPS decom
 * **Foundation Text Extraction & Java Engine:** Built upon seminal structural research and early patcher tooling by **Markus Schroeder** ([Markus Projects](http://markus-projects.net/dragon-hackst-iv/)) and early extraction tooling by **Mandy Wilkens** ([dq4psxtrans](https://github.com/mwilkens/dq4psxtrans)).
 * **Low-Level Codec & Hardware Inspection:** Incorporates forensic insights, asset inspection, and round-trip verification tooling adapted from the [DQIV_PSX_TOOLS](https://github.com/RadMageIRL/DQIV_PSX_TOOLS/tree/dev) project by **RadMage**.
 
----
-
-## 📐 Unified System Architecture
 ## 📐 Unified System Architecture
 
 ```text
