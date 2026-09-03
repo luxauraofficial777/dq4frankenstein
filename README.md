@@ -32,16 +32,27 @@ This suite represents the synthesis of hundreds of hours of low-level MIPS decom
 ---
 
 ## 📐 Unified System Architecture
-        ┌────────────────────────┐
-                      │   Multi-Generational   │
-                      │     Corpus Bridge      │
-                      └───────────┬────────────┘
-                                  │
-           ┌──────────────────────┴──────────────────────┐
-           ▼                                             ▼
-┌─────────────────────────┐                   ┌─────────────────────────┐│   PlayStation 1 (PSX)   │                   │  Super Nintendo (SNES)  ││    Native RC2 Engine    │                   │ "Zenithian Forge" Engine│├─────────────────────────┤                   ├─────────────────────────┤│ • Pristine SLPM_869.16  │                   │ • DQ3 SFC ExHiROM Host  ││ • HBD1PS1D.Q41 Rebuild  │                   │ • Mode 3 Title & Sprites││ • Java/MIPS Referrer Map│                   │ • 15 Campaign Maps ($E0)││ • Dual-Font Architecture│                   │ • Custom Huffman Tree   ││ • Buffer-Safe Pagination│                   │ • LOCN Collision Decode │└─────────────────────────┘                   └─────────────────────────┘
----
+## 📐 Unified System Architecture
 
+```text
+                          ┌────────────────────────┐
+                          │   Multi-Generational   │
+                          │     Corpus Bridge      │
+                          └───────────┬────────────┘
+                                      │
+               ┌──────────────────────┴──────────────────────┐
+               ▼                                             ▼
+  ┌─────────────────────────┐                   ┌─────────────────────────┐
+  │   PlayStation 1 (PSX)   │                   │  Super Nintendo (SNES)  │
+  │    Native RC2 Engine    │                   │ "Zenithian Forge" Engine│
+  ├─────────────────────────┤                   ├─────────────────────────┤
+  │ • Pristine SLPM_869.16  │                   │ • DQ3 SFC ExHiROM Host  │
+  │ • HBD1PS1D.Q41 Rebuild  │                   │ • Mode 3 Title & Sprites│
+  │ • Java/MIPS Referrer Map│                   │ • 15 Campaign Maps ($E0)│
+  │ • Dual-Font Architecture│                   │ • Custom Huffman Tree   │
+  │ • Buffer-Safe Pagination│                   │ • LOCN Collision Decode │
+  └─────────────────────────┘                   └─────────────────────────┘
+```
 ## 🎮 Track A: PlayStation 1 (Native RC2 — Primary Track)
 
 The PlayStation 1 release re-authors the native retail Japanese disc in-place. By abandoning executable grafting, the native engine preserves 100% of HeartBeat's original 3D camera sweeps, battle animations, and sound sequencing.
