@@ -1,4 +1,4 @@
-# dq4frankenstein Progress ~99%
+# dq4frankenstein Progress ~99% (Update to V1.00 In Progress)
 <p align="center">
   <img width="1024" height="1024" alt="dq4frank" src="https://github.com/user-attachments/assets/3ac9afc3-0cec-4a48-aab4-8b5e086aed73" />
 </p>
