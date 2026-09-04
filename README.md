@@ -1,17 +1,4 @@
 # dq4frankenstein Progress ~99%
-<img width="1024" height="1024" alt="dq4frank" src="https://github.com/user-attachments/assets/3ac9afc3-0cec-4a48-aab4-8b5e086aed73" />
-# Dragon Quest IV: The Zenithian Chronicles
-### Multi-Generational Localization Suite & Dual-Platform Re-Authoring Engine
-**Created & Architected by Lux Aura**  
-*Maintained under the VoidWalkers Research Project*
-
-[![Platform: PSX](https://img.shields.io/badge/Platform-PlayStation%201%20(Native%20RC2)-003791?logo=playstation&logoColor=white)](#-track-a-playstation-1-native-rc2--primary-track)
-[![Platform: SNES](https://img.shields.io/badge/Platform-Super%20Famicom%20(ExHiROM)-E60012?logo=nintendo&logoColor=white)](#-track-b-super-nintendo--sfc-zenithian-forge)
-[![Architecture: Multi-Generational Study](https://img.shields.io/badge/Architecture-Multi--Generational%20Study-4CAF50)](#-the-multi-generational-data-bridge)
-[![License: CC-BY-NC-SA 4.0](https://img.shields.io/badge/License-CC--BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
-
----
-
 <p align="center">
   <img width="1024" height="1024" alt="dq4frank" src="https://github.com/user-attachments/assets/3ac9afc3-0cec-4a48-aab4-8b5e086aed73" />
 </p>
@@ -44,8 +31,14 @@ This suite represents the synthesis of hundreds of hours of low-level MIPS decom
 * **Core Architecture & Toolchain:** Conceived, engineered, and finalized by **Lux Aura**.
 * **Foundation Text Extraction & Java Engine:** Built upon seminal structural research and early patcher tooling by **Markus Schroeder** ([Markus Projects](http://markus-projects.net/dragon-hackst-iv/))[cite: 4, 14] and early extraction tooling by **Mandy Wilkens** ([dq4psxtrans](https://github.com/mwilkens/dq4psxtrans)).
 * **Low-Level Codec & Hardware Inspection:** Incorporates forensic insights, asset inspection, and round-trip verification tooling adapted from the [DQIV_PSX_TOOLS](https://github.com/RadMageIRL/DQIV_PSX_TOOLS/tree/dev) project by **RadMage**[cite: 6, 14].
-
----
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/594c17d6-6b24-4107-b54b-4b1cf9ab82d5" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/2d9dd3da-7209-40d4-9385-cf6e24177e51" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/b605bb91-13a0-4a4c-97c6-ce67dca63306" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/eed68c3c-35b5-46c9-b719-75fdc652f311" />
+<img width="802" height="687" alt="image" src="https://github.com/user-attachments/assets/2a00621e-2a0e-4681-bb69-82d898b9dc83" />
+<img width="802" height="687" alt="image" src="https://github.com/user-attachments/assets/caed6469-e4f4-445d-a070-5cecc5379762" />
+<img width="802" height="687" alt="image" src="https://github.com/user-attachments/assets/7447c3b9-590d-4948-bd9d-b59be2dca651" />
+<img width="802" height="687" alt="image" src="https://github.com/user-attachments/assets/a579e1a3-1eca-4f3a-8456-b40bb9e436e4" />
 
 ## 📐 Unified System Architecture
 
@@ -67,22 +60,6 @@ This suite represents the synthesis of hundreds of hours of low-level MIPS decom
   │ • Dual-Font Architecture│                   │ • Custom Huffman Tree   │
   │ • Buffer-Safe Pagination│                   │ • LOCN Collision Decode │
   └─────────────────────────┘                   └─────────────────────────┘
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/594c17d6-6b24-4107-b54b-4b1cf9ab82d5" />
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/2d9dd3da-7209-40d4-9385-cf6e24177e51" />
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/b605bb91-13a0-4a4c-97c6-ce67dca63306" />
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/eed68c3c-35b5-46c9-b719-75fdc652f311" />
-<img width="802" height="687" alt="image" src="https://github.com/user-attachments/assets/2a00621e-2a0e-4681-bb69-82d898b9dc83" />
-<img width="802" height="687" alt="image" src="https://github.com/user-attachments/assets/caed6469-e4f4-445d-a070-5cecc5379762" />
-<img width="802" height="687" alt="image" src="https://github.com/user-attachments/assets/7447c3b9-590d-4948-bd9d-b59be2dca651" />
-<img width="802" height="687" alt="image" src="https://github.com/user-attachments/assets/a579e1a3-1eca-4f3a-8456-b40bb9e436e4" />
-
-
-
-
-
-
-
-
 
 ## 🔨 Build Instructions
 
