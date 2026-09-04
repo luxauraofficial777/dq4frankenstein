@@ -113,7 +113,22 @@ DQLOSTTRANSLATION/├── build/                 # Compiled binaries (.bin/.cu
   * **PSX:** [DuckStation](https://www.duckstation.org/) (Strict timing, VRAM debugger, and MIPS memory inspector).
   * **SNES:** [Mesen 2](https://github.com/SourMesen/Mesen2) or [bsnes-plus](https://github.com/devinacker/bsnes-plus).
 
----
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/594c17d6-6b24-4107-b54b-4b1cf9ab82d5" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/2d9dd3da-7209-40d4-9385-cf6e24177e51" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/b605bb91-13a0-4a4c-97c6-ce67dca63306" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/eed68c3c-35b5-46c9-b719-75fdc652f311" />
+<img width="802" height="687" alt="image" src="https://github.com/user-attachments/assets/2a00621e-2a0e-4681-bb69-82d898b9dc83" />
+<img width="802" height="687" alt="image" src="https://github.com/user-attachments/assets/caed6469-e4f4-445d-a070-5cecc5379762" />
+<img width="802" height="687" alt="image" src="https://github.com/user-attachments/assets/7447c3b9-590d-4948-bd9d-b59be2dca651" />
+<img width="802" height="687" alt="image" src="https://github.com/user-attachments/assets/a579e1a3-1eca-4f3a-8456-b40bb9e436e4" />
+
+
+
+
+
+
+
+
 
 ## 🔨 Build Instructions
 
