@@ -63,49 +63,31 @@ This suite represents the synthesis of hundreds of hours of low-level MIPS decom
                ▼                                             ▼
   ┌─────────────────────────┐                   ┌─────────────────────────┐
   │   PlayStation 1 (PSX)   │                   │  Super Nintendo (SNES)  │
-  │    Native RC2 Engine    │                   │ "Zenithian Forge" Engine│
+  │  Sovereign Native RC2   │                   │ "Zenithian Forge" Engine│
   ├─────────────────────────┤                   ├─────────────────────────┤
   │ • Pristine SLPM_869.16  │                   │ • DQ3 SFC ExHiROM Host  │
-  │ • HBD1PS1D.Q41 Rebuild  │                   │ • Mode 3 Title & Sprites│
-  │ • Java/MIPS Referrer Map│                   │ • 15 Campaign Maps ($E0)│
-  │ • Dual-Font Architecture│                   │ • Custom Huffman Tree   │
-  │ • Buffer-Safe Pagination│                   │ • LOCN Collision Decode │
+  │ • 7-Stage Native Chain  │                   │ • Mode 3 Title & Sprites│
+  │ • Class A Overlay Remap │                   │ • 15 Campaign Maps ($E0)│
+  │ • Class B LZS Duplicates│                   │ • Custom Huffman Tree   │
+  │ • Dual-Font UI Engine   │                   │ • LOCN Collision Decode │
+  │ • Mode 2 Form 1 EDC/ECC │                   │ • Native ASM Expansion  │
   └─────────────────────────┘                   └─────────────────────────┘
 
 ## 🔨 Build Instructions
 
-### Building the PSX Native Disc:
+### Building the PSX Sovereign Master Disc (7-Stage Native Pipeline):
 ```powershell
-# 1. Paginate the master English dialogue corpus (enforces strict 18/20 line limits)
-python tools/psx_string_paginator.py `
-  --input translation/full_translation_clean_master.json `
-  --output translation/full_translation_paginated.json
+# Execute the unified, self-contained native build pipeline
+# Executes: Step 0 (Validation) -> Step 1 (Dialogue) -> Step 1c (Type-39 Scripts) -> 
+#           Step 2 (Font 1 UI)   -> Step 3 (Save Menu) -> Step 4 (Battle 0x048B) -> 
+#           Step 4b (Overlay Refs) -> Step 4c (LZS Duplicates) -> Step 5 (EDC/ECC)
+python tools/native_build.py --corpus translation/full_translation_boot_with_0069.json
 
-# 2. Inject dialogue and remap Type-39 cutscene referrers via Java TextPatcher
-& "C:\Program Files\OpenJDK\jdk-25\bin\java.exe" `
-  -cp "translation-tools/classes;dq4psx-patcher.jar" `
-  TextPatcher --schema dq4 `
-  "Dragon Quest IV - Michibikareshi Mono Tachi (Japan).bin" `
-  translation/full_translation_paginated.json `
-  build/dq4_paginated.bin
+# (Optional) Verify RAM buffer alignment and overlay referrers
+python translation-tools/patch_overlay_refs.py --report
 
-# 3. Recalculate Mode 2 Form 1 Reed-Solomon EDC/ECC (mandatory before execution)
-.\edcre\edcre.exe build\dq4_paginated.bin
-
-# 4. Boot in DuckStation
-& "duckstation/duckstation-qt-x64-ReleaseLTCG.exe" "build/dq4_paginated.cue"
-Building the SNES ExHiROM ROM:PowerShell# Compile the complete SNES DQ4-on-DQ3 master cartridge
-python snes/tools/build_master_dq4.py
-
-# Verify cart header, memory mapping, and dual checksums
-python snes/audit/run_all.py
-🎯 Production RoadmapPhaseFocus AreaCore MilestoneStatusPhase 0Toolchain HardeningRebuild Java patcher from source; establish byte-level baseline.✅ COMPLETEPhase 1Playability KeystoneStable English narrative: Prologue $\to$ Chapter 1 (Font 2).🔄 ACTIVEPhase 2Font 1 Menus & UICommand menus, combat, shop dialogues (0x8001E8C8 / 0x048C).⏳ QUEUEDPhase 3Battle Engine TextIn-battle notifications, status messages, monster attacks.⏳ PLANNEDPhase 4World NPCs & DictionariesNon-dialogue HBD blocks and {7eXX} phrase expansion.⏳ PLANNEDPhase 5Gold Master ReleaseEnd-to-end playthrough (Chapters 1–5), standalone XDelta3 patch.⏳ PLANNED🛡️ Ground Truth & Engineering PrinciplesEmpirical Validation First: Success is defined exclusively by correct, unclipped in-game renders, clean DuckStation RAM/VRAM inspection, and verified hardware execution—never by self-certifying build scripts.Non-Destructive Integrity: Core executable sectors (SLPM_869.16) remain byte-pristine during dialogue runs to guarantee that CPU control flow, interrupt handlers, and DMA timings remain unmodified.Legal Notice: This repository contains reverse-engineering tools, patches, and asset bridges. No copyrighted ISOs or ROMs are distributed. Users must supply an authentic, legally dumped Japanese retail disc image to compile patches.📬 Contact & Official ChannelsOfficial Music & Audio Production: Lux Aura on BandcampVideo Devlogs & Demonstrations: Lux Aura Official YouTubeCommunity Updates: Lux Aura on Facebook(cc) Lux Aura. Released under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International.For digital preservation, research, and educational purposes.
-
-CONTACT
----------------------------------------------------------------
-
-  Bandcamp:  https://luxaura.bandcamp.com
-  Facebook:  https://www.facebook.com/LuxAuraOfficial
+# (Optional) Direct DuckStation Diagnostic Run (for MIPS/RAM inspection)
+& "duckstation/duckstation-qt-x64-ReleaseLTCG.exe" "build/dq4_sovereign_master.cue"
   YouTube:   https://www.youtube.com/LuxAuraOfficial
 
   (cc) Lux Aura. For educational and preservation purposes.
