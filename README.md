@@ -46,6 +46,8 @@ This suite represents the synthesis of hundreds of hours of low-level MIPS decom
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/a88d8bc4-21a3-472c-826e-fc242947fc9a" />
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/2eb2e85a-1405-42e3-887d-f64e55b6de74" />
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/825e9342-4aa0-4261-9404-7bde62591931" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/e4852791-0b1d-4494-9299-46bdfb671e74" />
+
 
 
 ## 📐 Unified System Architecture
