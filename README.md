@@ -47,7 +47,8 @@ This suite represents the synthesis of hundreds of hours of low-level MIPS decom
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/2eb2e85a-1405-42e3-887d-f64e55b6de74" />
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/825e9342-4aa0-4261-9404-7bde62591931" />
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/e4852791-0b1d-4494-9299-46bdfb671e74" />
-<img width="662" height="667" alt="image" src="https://github.com/user-attachments/assets/3c2041d2-4591-417c-99af-98463cc3d5b7" />
+<img width="662" height="667" alt="image" src="https://github.com/user-attachments/assets/c401be6c-188d-4912-a381-03d142379dfa" />
+
 
 
 
