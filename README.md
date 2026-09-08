@@ -7,6 +7,7 @@
 ### Multi-Generational Localization Suite & Dual-Platform Re-Authoring Engine
 **Created & Architected by Lux Aura**  
 *Maintained under the VoidWalkers Research Project*
+https://store.steampowered.com/app/4979730/Void_Walkers_X64/
 
 [![Platform: PSX](https://img.shields.io/badge/Platform-PlayStation%201%20(Native%20RC2)-003791?logo=playstation&logoColor=white)](#-track-a-playstation-1-native-rc2--primary-track)
 [![Platform: SNES](https://img.shields.io/badge/Platform-Super%20Famicom%20(ExHiROM)-E60012?logo=nintendo&logoColor=white)](#-track-b-super-nintendo--sfc-zenithian-forge)
