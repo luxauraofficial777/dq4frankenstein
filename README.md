@@ -102,3 +102,89 @@ This suite represents the synthesis of hundreds of hours of low-level MIPS decom
   │ • Dual-Font UI Engine   │                   │ • LOCN Collision Decode │
   │ • Mode 2 Form 1 EDC/ECC │                   │ • Native ASM Expansion  │
   └─────────────────────────┘                   └─────────────────────────┘
+
+---
+
+### File 2: `BUILD.md` (Separate Build & Track Guide)
+*Contains the complete PlayStation 1 Native Sovereign Engine documentation, E2E build pipeline steps, Super Famicom Zenithian Forge track, and emulator compatibility table.*
+
+```
+# 🚀 Track A: PlayStation 1 Native Sovereign Engine
+
+The PlayStation 1 release operates directly on the Japanese CD-ROM image in **Mode 2, Form 1** (2,352 bytes/sector, 2,048 bytes user data). Every modified dialogue block, menu, and overlay module is compressed to fit inside or below its pristine byte budget.
+
+---
+
+## 🔨 Build Instructions (E2E Pipeline)
+
+### Prerequisites
+* **Python 3.8+** with `numpy` installed (`pip install numpy`).
+* Clean Japanese PS1 CD-ROM image:
+  * **File:** `Dragon Quest IV - Michibikareshi Mono Tachi (Japan).bin`
+  * **Size:** `368,057,424` bytes
+  * **CRC32:** `3D67C858`
+  * **SHA-256:** `100D87DB9DEADF8F9FA4BB891D3A5D0BB112ACBF5ADBCBC93C637848ED9C7531`
+
+### Quick Start
+Place your pristine `.bin` file in the repository root or `ship/` folder, then run:
+
+```bash
+# Windows
+build.bat
+
+# Linux / macOS
+python ship/build.py
+
+[STEP -1] Ship Parity Gate (verify_ship_parity.py)
+└── Validates 156-file mirror integrity across root and ship/ distributions.
+
+[STEP 0] Pre-Flight Corpus & Marker Validation (validate_corpus.py + g8_marker_parity.py)
+└── Validates strict hex tokens {xxxx}, sequence parity, and zero apostrophe rule.
+└── Asserts facility variable marker parity against the pristine skeleton.
+
+[STEP 1] Native In-Place HBD Dialogue Injection (dq4_hbd_patcher.py)
+└── Re-encodes 1,358 blocks using length-limited Huffman (ml=14..9).
+└── Enforces numNodes > 0 fix with zero padding isolated after tree end.
+
+[STEP 1c] Type-39 Cutscene Script LZSS Remapper (patch_type39_scripts.py)
+└── Decompresses 612 scripts, remaps bytecode dialogue words, and re-compresses.
+└── Eliminates cutscene freezes (e.g. Burland Castle throne room).
+
+[STEP 2] Font 1 Menus, Items, Spells & Delta-Locks (patch_font1_ourway.py)
+└── Injects 8x14 half-width font into SLPM_869.16 Block 0x048C.
+└── Locks cursor blink / advance bit deltas (44, 36, 50, 66) across SIDs 773–778.
+
+[STEP 3] Church Save Menu & Memory Card (patch_save_menu.py)
+└── Injects English text for Block 0x0474 (save confirmations and memory card management).
+
+[STEP 4] Battle Overlay Primary Block & Monster DB (patch_battle_overlay.py)
+└── Injects 817 sequences into Block 0x048B (combat actions, messages, and bestiary).
+
+[STEP 4b] Class A Stale Referrer Remapping (patch_overlay_refs.py)
+└── 32-instruction dataflow scanner resolving shifted pointers across EXE & raw sectors.
+
+[STEP 4c] Class B Type-46 Duplicate Modules (patch_overlay_duplicates.py)
+└── Decompresses and updates all 67 distinct Type-46 overlay modules across 267 sites.
+
+[STEP 4e / 4d / 4h] Structural & Table Alignments
+└── 4e: Same-tree delta-lock confirmation.
+└── 4d: Stale word-table fixed-point sweep.
+└── 4h: Remaps LBA 40217 bare page table rows, eliminating the "Monster Gramps" bug.
+
+[STEP 1e / 4f / 4g / 4g-2] Late Structural Patches
+└── 1e: Injects Block 0x048F priest save text directly into the EXE.
+└── 4f: Remaps D4 split-immediates and cutscene call sites.
+└── 4g-2: Injects D2 (church offering) and D3 (victory window) string-start identities.
+
+[STEP 4h-2 / 4h-3 / 4h-4] Runtime Execution Guards
+└── 4h-2: Bypasses VSync timeout panic (0x80099F60 -> exit(3)), preventing stream stalls.
+└── 4h-3: Redirects overlay residency collisions during dialogue staging.
+└── 4h-4: Injects 17-instruction KSEG0 allocator guard protecting message module memory.
+
+[STEP 5] Disc Finalization & EDC/ECC Recalculation (edcre.exe)
+└── Generates sovereign master CUE sheet.
+└── Recalculates Mode 2 Form 1 EDC checksums and ECC P/Q parity across all modified sectors.
+
+[STEP 6 & 7] Post-Build Gates & Release Sealing
+└── Runs G2 dispatch gate, G10 corpus census, and G5 full-disc parity sweeps.
+└── Asserts G11 post-battle RAM residency before labeling a tagged release.
