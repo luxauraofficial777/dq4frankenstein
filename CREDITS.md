@@ -21,9 +21,7 @@
 - **Markus Schroeder** — Foundation HBD research & early tools (the original Java patcher
   lineage; his format work made the first extraction possible)
 - **Mandy Wilkens** (`dq4psxtrans`) — Text extraction & tooling research
-- **RadMageIRL** (`DQIV_PSX_TOOLS`) — Core CD-ROM codec, referrer systems,
-  sector table handling, MIPS disassembler, and corpus generator modules
-  (licensed under MIT; see `psx_tools/LICENSE`); discovery of the Font 1 atlas.
+- **RadMageIRL** (`DQIV_PSX_TOOLS`) discovery of the Font 1 atlas.
 
 ## The Lux Aura AI Pair Programming & Research Team
 - **KIMI** — Deep codebase search, memory-dump inspection, script disassembly, forensic
