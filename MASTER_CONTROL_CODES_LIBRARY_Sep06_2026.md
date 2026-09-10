@@ -2,7 +2,7 @@
 **Date:** 2026-09-06  **Author:** Omen Alpha (control-code library lane)
 **Scope:** every DQ engine generation — Famicom (DW1/2/3/4-FC), Super Famicom (DQ1+2, DQ3, DQ6),
 PlayStation HeartBeat (DQ7 → DQ4 PSX), Nintendo DS (DQ4). Built from verified-in-code extraction
-(Endo's decoders, DW1 disassembly, Osteoclave, RadMage FORMAT.md, Wilkens tooling, the consumer
+(Endo's decoders, DW1 disassembly, Osteoclave, RadMageIRL FORMAT.md, Wilkens tooling, the consumer
 project's own on-disc census).
 **Detailed evidence docs (read these for citations):**
 - `snes/docs/CONTROL_CODES_SFC_ENGINES.md` — SFC, verified against `dq_analyzer/dq3decode.c` & `dq6decode.c`
