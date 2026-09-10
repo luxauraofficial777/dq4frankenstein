@@ -221,9 +221,6 @@ failing LBA range, CD-ROM buffer status) plus paired RAM dumps; and your master'
 
 Full credits in [`shipB/CREDITS.md`](shipB/CREDITS.md).
 
-MIT License
-PSX_TOOLS Copyright (c) 2026 RadMageIRL (https://github.com/RadMageIRL/DQIV_PSX_TOOLS)
-
 **Follow Lux Aura** — the record label / publisher:
 [Bandcamp](https://luxaura.bandcamp.com) ·
 [Facebook](https://www.facebook.com/LuxAuraOfficial/) ·
