@@ -4,7 +4,7 @@
 
 # Dragon Quest IV: The Zenithian Chronicles Current Build V.99 Rebuild B (Live/Playable)
 ### Multi-Generational Localization Suite & Dual-Platform Re-Authoring Engine
-Deliverables: VoidPatcher.exe dist_rebuild_b.z01-z05 ShipB.zip Native Build Pipeline
+Deliverables: DQ4_Patcher_RebuildB_QuickStart.z01-z05 .zip dist_rebuild_b.z01-z05 .zip ShipB.zip Native Build Pipeline
 **Created & Architected by Lux Aura**  
 *Maintained under the VoidWalkers Research Project*  
 🎮 **Steam:** [Void Walkers X64](https://store.steampowered.com/app/4979730/Void_Walkers_X64/)
