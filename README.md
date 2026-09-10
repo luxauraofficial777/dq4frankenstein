@@ -8,6 +8,14 @@ Deliverables: VoidPatcher.exe dist_rebuild_b.z01-z05 ShipB.zip Native Build Pipe
 **Created & Architected by Lux Aura**  
 *Maintained under the VoidWalkers Research Project*  
 🎮 **Steam:** [Void Walkers X64](https://store.steampowered.com/app/4979730/Void_Walkers_X64/)
+[![Romhacking.net: #7711](https://img.shields.io/badge/Romhacking.net-Translation%20%237711-blue)](https://www.romhacking.net/translations/7711/)
+[![YouTube: Devlook](https://img.shields.io/badge/YouTube-Devlook%20Video-red?logo=youtube&logoColor=white)](https://www.youtube.com/watch?v=UE0rsMtogGw)
+<div align="center">
+  <a href="https://www.youtube.com/watch?v=UE0rsMtogGw">
+    <img src="https://img.youtube.com/vi/UE0rsMtogGw/maxresdefault.jpg" alt="DQ4 Frankenstein English Translation Devlook" width="750" style="border-radius: 8px;" />
+  </a>
+  <p><em>🎬 <b>Watch:</b> DQ4 Frankenstein English Translation Devlook (Rebuild B / Ship B)</em></p>
+</div>
 
 ---
 
