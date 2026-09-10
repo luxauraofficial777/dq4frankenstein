@@ -125,6 +125,107 @@ The PlayStation 1 release operates directly on the Japanese CD-ROM image in **Mo
   * **CRC32:** `3D67C858`
   * **SHA-256:** `100D87DB9DEADF8F9FA4BB891D3A5D0BB112ACBF5ADBCBC93C637848ED9C7531`
 
+ # DQ4 Frankenstein — Dragon Quest IV (PSX) English Localization
+**Lux Aura & The VoidWalkers Research Project**
+
+Two ways to play the English localization on your own Japanese disc:
+
+| Path | Time | Needs |
+|---|---|---|
+| **VoidPatcher** (recommended) | ~2 min | Just the patcher exe — nothing to install |
+| **BuildB pipeline** | ~80 min | Python 3.8+ (+numpy), edcre.exe |
+
+> We distribute **no copyrighted content**. You supply your own pristine Japanese disc
+> image; our tools transform **your** copy.
+
+---
+
+## Your input image
+
+`Dragon Quest IV - Michibikareshi Mono Tachi (Japan).bin` (PSX, SLPM_869.16)
+
+| Hash | Value |
+|---|---|
+| SHA-1 | `85064625AFA12219880FC8D07047A3CC1C595CB9` |
+| SHA-256 | `100D87DB9DEADF8F9FA4BB891D3A5D0BB112ACBF5ADBCBC93C637848ED9C7531` |
+
+---
+
+## Option A — VoidPatcher (fast path)
+
+### Install
+1. Download `VoidPatcher_RB1.exe` — a single self-contained executable.
+2. Done. No runtime, no Python, no dependencies.
+
+### Usage
+1. Run `VoidPatcher_RB1.exe`.
+2. **TARGET DISC IMAGE** → browse to (or type) your pristine image's path.
+   It's validated on selection (size + SLPM_869.16 boot reference).
+3. Leave **SEALED PAYLOAD (DEFAULT)** selected.
+4. Press **[ >>> APPLY PATCH <<< ]** and watch the stage panel (~2 min).
+5. Output appears next to the exe:
+   - `dq4_zenithian_english_RB1.bin` + `.cue`
+   - The final SHA-256 gate guarantees your output equals the verified master
+     (`AC9F94A13A5627C30013FB0D13C88CD96F4BCEC878A2DA6E7B1978E1CD4E5703`).
+
+     Exit 0 = every verification gate passed.
+
+The patcher refuses non-pristine sources (already-patched masters, known-bad images)
+with a specific message, and never writes to your source image.
+
+---
+
+## Option B — BuildB pipeline (build from source)
+
+### Install
+1. Clone / download this repo.
+2. Python 3.8+ and `pip install numpy`.
+3. Download `edcre.exe` (PSX EDC/ECC recalculator) and place it at `shipB\edcre\edcre.exe`
+   — without it the build completes but EDC/ECC steps are skipped (output not hardware-safe).
+4. Place your pristine image in the repo root (one level above `shipB\`).
+
+### Usage
+- ~80 minutes. Output: `shipB\build\dq4_shipB.bin` + `.cue` (SHA-256 printed at the end).
+- Resume: `--from-step 4g` · Reuse dialogue: `--skip-dialogue` ·
+  Custom corpus: `--corpus your_translation.json` ·
+  Finish the seal: `--g11-dumps dump1.bin dump2.bin`
+- The build runs hard verification gates (G2 dispatch integrity, G10 corpus census,
+  G5 EDC/ECC) and the same-tree 048C rebuild with delta-lock assertions.
+
+---
+
+## Playing
+
+1. DuckStation (retail PSX BIOS, e.g. SCPH-1001 — no custom BIOS needed).
+2. File → Open Disc → the generated `.cue`.
+3. Verify: title → prologue → Chapter 1; dialogue, battles, sound, saving.
+4. Real hardware: burn the `.bin/.cue` to a CD-R at 4x–8x (modchipped/softmodded consoles).
+
+## Reporting bugs
+
+Include: in-game location + description; for freezes, the DuckStation log (timestamp,
+failing LBA range, CD-ROM buffer status) plus paired RAM dumps; and your master's SHA-256.
+
+## Credits & links
+
+Full credits in [`shipB/CREDITS.md`](shipB/CREDITS.md).
+
+**Follow Lux Aura** — the record label / publisher:
+[Bandcamp](https://luxaura.bandcamp.com) ·
+[Facebook](https://www.facebook.com/LuxAuraOfficial/) ·
+[YouTube](https://www.youtube.com/LuxAuraOfficial) ·
+[Steam (via SteamDB)](https://steamdb.info/publisher/Lux+Aura/)
+
+## Legal
+
+DQ4: Michibikareshi Mono Tachi © 1998 HeartBeat / Enix. All trademarks belong to their
+respective owners. This project ships tools only — no game assets, no BIOS, no copyrighted
+binary. It requires and transforms the user's own legally obtained disc image.
+
+*ORDER. PRECISION. FIDELITY.*
+
+Headless / scriptable:
+
 ### Quick Start
 Place your pristine `.bin` file in the repository root or `ship/` folder, then run:
 
