@@ -2,7 +2,7 @@
   <img width="800" alt="Dragon Quest IV: The Zenithian Chronicles" src="https://github.com/user-attachments/assets/3ac9afc3-0cec-4a48-aab4-8b5e086aed73" />
 </p>
 
-# Dragon Quest IV: The Zenithian Chronicles
+# Dragon Quest IV: The Zenithian Chronicles Current Build V.99 Rebuild B (Live/Playable)
 ### Multi-Generational Localization Suite & Dual-Platform Re-Authoring Engine
 
 **Created & Architected by Lux Aura**  
