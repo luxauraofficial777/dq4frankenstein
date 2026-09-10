@@ -6,7 +6,7 @@ PlayStation HeartBeat (DQ7 → DQ4 PSX), Nintendo DS (DQ4). Built from verified-
 project's own on-disc census).
 **Detailed evidence docs (read these for citations):**
 - `snes/docs/CONTROL_CODES_SFC_ENGINES.md` — SFC, verified against `dq_analyzer/dq3decode.c` & `dq6decode.c`
-- `snes/docs/CONTROL_CODES_PSX_HBD.md` — PSX HBD, RadMage MEASURED + Wilkens tool-mapped + on-disc counts
+- `snes/docs/CONTROL_CODES_PSX_HBD.md` — PSX HBD, RadMageIRL MEASURED + Wilkens tool-mapped + on-disc counts
 - `snes/docs/CONTROL_CODES_FC_AND_DS.md` — FC + DS, verified against `Bank01.asm`, `bank22.asm`, concreted's parser
 - Machine-readable base: `translation/control_code_mapping.json` (43 PSX code families, on-disc counts/blocks)
 
