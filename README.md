@@ -42,7 +42,7 @@ This project delivers a **100% native in-place re-authoring engine** targeting t
 This suite represents the synthesis of hundreds of hours of low-level MIPS decompilation, CD-ROM container research, and community reverse-engineering milestones:
 * **Core Architecture & Sovereign Native Engine:** Conceived, engineered, and finalized by **Lux Aura**.
 * **Foundation Text Extraction & Early Tooling:** Seminal structural research and early patcher tooling by **Markus Schroeder** ([Markus Projects](http://markus-projects.net/dragon-hackst-iv/)) and early extraction tooling by **Mandy Wilkens** ([dq4psxtrans](https://github.com/mwilkens/dq4psxtrans)).
-* **Low-Level Codec & Hardware Inspection:** Forensic insights, asset inspection, and round-trip verification tooling adapted from the [DQIV_PSX_TOOLS](https://github.com/RadMageIRL/DQIV_PSX_TOOLS/tree/dev) project by **RadMage**.
+* **Low-Level Codec & Hardware Inspection:** Forensic insights, asset inspection, and round-trip verification tooling adapted from the [DQIV_PSX_TOOLS](https://github.com/RadMageIRL/DQIV_PSX_TOOLS/tree/dev) project by **RadMageIRL**.
 * **SNES Authoring & ROM Mining:** Big Pickle & Omen Alpha (SNES data mining, DQ1+2+3 corpora, and RAM dump forensics).
 * **AI Research & Pair Programming Team:** KIMI (Memory dumps & disassembly), GLM (MIPS dataflow analysis & split-immediates), Claude (Opus) (Pipeline architecture & Huffman packing), Gemini (Font 2 text mining & Class A/B remappers), Nemotron (Monster DB & battle overlay layers). Omen Alpha DQ4 SNES content authoring. Debugging RAM dump mining Omen Alpha & Big Pickle.
 
