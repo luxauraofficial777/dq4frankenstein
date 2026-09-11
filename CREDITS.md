@@ -22,10 +22,12 @@ Big Pickle — SNES content authoring, RAM dump analysis, schema analysis, corpo
 
 Omen Alpha — DQ4 content authoring, infrastructure, RAM debugging, DQ1+2+3 ROM mining, RC3 final build, stale word-table sweep, block 0x048C rebuild, VoidPatcher design & build
 
-Foundation Research (the ground we stood on)
+Foundation Research
 Markus Schroeder — Foundation HBD research & early tools (the original Java patcher lineage; his format work made the first extraction possible)
 
 Mandy Wilkens (dq4psxtrans) — Text extraction & tooling research
+
+RadMageIRL (DQIV_PSX_TOOLS) - Forensic research tool. Font 1 atlas discovery.
 
 The Lux Aura AI Pair Programming & Research Team
 KIMI — Deep codebase search, memory-dump inspection, script disassembly, forensic analysis, empirical audits, gate design (G2/G8/G10/G11)
