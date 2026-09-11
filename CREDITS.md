@@ -1,5 +1,3 @@
-Here is the revised CREDITS block with all references to RadMageIRL removed, keeping the focus entirely on your core team, foundational community research, and your sovereign engine architecture:
-
 Credits — Dragon Quest IV: The Zenithian Chronicles (PSX)
 Sovereign Native English Localization Suite
 Maintained by Lux Aura & The VoidWalkers Research Project
