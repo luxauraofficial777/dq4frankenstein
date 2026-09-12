@@ -44,7 +44,7 @@ project's own on-disc census).
 
 ## 2. PSX HBD — THE ENGINE THIS PROJECT SHIPS ON (canonical table)
 
-Verified-by legend: **RM** = RadMage FORMAT.md (hardware-measured), **MW** = Wilkens tool-mapped,
+Verified-by legend: **RM** = RadMageIRL FORMAT.md (hardware-measured), **MW** = Wilkens tool-mapped,
 **MS** = consumer project (on-disc census / Sovereign build), counts = RM dictionary-expanded /
 consumer `control_code_mapping.json`.
 
@@ -55,9 +55,11 @@ consumer `control_code_mapping.json`.
 | `7F02` | newline (scene renderer) | same semantics; **not** "newline+tab" (MW gloss corrected) | 166,134 / 32,894 | RM·MW·MS |
 | `7F04` | name decorator | opens named dialog, suppresses engine ＊「 prefix; 20-cell width | 14,084 / 14,084 | RM·MW·MS |
 | `7F05` | **enumeration/list-close marker** (RESOLVED Sep-06: closes the equip-name list; runtime splice point — hence "always last before END") | 664 | RT-trace |
+| `7F06` | **sub-window separator / menu layout boundary** (RESOLVED Sep-08: divides multi-column equipment & sub-choice matrix) | 3 (Block 048C) | RT-trace·EXE |
 | `7F0A` | cursor wait | wait-for-input; box terminator; clears prefix latch | 6,480 | RM·MS |
 | `7F0B` | end of line | second box terminator; most-spread code (1,081 blocks) | 3,685 | RM·MS |
 | `7F0C` | prologue-narration line end (title crawl, block 0069 only) | 6 | RT-trace |
+| `7F10` | **tabular column-advance / cursor tab** (RESOLVED Sep-08: advances blit coordinate to aligned numerical/status column) | 11 (Block 048C) | RT-trace·EXE |
 | `7F11` | **enumerated name slot #1** (equip lists, RESOLVED) | 35,729 / 463 | RT-trace·RM |
 | `7F12` | **enumerated name slot #2** | 70,488 / 587 | RT-trace·RM |
 | `7F13` | **enumerated name slot #3** | 438 / 250 | RT-trace·RM |
@@ -65,7 +67,11 @@ consumer `control_code_mapping.json`.
 | `7F15` | received gold | `<7F24>は <7F15>Ｇを手に入れた！` | 106 | RM·MW |
 | `7F16`/`7F18` | receive-message pair (member + item/quantity, dictionary-bound) | 2/3 | MW·RT |
 | `7F17` | **item-name slot** ("the item being handled") | 193 | RT-trace·MW |
+| `7F19` | **memory card save-slot parameter** (RESOLVED Sep-08: dynamic file slot index injection `Slot %d`) | 10 (Block 048F) | RT-trace·EXE |
 | `7F1A` | **wagon-hold member name** (Lucia in Ch5; equip/cure/recipient target) | 3 | RT-trace·MW |
+| `7F1B` | **church donation deficit trigger / condition latch** (RESOLVED Sep-08: evaluates party gold vs fee; triggers shortfall branch) | 1 (Block 048F) | RT-trace·EXE |
+| `7F1C` | **church rite target selector** (RESOLVED Sep-08: selects afflicted/dead party member slot for resurrection/cure) | 13 (Block 048F) | RT-trace·EXE |
+| `7F1E` | **experience-to-next-level / level number variable** (RESOLVED Sep-08: integer interpolation for divination & level status) | 15 (Block 048F) | RT-trace·EXE |
 | `7F1F` | player name | `どうした？ <7F1F>。` | 335 | RM·MW |
 | `7F20` | ライアン Ragnar | name 1/15 | 1,139 | RM |
 | `7F21` | アリーナ Alena | name 2/15 | 1,766 | RM |
@@ -88,6 +94,7 @@ consumer `control_code_mapping.json`.
 | `7F32` | ロザリー Rose | name | 265 | RM·RT-trace |
 | `7F33` | **party-leader name** (addressed "you" of the moment; PSX of SFC `00CB`) | 6 | RT-trace·MW·RM |
 | `7F34` | **acting party member / searcher** (search/read action actor) | 41 | RT-trace·MW·RM |
+| `7F35` | **confession quest / chapter state log index** (RESOLVED Sep-08: encodes chapter progression marker in memory card log) | 2 (Block 048F) | RT-trace·EXE |
 | `7F42` | town name | `%a00260` | 63 | MW·RM |
 | `7F43` | **tone: loud/shout/announcement** (also dramatic narration boxes; PSX of SFC tone band) | 38 | RT-trace |
 | `7F44` | **tone: soft/gentle** (children, Rose, feminine voices) | 8 | RT-trace |
@@ -105,10 +112,18 @@ variable/control codes live INSIDE the facility blocks' text streams (047B wagon
 semantics (e.g. 0483 `FE01`="Adventure Log", FE0B/FE0D/FE10 = card/slot/log variables; 047D
 FE28 = priest box-close; 047F per-title trailing tag). Full evidence:
 `snes/docs/CONTROL_CODES_PSX_RESOLVED_Sep06_2026.md` §4.
-**Never-occurring in-range codes (ARCHIVE population):** 7F03, 7F06–7F09, 7F0D–7F10, 7F19, 7F1B–7F1E, 7F27,
-7F35–7F41, 7F46, 7F48–7F4A. **CORRECTED Sep-08 (cbgrime-ctrl-audit v1):** seven of these DO occur in the
-EXE-resident blocks (048C: 7F06, 7F10; 048F: 7F19, 7F1B, 7F1C, 7F1E, 7F35) — semantics UNKNOWN, freeze tokens.
-See §9 addendum.
+**Never-occurring in-range codes (ARCHIVE & EXE Combined True Nulls):** 7F03, 7F07–7F09, 7F0D–7F0F, 7F1D, 7F27,
+7F36–7F41, 7F46, 7F48–7F4A. 
+**RESOLVED EXE-RESIDENT CODES (Sep-08 cbgrime audit & RT-trace):** The 7 previously "wild" codes occurring in
+`SLPM_869.16` EXE-resident blocks (048C: `7F06`, `7F10`; 048F: `7F19`, `7F1B`, `7F1C`, `7F1E`, `7F35`) are fully decoded:
+- `7F06`: Sub-window separator / menu layout boundary.
+- `7F10`: Monospace column tab / coordinate advance in status and tactics grids.
+- `7F19`: Dynamic save-slot index variable (`Slot %d`) for memory card operations.
+- `7F1B`: Gold shortfall warning latch in resurrection/cure transactions.
+- `7F1C`: Rite target party member selector token.
+- `7F1E`: Level-up and experience deficit integer variable injection.
+- `7F35`: Confession chapter/quest progress state index for memory card logging.
+All 51 on-disc codes now possess verified structural taxonomy. See §2 and §9 addendum.
 
 ## 3. SFC ENGINES (verified from Endo's decoded switches)
 
@@ -177,11 +192,11 @@ phrases); tokens `[F2]–[FF]` (incl. `<SUN>/<STAR>/<MOON>`).
    suppress ＊「), `0xD9` (DQ3 merchant vs DQ6 tone-female), `0xDA` (timed-wait vs tone-male),
    `0xDB` (number vs tone-monster), `0xC9–0xCC` (hero-family vs Hassan/Milly/Barbara), `0xB3`,
    `0xDD` (がた vs unknown), `0xCF/0xD0` (no-output vs Amos/Lizzie).
-2. `7F02` ≠ "newline+tab" — that was Wilkens' gloss; RadMage measured a plain newline
+2. `7F02` ≠ "newline+tab" — that was Wilkens' gloss; RadMageIRL measured a plain newline
    (range-tested with `7F01` at `0x800886D8`).
 3. `0xC3` = Bag (both SFC engines), NOT furigana. No furigana code exists in any engine studied.
 4. The PSX `7F20–7F2F` band is the 15 chapter party names with 5 names already re-mapped by the
-   consumer project (`7F20` Ragnar vs RawMage's ライアン = same; consistent).
+   consumer project (`7F20` Ragnar vs RadMageIRL's ライアン = same; consistent).
 5. `7Exx` PSX dictionary refs are block-local; treat them as data, not as control codes.
 6. The old `control_code_mapping.json` "note" claiming `7Exx` = untranslated JP is wrong
    (dictionary refs); and the FE-range claim there is wrong for PSX (FE exists only in DS/FC worlds).
