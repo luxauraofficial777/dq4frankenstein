@@ -30,7 +30,7 @@ Rather than relying on closed, legacy third-party binary patches, the toolchain 
 ### The "Heart Transplant" Concept
 The PlayStation *Dragon Quest* releases share HeartBeat’s proprietary platform (`HBD1PS1D` archives, Huffman compression, and uniform dialog control codes). By studying the US release of *Dragon Quest VII* (`HBD1PS1D.W71`), we treated the engine mechanics as an English-aware target chassis, transplanting the raw narrative, events, and assets of *DQ4* into a fully working execution environment.
 
-### Font 1 Atlas Discovery (`0xD60`) & Sub-Block Mining
+### Font 1 Atlas Anchor (`0xD60`) & Sub-Block Mining
 * Anchored the raw **Font 1 tile atlas** at offset `0xD60`.
 * Decoded the proprietary character-spacing and tile-referencing system.
 * Mapped surrounding variable-width sub-blocks to prevent English text expansions from colliding with adjacent runtime VRAM buffers.
