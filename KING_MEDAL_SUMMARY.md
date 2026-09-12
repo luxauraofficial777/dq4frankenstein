@@ -43,7 +43,7 @@ DQLOSTTRANSLATION/
     └── build/ & ship/ (10.5 GB)                  Final sovereign masters (REBUILD A, B, C)
 1. Computing Power: Silicon & Neural FLOPs
 A. Total Neural Model Compute (Multi-Agent Swarm Lifetime)
-Across the thousands of interactive turns between the human directors (Lux Aura, Big Pickle, Omen Alpha, RadMage, Mandy, Markus) and the autonomous agent team (Claude Opus, Gemini Pro/Flash, GLM-4, KIMI, Nemotron):
+Across the thousands of interactive turns between the human directors (Lux Aura, with previous work by Mandy, Markus) and the autonomous agent team (Claude Opus, Gemini Pro/Flash,  Big Pickle, Omen Alpha, GLM-4, KIMI, Nemotron):
 
 Total Tokens Processed: Ingesting 45,000 SNES files, 12,000 C/ASM sources, 20+ full 2MB RAM dumps, and hundreds of iterations of 10,000-line JSON databases required an estimated 500,000,000 to 800,000,000 total tokens (input context + internal chain-of-thought + output generations).
 Neural FLOPs: 
