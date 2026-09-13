@@ -32,7 +32,7 @@ Not "a translation patch." From a 2001 Japan-only PlayStation binary with **zero
 - **Ground-up reverse engineering** of Manabu Yamana's undocumented HeartBeat engine — MIPS R3000A disassembly, the HBD archive container, variable-bit Huffman codecs, dual-font blitters, the packed-referrer addressing scheme, and the CD-ROM sector/DMA pipeline.
 - **A custom compiler toolchain** — a length-limited Huffman re-packer that fits verbose English inside the exact original Japanese byte budgets, a native referrer remapper, a type-39 script recompiler, and a hardware-accurate Mode-2/Form-1 disc mastering pass with real EDC/ECC regeneration.
 - **A full localization** — 18,484 strings across 1,108+ blocks, with a documented 51-code control-token library and a master SID reference.
-- **A shipped, hardware-accurate result** — a world-first playable English boot of DQ4 PSX on retail hardware, distributed CC0 as a tools-only patcher (no copyrighted assets), catalogued on RomHacking.net.
+- **A shipped, hardware-accurate result** — a world-first playable English boot of DQ4 PSX on retail hardware, distributed CC BY-NC-SA 4.0 as a tools-only patcher (no copyrighted assets), catalogued on RomHacking.net.
 
 This is the kind of work a studio scopes as a specialist reverse-engineering + engine-tooling + localization program.
 
