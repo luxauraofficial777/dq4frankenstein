@@ -1,4 +1,4 @@
-# MASTER CONTROL-CODE LIBRARY — ALL DRAGON QUEST ENGINES
+# YAMANA HBE MASTER CONTROL-CODE LIBRARY — ALL DRAGON QUEST ENGINES
 **Date:** 2026-09-06  **Author:** Omen Alpha (control-code library lane)
 **Scope:** every DQ engine generation — Famicom (DW1/2/3/4-FC), Super Famicom (DQ1+2, DQ3, DQ6),
 PlayStation HeartBeat (DQ7 → DQ4 PSX), Nintendo DS (DQ4). Built from verified-in-code extraction
