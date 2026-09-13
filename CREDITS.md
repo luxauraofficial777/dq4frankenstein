@@ -1,75 +1,84 @@
-Credits — Dragon Quest IV: The Zenithian Chronicles (PSX)
-Sovereign Native English Localization Suite
-Maintained by Lux Aura & The VoidWalkers Research Project
+# Credits — Dragon Quest IV: The Zenithian Chronicles (PSX)
 
-Follow Lux Aura (record label / publisher)
-Bandcamp: https://luxaura.bandcamp.com
+**Project:** Sovereign Native English Localization Suite  
+**Maintenance & Direction:** Lux Aura & The VoidWalkers Research Project  
+**Target Target Binary:** `SLPM_869.16` (Sony PlayStation) + `HBD1PS1D.Q41`  
+**Pipeline Standard:** Zero Sector Shift, Native In-Place Re-authoring, Full EDC/ECC Compliance  
+**Date:** September 13, 2026  
 
-Facebook: https://www.facebook.com/LuxAuraOfficial/
+---
 
-YouTube: https://www.youtube.com/LuxAuraOfficial
+## 1. Project Leadership & Engineering Architecture
 
-Steam: publisher page coming soon — track via SteamDB:
+| Contributor / Lead | Primary Role | Engineering Scope & Core Responsibilities |
+|---|---|---|
+| **Lux Aura** | Project Director & Lead Systems Architect | Overall project direction, native reverse-engineering leadership, Sovereign Engine architecture, zero-drift sector planning. |
+| **Big Pickle** | Systems Analysis & Corpora Mining | Super Famicom content authoring, RAM dump forensics, schema mapping, and cross-generational corpora mining. |
+| **Omen Alpha** | Infrastructure & Systems Engineering | DQ4 content authoring, build infrastructure, live RAM debugging, DQ1/2/3 ROM mining, RC3 final build, stale word-table sweep, block `0x048C` rebuild, VoidPatcher design & build. |
 
-https://steamdb.info/publisher/Lux+Aura/
+---
 
-GitHub: https://github.com/luxauraofficial777
+## 2. Foundation Research & Pioneer Lineage
 
-The Lux Aura Team (VoidWalkers Project)
-Lux Aura — Architecture, Lead Reverse Engineering, Sovereign Engine, project direction
+| Pioneer / Researcher | Repository / Research Tooling | Core Historical Breakthrough |
+|---|---|---|
+| **Markus Schroeder** | Foundation HBD Tooling (Java Lineage) | Foundational HBD archive extraction research; engineered the first functional format decoders that made modern disc extraction possible. |
+| **Mandy Wilkens** | `dq4psxtrans` | Early Python-based text extraction frameworks and dialogue tooling research. |
+| **RadMageIRL** | `DQIV_PSX_TOOLS` | Forensic engine inspection tooling; primary discovery of the Font 1 atlas and metric mapping. |
 
-Big Pickle — SNES content authoring, RAM dump analysis, schema analysis, corpora mining
+---
 
-Omen Alpha — DQ4 content authoring, infrastructure, RAM debugging, DQ1+2+3 ROM mining, RC3 final build, stale word-table sweep, block 0x048C rebuild, VoidPatcher design & build
+## 3. Autonomous AI Pair Programming & Neural Research Cohort
 
-Foundation Research
-Markus Schroeder — Foundation HBD research & early tools (the original Java patcher lineage; his format work made the first extraction possible)
+| Neural Agent / Model | Primary Research Specialization | Forensic Milestones & Subsystem Deliverables |
+|---|---|---|
+| **KIMI** | Memory Forensics & Empirical Audits | Deep codebase indexing, 2MB RAM dump analysis, script disassembly, forensic audits, and verification gate engineering (G2, G8, G10, G11). |
+| **GLM** | MIPS Static Analysis & Dataflow Tracking | MIPS R3000A dataflow tracing, split-immediate sign-carry mechanics, root-cause isolation for Type-46 overlay duplicate sectors, forensic patch verification. |
+| **Claude (Opus)** | Pipeline Architecture & Algorithmic Codecs | Sovereign build-pipeline authoring, native length-limited Huffman engine design, Type-39 cutscene remapping, pre-flight corpus verification gates. |
+| **Gemini** | Text Mining, Referrer Logic & Integration | Font 2 proportional text mining, gap audits, Class A/B referrer remapping, Class B Type-46 overlay duplicate patcher, deterministic build integration. |
+| **Nemotron** | Binary Mining & Asset Injection | Cross-game ROM mining, combat overlay (`0x048B`) text injection, master monster database alignment, Font 1 character nameplate layering. |
+| **Cascade** | Operational Orchestration | Cross-session continuity, technical lane coordination, and task synchronization. |
 
-Mandy Wilkens (dq4psxtrans) — Text extraction & tooling research
+---
 
-RadMageIRL (DQIV_PSX_TOOLS) - Forensic research tool. Font 1 atlas discovery.
+## 4. Technical Foundations & Tooling Frameworks
 
-The Lux Aura AI Pair Programming & Research Team
-KIMI — Deep codebase search, memory-dump inspection, script disassembly, forensic analysis, empirical audits, gate design (G2/G8/G10/G11)
+| Subsystem / Tool | Core Author / Maintainer | Implementation within Sovereign Pipeline |
+|---|---|---|
+| **EDC/ECC Parity Engine** | Neill Corlett (`ecmtools`) | Implementation of zeroed-MSF-address raw sector parity recalculation; validated 276/276 against `edcre`. |
+| **HBD Container Architecture** | Markus Schroeder & VoidWalkers | Reverse-engineering the flat 2,048-byte sector container `HBD1PS1D.Q41` to achieve zero sector drift. |
+| **Font 1 Atlas & Layout** | VoidWalkers Project | Empirical RAM mapping and VRAM coordinate analysis for 8×14 fixed-pitch UI menu rendering. |
+| **Huffman Codec Infrastructure** | VoidWalkers Project | Length-limited binary tree generation guaranteeing exact in-place byte budgets across 1,358 dialogue containers. |
+| **DuckStation Emulator** | Stenzek & DuckStation Contributors | Low-level execution environment, hardware register telemetry, and headless boot verification harness. |
 
-GLM — MIPS dataflow analysis, split-immediate sign-carry mechanics, root-cause isolation (type-46 overlay duplicates), forensic verification
+---
 
-Claude (Opus) — Sovereign build-pipeline architecture, native Huffman engine, type-39 cutscene remapping, pre-flight corpus gate
+## 5. Original Intellectual Property & Heritage
 
-Gemini — Font 2 text mining, gap audits, Class A/B referrer remapping, Class B type-46 overlay duplicate patcher, build integration
+* **Original Work:** *Dragon Quest IV: Michibikareshi Mono Tachi* (2001, PlayStation)
+* **Original Engine Development:** HeartBeat Inc. (Led by Manabu Yamana & Keisuke Eriguchi)
+* **Publisher:** Enix Corporation
+* **Design & Scenario:** Yuji Horii (Armor Project)
+* **Character & Visual Art:** Akira Toriyama (Bird Studio)
+* **Musical Composition:** Koichi Sugiyama (Sugiyama Kobo)
+* **Executable ID:** `SLPM_869.16`
 
-Nemotron — ROM mining, battle overlay injection, monster database, Font 1 character nameplate layers
+*Disclaimer: This project distributes no copyrighted binary assets. All transformations are applied deterministically in-place to the user's legally acquired Japanese disc image.*
 
-Cascade — Coordination and session continuity
+---
 
-Technical Foundations
-Neill Corlett — EDC/ECC routines (ecmtools), the basis of our parity engine (zeroed-MSF-address convention, verified 276/276 against edcre)
+## 6. Official Channels & Resources
 
-HBD architecture reverse engineering — Markus Schroeder and the VoidWalkers project
+* **Record Label & Publisher:** Lux Aura ([Bandcamp](https://luxaura.bandcamp.com) | [Facebook](https://www.facebook.com/LuxAuraOfficial/) | [YouTube](https://www.youtube.com/LuxAuraOfficial))
+* **Steam Publisher Portal:** Coming Soon — [Track via SteamDB](https://steamdb.info/publisher/Lux+Aura/)
+* **Engineering Source Repository:** [Lux Aura GitHub](https://github.com/luxauraofficial777)
 
-Font 1 atlas & layout — Empirical RAM mapping & VRAM coordinate analysis
+---
 
-Huffman tree decoding/encoding infrastructure — the VoidWalkers project
+## 7. Acknowledgments & Scene Heritage
 
-DuckStation — the boot oracle emulator
+* **The Dragon Quest Research Community:** For four decades of continuous ROM data mining, structural documentation, and preservation effort.
+* **The PlayStation Emulation Community:** For open-source diagnostic utilities, GTE debugging frameworks, and bit-accurate hardware emulation.
+* **Alpha & RC Playtest Vanguard:** Everyone who stress-tested the RC cycles and the Rebuild B baseline across DuckStation and real hardware.
 
-Original Game
-Dragon Quest IV: Michibikareshi Mono Tachi (1998)
-
-Developed by HeartBeat — Published by Enix — Sony PlayStation (SLPM_869.16)
-
-Music by Koichi Sugiyama. All trademarks belong to their respective owners.
-
-This project distributes no copyrighted content; it transforms the user's own disc image.
-
-Localization Approach
-A Sovereign Native localization — all text patched in-place within the original Japanese binary's sector geometry: zero sector shift, zero cross-engine grafting, full EDC/ECC compliance, hardware-verified.
-
-Special Thanks
-The Dragon Quest community for decades of documentation and data mining
-
-The PSX emulation and preservation community for tooling and insight
-
-Everyone who playtested the RC cycles and the Rebuild B baseline and reported bugs
-
-ORDER. PRECISION. FIDELITY.
+**ORDER. PRECISION. FIDELITY.**
