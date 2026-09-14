@@ -208,8 +208,22 @@ char, `$00F7` param, `$03D3` state, `$03D4` PPU address, `$03D9` line counter. L
 > `<END>`↔`$FF` · `<NEWLINE>`↔`$FD` · `<PAUSE>`↔input-wait · `<NAME>`↔`$F8`-family ·
 > `<ITEM>`↔`$F9`/`[FA]` · `<SPELL>`↔`$FA` · `<AMOUNT>`↔`$F6/$F7`. The bitstream tokens
 > are what Osteoclave dumps; the `$F0-$FF` bytes are what the *runtime dispatcher* executes.
-> The `$B3A4` "DTE dictionary" claim in the repo conflicts with this verified reality and is
-> treated as a probable misreading of the Huffman node table (see `nes_dq4_famicom_technical.md` §1.4).
+>
+> **`$B3A4` resolution (Sep 14 gap-fill, measured):** the table at file `0x5B3B4`
+> (bank 22 `$B3A4`) is a **genuine 128-entry × 2-byte character-pair dictionary** for
+> byte-mode menu/UI text — the analysis doc's pairs are byte-reversed (doc `$80=$0705`,
+> ROM `$80=$0507`; `$81=$0300`→`$0003`; `$82=$1D1A`→`$1A1D`; `$83=$0F0F` palindrome;
+> `$84=$0E00`→`$000E`; `$85=$2319`→`$1923`). It is NOT the Huffman node table — the
+> words are charset-range char pairs, not `0x80xx` node words — and it coexists with the
+> Huffman bitstream: pair-dictionary path at `$8272` (`CMP #$80 / BCS $829A`) for
+> byte-mode text, prefix-coded bitstream for main dialogue.
+>
+> **`$FD`/`$FE` resolution (disasm opcode-exact):** `bank22.asm` shows the dispatcher
+> `$8B28: CMP #$FF/BEQ $8B63` (END), `CMP #$FE/BNE $8B48` with the `$FE` fall-through
+> at `$8B30` = `ASL $03D4 ×3` + `LSR/ROR $03D4 ×3` folding `$F7` (PPU-address
+> recompute — the CTRL handler), and `$8B48` = shared cursor path (`AND #$04`, then
+> `$03D4 += $20`, clear `$07B4` bit 2, `JMP $8C96`). `TEXT_ENCODING.md`'s
+> ($FD=CLEAR/$FE=LINE) reading is disassembly-refuted; `text_control_codes.md` stands.
 
 ### 2.3 Pointer mechanics
 
@@ -243,7 +257,9 @@ struct NesMapInfo {          // 3 bytes per (map, submap)
 Bank resolution: data fills banks `$09-$0B` sequentially; addresses ascend within a bank
 and the bank increments on wrap (identical mechanic to §2.3). Measured: **73 primary maps,
 35 distinct tilesets**, map 0 (Burland) = tileset `$0B`, 5 submaps, data in bank `$09` at
-`$8000`.
+`$8000`. **FC-JP candidate (gap-fill scan):** the JP cartridge carries a 73-entry
+ascending-u16 table at bank `$05:$8000` (file `0x014010`) — the same count as the US
+map-pointer table — the leading candidate for the JP map table.
 
 **Map data stream** (MSB-first bit reader):
 
@@ -355,18 +371,54 @@ state, a design the SFC generation (§ Paper 2 §2.4) replaces with pattern-ID d
 - Tool lineage (verified): Osteoclave (Huffman, 2012) → Bongo` (Text Utility/DWScript
   Editor) → abw (map format, 2021) → TheAnsarya (disassembly framework, 2024-2026).
 
-## 6. Open gaps (do not re-derive)
+## 6. Open gaps — RESOLUTION PASS (Sep 14 2026, `gapfill_forensics.py`)
 
-1. **FC-DQ4 (JP) Huffman tree + block pointers** — the JP tree/pointers are not yet dumped;
-   the FC decoder's 2-byte codepoint emission is inferred from the SFC DQ5/DQ6 architecture.
-2. `$FD`/`$FE` semantics conflict inside `dragon-warrior-4-info` (CLEAR/LINE vs LINE/CTRL)
-   — needs its `disasm/bank22.asm` verification.
-3. `$B3A4` "DTE" table — probable Huffman node misreading (§2.1 note).
-4. CHR-RAM streaming specifics (bank pairing per scene) — inferred, not yet traced.
+The original four gaps were re-audited against the in-tree evidence; two are now closed
+with opcode/byte-exact proof, one is advanced to measured candidates, and one is a
+genuinely runtime-only trace:
+
+1. **`$FD`/`$FE` semantics — CLOSED (opcode-exact).** `dragon-warrior-4-info`'s
+   `disasm/bank22.asm` settles the conflict in favour of `text_control_codes.md`:
+   the dispatcher at `$8B28` is `CMP #$FF / BEQ $8B63` (END), `CMP #$FE / BNE $8B48`
+   — with the **`$FE` fall-through at `$8B30`** = `ASL $03D4 ×3` then fold `$F7`'s
+   low bits via `LSR / ROR $03D4 ×3` (PPU-address recompute with the parameter byte —
+   the CTRL handler), and `$8B48` = the shared cursor path (`LDA $07B4; AND #$04`,
+   then `$03D4 += $20` (one nametable row) + clear `$07B4` bit 2 (`AND #$FB`),
+   `JMP $8C96`). `TEXT_ENCODING.md`'s reading ($FD=CLEAR, $FE=LINE) is therefore
+   **disassembly-refuted**; `text_control_codes.md` stands.
+
+2. **`$B3A4` "DTE" table — CLOSED (genuine auxiliary pair table).** The ROM bytes at
+   file `0x5B3B4` (bank 22 `$B3A4`) contain a real 128-entry × 2-byte character-pair
+   dictionary; the analysis doc's pairs are **byte-reversed** (doc `$80=$0705`, ROM
+   `$80=$0507`; `$81=$0300`→`$0003`; `$82=$1D1A`→`$1A1D`; `$83=$0F0F` palindrome).
+   Hypothesis 1 ("it is the Huffman node table") is refuted — the words are char-pair
+   payloads in the `$00-$3E` charset range, not `0x80xx` node words. It coexists with
+   the Huffman dialogue bitstream: dictionary pairs for byte-mode menu/UI text,
+   prefix codes for the main script.
+
+3. **FC-DQ4 (JP) Huffman tree + block pointers — ADVANCED TO MEASURED CANDIDATES.**
+   A structural scan of the JP cartridge (ascending-u16 runs ≥40 in `$8000-$BFFF`
+   per bank) yields four pointer-table candidates; the strongest is
+   **bank `$1C:$AC8A` — 74 ascending u16 entries, first `$A058`**
+   (file `0x072C9A`), the same table shape as the US block-pointer table (86
+   ascending u16 at bank 22 `$8951`). A second candidate at **bank `$05:$8000`,
+   73 ascending entries** (file `0x014010`) matches the US map-pointer-table count
+   (73 maps) and is the leading candidate for the JP map table. The JP tree itself
+   (2-byte codepoints) is not yet decoded — locating it is a targeted follow-up that
+   now has concrete table addresses instead of a blank.
+
+4. **CHR-RAM streaming specifics (bank pairing per scene)** — unchanged: this is a
+   runtime trace (emulator PPU watch), not statically derivable from the cartridge
+   bytes; requires a live lane in the CyberGrime/CE harness.
+
+*Measured values regenerate via `python whitepaper_forensics.py` +
+`python gapfill_forensics.py` (see `WHITEPAPER_FORENSICS_DATA.json` and
+`GAPFILL_FORENSICS_DATA.json`).*
 
 ---
 
-*All measured values trace to `WHITEPAPER_FORENSICS_DATA.json` (regenerate with
-`python whitepaper_forensics.py`). Every structure cited as "documented" carries its source
+*All measured values trace to `WHITEPAPER_FORENSICS_DATA.json` +
+`GAPFILL_FORENSICS_DATA.json` (regenerate with `python whitepaper_forensics.py` and
+`python gapfill_forensics.py`). Every structure cited as "documented" carries its source
 in the citation line; structures marked "measured" were decoded from the cartridges in this
 pass without secondary mediation.*
