@@ -1,6 +1,6 @@
 # DRAGON QUEST VI (Super Famicom, 1995) — Engine Architecture Whitepaper
 
-**Paper 5 of 5 — Enix Engine Specification Suite**
+**Paper 4 of 5 — Enix Engine Specification Suite**
 **Doc ID:** VW-SNES-WP-005 · 2026-09-14
 **Scope:** ドラゴンクエストVI 幻の大地 (Enix/Heartbeat, 1995-12-09) — the first full
 HeartBeat 16-bit engine: the global-Huffman dialogue system, the co-opted `BRK`
