@@ -1,6 +1,6 @@
 # DRAGON QUEST VII / DRAGON QUEST IV PSX — HeartBeat Engine Architecture Whitepaper
 
-**Paper 4 of 5 — Enix Engine Specification Suite**
+**Paper 5 of 5 — Enix Engine Specification Suite**
 **Doc ID:** VW-SNES-WP-004 · 2026-09-14
 **Scope:** Heart Beat's 32-bit PlayStation engine: Dragon Quest VII 縁の Senshitachi
 (SLPM_865.00, 2000-08-26) and Dragon Quest IV: Chapters of the Chosen (SLPM_869.16,
