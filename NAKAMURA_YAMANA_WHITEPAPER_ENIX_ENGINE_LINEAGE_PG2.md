@@ -1,6 +1,6 @@
 # DRAGON QUEST I & II (Super Famicom, 1993) — Engine Architecture Whitepaper
 
-**Paper 2 of 3 — Enix Engine Specification Suite**
+**Paper 2 of 5 — Enix Engine Specification Suite**
 **Doc ID:** VW-SNES-WP-002 · 2026-09-14
 **Scope:** 「DRAGONQUEST 1・2」 Chunsoft/Enix, 1993-12-18 — the 16-bit bridge between the
 Famicom table era and the HeartBeat Huffman era.
