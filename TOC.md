@@ -115,6 +115,24 @@ messaging VM — and reconcile it against the recovered binary at hex and instru
 | `YAMANA_NAKAMURA_HEARTBEAT_ENGINE_GENERATIONAL_ARCHITECTURE.md` | 34.5 KB / 517 lines | **Generational architecture white paper** (Doc ID `VW-DQLOST-TECHRPT-007`) — hex/instruction-level companion to the case study: Gen I SFC baseline (65816/5A22, ExHiROM `0x35` banking, string VM, PPU DMA, DQ6 Huffman) vs Gen II PSX rebuild (MIPS R3000A, 2 MB working set, `TID`/`SID` referrer word `(BlockID≪20)\|(BitOffset+HTS×8)`, 51-opcode VM dispatch `$Base+(ID×Stride)`, Huffman `HTS 0x18` + dqlzs decoders, overlay residency `0x80011F00`); Rebuild C lessons (Shift-JIS desync @ `0x800F4DF0`, Auld Well LBA 19082–19118, `0x047B` facility segregation, `≤+3` overrun contract); full local + GitHub citation corpora; hex-layout & census appendices. |
 | `YAMANA_HBE_HBD_ARCHITECTURE_ENGINEERING_SPECIFICATION.md` | 31.9 KB / 468 lines | **Formal HBE/HBD architecture whitepaper** (Doc ID `VW-DQLOST-TECHRPT-008`) — byte- and instruction-level engine specification: `.HBD` on-disc container (master header `nsub/nsec/tlen/zero`, 16-byte sub-block records `dlen/ulen/extra/flags/type`, cumulative packing `hdr+cum(dlen)`); **three disjoint container classes** (wide-tree Huffman incl. Endor `0x0021`, algorithmic raw cells/overlays `0x048B`/type-26/44/46/39, fixed-stride sentinel lookup tables) + pristine RAW-passthrough boundary canaries `0x0066–0x006C`; the two-key dispatch rule `(flags==0x0500)∧(type∈{23,24,25,27,39,40,42,44})` replacing the legacy single-flag test; EXE dispatch table (`0x8008F280` resolver, `0x8008F3BC` renderer, `0x8008F7B0` sentinel walk, `0x8008F9A0` planar unpacker, `0x8008FB48` dir re-init, `0x8009A120/240` DMA) and full fixed-residency memory map; C struct definitions, invariants (§6 delta-locks, monotonicity, zero sector shift, headless telemetry). |
 
+### 4E. Enix Engine Specification Suite — Cross-Generation Whitepapers (Sep 2026)
+The publication-grade whitepaper suite for the foundational Enix engines: **Dragon Warrior IV
+(NES/MMC1)**, **Dragon Quest I & II (SFC)**, **Dragon Quest VI (SFC)**, **DQ7/DQ4 (PSX
+HeartBeat)**, and the cross-generation lineage synthesis. Every load-bearing structure is
+byte-verified against the cartridges/archives in the repo by the suite's forensic engines
+(`whitepaper_forensics.py`, `hbd_forensics.py`). Lives at `DQLOSTTRANSLATION\snes\study\`.
+
+| File | Content |
+|---|---|
+| `NAKAMURA_YAMANA_WHITEPAPER_ENIX_ENGINE_LINEAGE_PG1.md` | **Paper 1 — Dragon Warrior IV (NES/Famicom).** MMC1 memory map (settled by iNES header read: mapper 1, 32×16 KB PRG, 0 CHR → CHR-RAM streaming), battery WRAM save structures, bit-level Huffman script (pointer table `0x58961` = Osteoclave offsets + $8000, live-decoded lines), DW2/3/4 instruction-built map format, 22-byte monster record, encounter-zone bug byte `0x61C8B=05` confirmed. |
+| `NAKAMURA_YAMANA_WHITEPAPER_ENIX_ENGINE_LINEAGE_PG2.md` | **Paper 2 — Dragon Quest I & II (SFC, 1993).** LoROM topology, header checksum verified, 18-byte shared DQ1+DQ2 monster record (Metal Slime ground truth `99 12 fe 04 …` byte-exact), boss-HP >255 hardcodes proven (`LDX #$0140/01CC/06D6` at raw `0x59C14/19/1E`), zone/store tables re-verified, plain-byte text + `0xD0-D2` kanji escape (no Huffman — corrected myth), SRAM layout honestly flagged OPEN. |
+| `NAKAMURA_YAMANA_WHITEPAPER_ENIX_ENGINE_LINEAGE_PG3.md` | **Paper 3 — Cross-Engine Lineage.** Five-generation evolution table (FC table era → Chunsoft 16-bit transition → HeartBeat Huffman era → HeartBeat archive era → DS Nitro sidestep); storage-paradigm evolution (direct tables → per-resource streams → typed archive); the Huffman bloodline table with DQ3's bit convention byte-proven (ptr `79 12 00` → steps `011111101001` → leaf `0x0521` = ツ; bit=1→$161A7, MSB-first); control-code evolution table; corrected-myths ledger. |
+| `NAKAMURA_YAMANA_WHITEPAPER_ENIX_ENGINE_LINEAGE_PG4.md` | **Paper 5 — Dragon Quest VI (SFC, 1995).** Global Huffman tree measured (1,064 nodes × 2 parallel arrays at raw `0x167BE/0x1700E`, root `0x427`, both roots inner — DQ6 MSB polarity inverted vs DQ5), 870×3 B pointer table monotone from base `$37175B`, travel-mode (Huffman) vs battle-mode (raw small font) split, `BRK`-as-message-ID primitive (2-byte operand), talk-object tables, 42-byte monster struct, LC_LZ21 map layer, furigana control. |
+| `NAKAMURA_YAMANA_WHITEPAPER_ENIX_ENGINE_LINEAGE_PG5.md` | **Paper 4 — DQ7/DQ4 PSX HeartBeat archive era.** `HBD1PS1D` container verified end-to-end (155,975 × 2,048-B sectors, 44,657 entries / 23,828 files / 3,243 folders — matching `hbd_structure.json`), 16-B file headers + `flags==0x0500` LZSS predicate live (sampled decompressions to exact uncompressed size), type-42 text blocks decoded live with control codes (`{7F04}{7F24}`), DQ7→DQ4 memory remap table, `C021A0` dialogue VM + `%A/%B` conditionals, 224-unit message-box model. |
+| *(companion)* `NAKAMURA_YAMANA_WHITEPAPER_ENIX_ENGINE_LINEAGE_PG1.json` | Machine-readable companion to PG1. |
+
+**Forensic engines (regenerate the suite's measurements):** `DQLOSTTRANSLATION\snes\study\whitepaper_forensics.py` (Papers 1-3: NES/SFC headers, DQ3 Huffman decode, table verifications) and `hbd_forensics.py` (Papers 4-5: HBD census, LZSS roundtrips, live text decode).
+
 ---
 
 ## 5. Blueprints & Implementation Specifications
@@ -170,7 +188,7 @@ The "why" — how this was done, the failed predecessors, and the studio/lineage
 
 - **73 blob entries** at root (git tree), 238.7 MB total working tree (measured at audit time).
 - **35 archive/pipeline binaries** — 4 split bundles (`DQ4_Patcher_RebuildB_QuickStart`, `shipB`, `dist_rebuild_b`, `cybergrime`; 24 `.zNN` parts + 4 `.zip`), 6 `frankenstein_pipeline` zips (V.98/V.99/v095/v096/v097 + the 2 B `v090` stub), and the `study.zip` snapshot.
-- **31 Markdown documentation files** covering every layer of the research (3 master HBE libraries, 14 engine-study docs, 5 blueprints, 3 reports, 6 history/method docs, plus the 4D spec/case corpus counted in the engine-study figure).
+- **36 Markdown documentation files** covering every layer of the research (3 master HBE libraries, 14 engine-study docs, 5 blueprints, 3 reports, 6 history/method docs, the 4D spec/case corpus counted in the engine-study figure, plus the 5-paper 4E whitepaper suite).
 - **4 PDF renderings** of the analysis docs, plus `dq4.png` banner and `facility_marker_worksheet.json`.
 - Languages (per topics): `python` / `python3`, `cpp`, `java` (jar-based early tooling), plus the emulation-side C++ harness.
 - Topics: romhacking, psx, jrpg, huffman-compression-algorithm, hbd, hbe, translation, translation-tool, and 12 others.
