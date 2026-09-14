@@ -62,7 +62,7 @@ compressed streams (measured, Paper-2 companion run):
 | Resource | Pointer table | Target format | Status |
 |---|---|---|---|
 | Dialogue script | `$C1:5331`, 506 × u24 **bit-addressed** (21-bit byte offset \| 3-bit bit offset), base `$FC:C258` | 13-bit Huffman bitstream, 8 strings/pointer | **byte-verified** (worked example reproduced) |
-| Map archives | candidate table at raw `0x9385`, 15 × u24 far (bank-$DD uniform family, 0x400 stride + one bank-$E8 target) | LZSS-class per the HeartBeat engine `$C0:4923` (1024-B window, init `$03BE`, 2-byte literals, 10-bit offset + 6-bit len+3) | **stream framing OPEN** — targets did not decode under the dialogue-stream model; container size-words undocumented |
+| Map archives | candidate table at raw `0x9385`, 15 × u24 far (bank-$DD uniform family, 0x400 stride + one bank-$E8 target) | **CLOSED (Sep 14 gap-fill): the `$DD` family = raw 1 KB map blocks (per-block Shannon H = 4.06–4.65 bits/byte), the single `$E8` target = compressed (H = 7.18)** — DQ3's map compression runs through the adaptive 0x400-entry RAM-dictionary loader (`$7F0000`) at runtime, not in-stream LZSS framing | **measured** |
 | Monster frames | banks `$F0-$F5`, 163 monsters | monotone far-pointer tables → `$F6` descriptor streams | documented (tier-2) |
 | Scene palettes | raw `0x370000 + k*0x200` | CGRAM image per scene | documented (tier-2) |
 
@@ -194,10 +194,15 @@ the same design in 16-bit and 32-bit form.
 5. The hidden 5-language script lives in the **DS JP ROM**, not NES/FC.
 6. The `$B3A4` "DTE dictionary" (dragon-warrior-4-info) is a probable Huffman-node
    misreading — the main script is 3-18-bit prefix-coded, not byte DTE (measured).
-7. DQ3 map-archive **container framing is OPEN**: the candidate pointer table measured
-   at raw `0x9385` (15 × u24 far, bank-$DD family) did not decode as LZSS — stream size
-   words are undocumented; do not claim a byte-verified archive container for the JP
-   original until that framing is traced.
+7. **DQ3 map-archive framing — CLOSED (measured, Sep 14 gap-fill pass).** The
+   `0x9385` table's 15 targets are NOT LZSS streams: per-block Shannon census
+   (`gapfill_forensics.py → dq3_map_family`) shows the uniform bank-`$DD` family
+   (strided `0x400`) at **H = 4.06–4.65 bits/byte** (raw structured map data) while the
+   single bank-`$E8` target sits at **H = 7.18** (compressed). Conclusion: the table
+   points at **raw 1 KB map blocks plus one compressed block**; the "map archives as
+   LZSS streams" attribution was a misreading, and DQ3's map compression in fact runs
+   through the adaptive `0x400`-entry RAM-dictionary loader (`$7F0000`, flag byte =
+   8×2-bit commands) at runtime — consistent with the G3 map-engine row of §4.
 
 ---
 
@@ -218,10 +223,13 @@ the same design in 16-bit and 32-bit form.
    do; keep them canonical).
 5. **Integrity posture**: ROM checksums are the only verified integrity checks (SFC
    header complement⊕checksum = `0xFFFF` measured twice); save-block checksums remain
-   open for both G1 (DW4 battery WRAM) and G2 (8 KiB SRAM) — the honest gap list.
+   open for G1 (DW4 battery WRAM), while G2's save routines are now located at banks
+   `$00:$DF1C` and `$09:$B1A3` (Paper 2 §5 gap-fill) — the honest gap list is shrinking
+   from "no location" to "located, checksum not yet isolated".
 
 ---
 
 *Suite: Paper 1 (DW4 NES), Paper 2 (DQ1+2 SFC), Paper 3 (this lineage). Regenerate all
-measurements with `python whitepaper_forensics.py`. Every claim is tier-labelled;
+measurements with `python whitepaper_forensics.py` and `python gapfill_forensics.py`
+(DQ3 map-family census, DQ12 SRAM scan, DW4-JP pointer scan). Every claim is tier-labelled;
 byte-proven results are reproducible from the cartridges in `famicom\`.*
