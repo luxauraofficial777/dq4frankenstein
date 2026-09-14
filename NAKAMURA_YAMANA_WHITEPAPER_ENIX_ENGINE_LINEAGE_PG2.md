@@ -59,15 +59,24 @@ WRAM native addressing is the engine's working set: name entry writes 1 byte per
 hero), inventory array at `$7E0CBE+` (10 slots). Battle background id at `$7E0081`;
 no-encounter `$7E0027`;トヘロス latch `$7E00E2` (cheat-derived RAM map, roadbikebeginners).
 
-### 1.2 SRAM allocation & integrity — status
+### 1.2 SRAM allocation & integrity — status (gap-fill updated, Sep 14)
 
 - Size: 8 KiB (`$70:0000-$70:1FFF` window; header byte `0x03`).
-- **Save slot layout: OPEN GAP.** No public byte-level documentation exists for the DQ1+2
-  SFC save block (s-endo's tooling extracts ROM tables only; the RPGOne toolchain was never
-  released). Known constraints only: the cartridge is `ROM+RAM+battery` (type `0x02`),
-  8 KiB SRAM, two games' saves coexist (DQ1 and DQ2 slots), and the community cheat
-  tooling manipulates WRAM, not SRAM. The save checksum routine location is an **open
-  item** for the next mining lane.
+- **Save routines LOCATED (measured, `gapfill_forensics.py → dq12_sram`).** A 65816
+  long-addressing census of the `$70-$7D` bank byte over the full image (576 hits,
+  8 clusters of ≥3) places the save/load machinery at:
+  - **bank `$00:$DF1C-$DF5C`** (raw `0x5F1C-0x5F5C`) — paired `LDA long,X` /
+    `STA long,X` over `$70:0000-$70:0004`: the save-slot core read/write block;
+  - **bank `$09:$B1A3-$B5xx`** (raw `0x4B1A3+`) — the dense save/state cluster with a
+    `$46`-byte stride pattern (`$70:0014/$70:0059/$70:009E/$70:00E3` reads at
+    `$09:$B431+`) and coverage up to `$70:0AB3`.
+- **Remaining open item (precise):** the exact slot-layout map and the checksum
+  arithmetic. Notably, no `LDA #$0070 / PHA / PLB` bank-load sequence occurs anywhere
+  (0 hits) — the engine changes DB by other means — so the checksum computation was
+  not isolatable statically in this pass; it now has concrete routine banks to trace
+  instead of a blank. Known constraints stand: the cartridge is `ROM+RAM+battery`
+  (type `0x02`), 8 KiB SRAM, two games' saves coexist, and the community cheat tooling
+  manipulates WRAM, not SRAM.
 - ROM-side integrity is measured and green (§0): complement⊕checksum = `0xFFFF` over the
   full 2 MiB image — the RPGOne repack recomputed the header checksum, so the cart boots
   with internal SRAM-check paths intact.
@@ -273,9 +282,23 @@ scene-layout/battle-position data). Related parallel tables: `$0B:C131`, `$0B:C9
 - **ROM checksum**: measured valid on the shipped 2 MiB image (§0). The SFC header's
   complement/checksum pair is recomputed by the repack — the only published integrity
   check for this title.
-- **SRAM save integrity**: layout + checksum routine = **OPEN GAP** (§1.1). The honest
-  state of the record: no public save-block map and no located checksum routine; the
-  next lane should trace the save/load dispatcher through the `$70`-bank window reads.
+- **SRAM save integrity**: layout + checksum = partially RESOLVED by the Sep-14
+  structural scan (`gapfill_forensics.py → dq12_sram`). A 65816 long-addressing census
+  of the `$70-$7D` bank byte over the whole image finds **576 SRAM-window accesses in
+  8 clusters of ≥3**, locating the save/load machinery at:
+  - **bank `$00:$DF1C-$DF5C`** (raw `0x5F1C-0x5F5C`) — paired `LDA long,X`/`STA long,X`
+    over `$70:0000-$70:0004`: the save-slot core read/write block;
+  - **bank `$09:$B1A3-$B5xx`** (raw `0x4B1A3+`) — the dense save/state cluster:
+    `$70:0002/$70:0008/$70:000E/$70:0014/$70:0059/$70:009E/$70:00E3/$70:01B2…`
+    strided read/write groups (stride `$46` = 70 bytes between `$70:0014/$70:0059/
+    $70:009E/$70:00E3` reads at `$09:$B431+` — the per-record save stride candidate),
+    extending to `$70:0AB3`.
+  No `LDA #$0070 / PHA / PLB` bank-load sequence occurs (0 hits) — the engine changes
+  DB by other means (PHB/RTL frames or TCD-page conventions), so the exact checksum
+  computation was not isolated statically in this pass. Status: **save-routine banks
+  LOCATED (measured); slot-layout map and checksum arithmetic remain the two precise
+  remaining artifacts** — both now have concrete routine addresses to trace, replacing
+  the earlier blank.
 
 ---
 
@@ -298,6 +321,8 @@ scene-layout/battle-position data). Related parallel tables: `$0B:C131`, `$0B:C9
 
 ---
 
-*Measured values regenerate via `python whitepaper_forensics.py`; see
-`WHITEPAPER_FORENSICS_DATA.json → dq12_sfc`. Documented-but-unverified structures carry
-their source citation; the SRAM slot layout and save checksum are the two honest gaps.*
+*Measured values regenerate via `python whitepaper_forensics.py` +
+`python gapfill_forensics.py`; see `WHITEPAPER_FORENSICS_DATA.json → dq12_sfc` and
+`GAPFILL_FORENSICS_DATA.json → dq12_sram`. Documented-but-unverified structures carry
+their source citation; the remaining SRAM artifacts are the slot-layout map and the
+checksum arithmetic, both now anchored to measured routine banks.*
