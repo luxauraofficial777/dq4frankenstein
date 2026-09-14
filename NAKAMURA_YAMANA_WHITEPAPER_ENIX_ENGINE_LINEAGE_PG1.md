@@ -1,6 +1,6 @@
 # DRAGON WARRIOR IV (NES / Famicom) — Engine Architecture Whitepaper
 
-**Paper 1 of 3 — Enix Engine Specification Suite**
+**Paper 1 of 5 — Enix Engine Specification Suite**
 **Doc ID:** VW-NES-WP-001 · 2026-09-14
 **Scope:** Dragon Warrior IV (NES US, 1992-10) / Dragon Quest IV 導かれし者たち (FC, 1990-02-11).
 Chunsoft 8-bit engine, 6502 core, MMC1 memory management.
