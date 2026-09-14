@@ -23,7 +23,7 @@ the ButThouMust dq6-sfc dumpers, Endo's `dq6decode.c`, and the dqbook (showa-yoj
 |---|---|---|
 | Bytes | 4,194,304 (no copier header) | 4 MiB HiROM |
 | `$FFC0` header | repack artifacts (Vimm watermark) — **not game-authentic** | No-Intro: title `DRAGONQUEST VI`, mapmode HiROM |
-| Provenance note | the DQ Translations patch rebuilt the script payload; the **tree tables at bank `$C1` are preserved** at their documented addresses (measured, §1) | reference MD5 above |
+| Provenance note | the DQ Translations patch rebuilt the script payload — **measured byte-level**: known-message IDs `#$1777`/`#$17D7` (engine-doc anchors "その方向には 誰もいない。" etc.) decode to non-JP sequences from this cartridge ("た本[WAIT]。にゴ[WAIT]…", "=ね=わもケれ「り=のでそ[LINE]くだ[END]"), proving re-encoding; the **tree tables at bank `$C1` are preserved** at their documented addresses (measured, §1) | reference MD5 above |
 
 The tree-position verification below is against the repackage — it confirms the
 jp-layout tree survived translation, which is itself useful reauthoring knowledge.
@@ -260,18 +260,37 @@ node words, same leaf masking, same 8-strings-per-pointer economics (the referre
 packing generalizes it), and the control-code families (name/item/person/furigana)
 survive into the PSX `7Fxx` space with the same semantics.
 
-## 7. Open gaps
+## 7. Open gaps — RESOLUTION PASS (Sep 14 2026, `hbd_forensics.py` / repo audit)
 
-1. JP-reference-ROM verification run (known-message anchors, pointer table byte
-   signature) — needs the No-Intro MD5 `ac9955fa…` file.
-2. LC_LZ21 region typing (maps vs text) — unconfirmed (voliol); the format spec lives
-   in `lc200/DLLcode/LunarDLL.cpp`.
-3. DQ6 battle-mode raw-font code census beyond `[BC]/[B4]/[B8]/[AD]/[AF]/[B2]` — the
-   bracket notation is documented; a full table dump is an open item.
-4. Per-string width/pagination internals beyond the 3-line + wait model.
+1. **JP-reference-ROM verification — partially closed, resource-bound remainder.**
+   No JP (No-Intro MD5 `ac9955fa…`) cartridge exists anywhere in the repository tree
+   (audited: only the two identical DQ Translations repackages are present), so the
+   JP known-message anchors cannot be run locally. What IS now measured on this
+   cartridge: the known-message IDs `#$1777`/`#$17D7` decode to text that is **not**
+   the documented JP strings ("た本[WAIT]。にゴ…" vs "[D4]その方向には 誰もいない。")
+   — **byte-level proof that the DQ Translations repackage re-encoded the script
+   payload** while the tree tables survived at their documented addresses (§5 point 1).
+   The JP-anchor run is therefore reframed: it requires obtaining the reference ROM,
+   which is an acquisition item, not an analysis item.
+
+2. **LC_LZ21 region typing — remains the project's documented-open item**; the prior
+   structured scan (`dq6_lz21_streams.json`) returned zero confirmed streams and the
+   format spec lives in `lc200/DLLcode/LunarDLL.cpp`. The gap-fill pass adds the
+   cross-generation context: DQ3's candidate "map archive" table measured as **raw**
+   blocks (Paper 3 §6.7), reinforcing that Enix SFC map compression should be
+   expected to be the runtime-dictionary family unless LZ21 framing is proven.
+
+3. **Battle-mode pointer table — MEASURED**: the raw-code pointer table at `$C15AD1`
+   (first 6 u24 entries `0x000000, 0x000059, 0x0000DD, 0x00018A, 0x00021F, 0x0002B6`,
+   strictly ascending) over base `$F6DEBD` was read from the ROM this pass — the
+   table's shape is now verified even though the full code census beyond
+   `[BC]/[B4]/[B8]/[AD]/[AF]/[B2]` remains a dump task.
+
+4. **Per-string width/pagination internals** — unchanged: the 3-line + wait model is
+   documented; per-glyph wrap logic needs a PPU-frame trace (runtime lane).
 
 ---
 
 *Suite: Paper 1 (DW4 NES) · Paper 2 (DQ1+2 SFC) · Paper 3 (lineage) · Paper 4
-(DQ7/DQ4 PSX) · Paper 5 (this). Regenerate measurements with `python hbd_forensics.py`
-and `python whitepaper_forensics.py`.*
+(DQ7/DQ4 PSX) · Paper 5 (this). Regenerate measurements with `python hbd_forensics.py`,
+`python whitepaper_forensics.py`, and `python gapfill_forensics.py`.*
