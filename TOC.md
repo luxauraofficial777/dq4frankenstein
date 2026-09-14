@@ -103,16 +103,17 @@ artifact), and extracted clean version.
 | `generation.md` | 20.8 KB | Notebook-style: Python generator → `STUDY_MIGRATION_HBE_SFC_TO_PSX_Sep13_2026.md` (Doc ID `ARCH-STUDY-MIGRATION-HBE-SFC-TO-PSX-20260913-V2`) — SFC→PSX divergence, hidden commonalities (Monsters 50×8 B, Items 128×2 B …), 2 MB memory map, SFC→PSX control-code mapping, HBD/LZSS0, decoupled battle pipeline & town streaming. |
 
 ### 4D. Yamana–Nakamura HeartBeat Engine — Architecture & Case Study
-The two-architect corpus: the formal generational-architecture white paper plus its
-IEEE/SIGGRAPH-format case-study companion. Together they restate the engine lineage —
-Koichi Nakamura's 16-bit dialogue & data-compression systems carried forward by Manabu
-Yamana into HeartBeat's 32-bit TID/SID messaging VM — and reconcile it against the
-recovered binary.
+The HeartBeat Engine research corpus: the formal HBE/HBD architecture specification, the
+generational-architecture white paper, and the IEEE/SIGGRAPH-format case-study companion.
+Together they restate the engine lineage — Koichi Nakamura's 16-bit dialogue &
+data-compression systems carried forward by Manabu Yamana into HeartBeat's 32-bit TID/SID
+messaging VM — and reconcile it against the recovered binary at hex and instruction level.
 
 | File | Size | Notes |
 |---|---|---|
 | `CASE_STUDY_NAKAMURA_YAMANA_HEARTBEAT_ENGINE_IEEE_2026.md` | 27.1 KB / 214 lines | **IEEE/SIGGRAPH-format case study** (Doc ID `STUDY-HBE-NAKAMURA-YAMANA-CASE-2026`) — "The HeartBeat Engine and the Two Craftsmen: Koichi Nakamura, Manabu Yamana, and the 25-Year Reverse-Engineering of *Dragon Quest IV* (PSX)." Studio genealogy (Chunsoft → HeartBeat, 1992–2002), the HBE as a *compiler for game dialog under hard byte budgets*, why the monolithic `SLPM_869.16`/`HBD1PS1D.Q41` text pipeline resisted localization until the community reverse-engineered the compiler itself; sources: published engineer interviews, binary evidence, and the complete 2020–2026 attempt record. |
 | `YAMANA_NAKAMURA_HEARTBEAT_ENGINE_GENERATIONAL_ARCHITECTURE.md` | 34.5 KB / 517 lines | **Generational architecture white paper** (Doc ID `VW-DQLOST-TECHRPT-007`) — hex/instruction-level companion to the case study: Gen I SFC baseline (65816/5A22, ExHiROM `0x35` banking, string VM, PPU DMA, DQ6 Huffman) vs Gen II PSX rebuild (MIPS R3000A, 2 MB working set, `TID`/`SID` referrer word `(BlockID≪20)\|(BitOffset+HTS×8)`, 51-opcode VM dispatch `$Base+(ID×Stride)`, Huffman `HTS 0x18` + dqlzs decoders, overlay residency `0x80011F00`); Rebuild C lessons (Shift-JIS desync @ `0x800F4DF0`, Auld Well LBA 19082–19118, `0x047B` facility segregation, `≤+3` overrun contract); full local + GitHub citation corpora; hex-layout & census appendices. |
+| `YAMANA_HBE_HBD_ARCHITECTURE_ENGINEERING_SPECIFICATION.md` | 31.9 KB / 468 lines | **Formal HBE/HBD architecture whitepaper** (Doc ID `VW-DQLOST-TECHRPT-008`) — byte- and instruction-level engine specification: `.HBD` on-disc container (master header `nsub/nsec/tlen/zero`, 16-byte sub-block records `dlen/ulen/extra/flags/type`, cumulative packing `hdr+cum(dlen)`); **three disjoint container classes** (wide-tree Huffman incl. Endor `0x0021`, algorithmic raw cells/overlays `0x048B`/type-26/44/46/39, fixed-stride sentinel lookup tables) + pristine RAW-passthrough boundary canaries `0x0066–0x006C`; the two-key dispatch rule `(flags==0x0500)∧(type∈{23,24,25,27,39,40,42,44})` replacing the legacy single-flag test; EXE dispatch table (`0x8008F280` resolver, `0x8008F3BC` renderer, `0x8008F7B0` sentinel walk, `0x8008F9A0` planar unpacker, `0x8008FB48` dir re-init, `0x8009A120/240` DMA) and full fixed-residency memory map; C struct definitions, invariants (§6 delta-locks, monotonicity, zero sector shift, headless telemetry). |
 
 ---
 
@@ -167,9 +168,9 @@ The "why" — how this was done, the failed predecessors, and the studio/lineage
 
 ## Appendix A — Repository Shape (compressed `main` tree)
 
-- **72 blob entries** at root (git tree), 238.7 MB total working tree (measured at audit time).
+- **73 blob entries** at root (git tree), 238.7 MB total working tree (measured at audit time).
 - **35 archive/pipeline binaries** — 4 split bundles (`DQ4_Patcher_RebuildB_QuickStart`, `shipB`, `dist_rebuild_b`, `cybergrime`; 24 `.zNN` parts + 4 `.zip`), 6 `frankenstein_pipeline` zips (V.98/V.99/v095/v096/v097 + the 2 B `v090` stub), and the `study.zip` snapshot.
-- **30 Markdown documentation files** covering every layer of the research (3 master HBE libraries, 13 engine-study docs, 5 blueprints, 3 reports, 6 history/method docs).
+- **31 Markdown documentation files** covering every layer of the research (3 master HBE libraries, 14 engine-study docs, 5 blueprints, 3 reports, 6 history/method docs, plus the 4D spec/case corpus counted in the engine-study figure).
 - **4 PDF renderings** of the analysis docs, plus `dq4.png` banner and `facility_marker_worksheet.json`.
 - Languages (per topics): `python` / `python3`, `cpp`, `java` (jar-based early tooling), plus the emulation-side C++ harness.
 - Topics: romhacking, psx, jrpg, huffman-compression-algorithm, hbd, hbe, translation, translation-tool, and 12 others.
