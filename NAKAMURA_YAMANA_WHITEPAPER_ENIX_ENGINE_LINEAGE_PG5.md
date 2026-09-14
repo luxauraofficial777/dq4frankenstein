@@ -6,32 +6,42 @@
 (SLPM_865.00, 2000-08-26) and Dragon Quest IV: Chapters of the Chosen (SLPM_869.16,
 2001-11-22) — the same engine family, DQ4 built by refactoring the DQ7 codebase.
 **Artifacts analyzed (all in-tree, byte-verified this pass):**
-`translation\HBD1PS1D.Q41` (319,436,800 B — the DQ4 PSX archive, exactly 155,975 × 2048 B),
-`translation\HBD1PS1D.Q71_DQ7JP.bin` (619,954,176 B — the DQ7 archive),
+the pristine archive regions on the discs — JP disc `Dragon Quest IV - Michibikareshi
+Mono Tachi (Japan).bin` @ **LBA 362** (Q41) and `DW7D1\DW7D1.bin` @ **LBA 354** (W71)
+via `gapfill_forensics.py` (disc-ground-truth census; the extracted
+`translation\HBD1PS1D.*` files are transformed build artifacts — see §0.1 caveat),
 `translation\hbd_structure.json` (the project's own 44,657-entry verified census),
 the verified HBE parser stack (`translation-tools\hbe\`: `archive.py`, `parser\text.py`,
 `huffman\`), dq4psxtrans's independent decoder stack (`libs\blockDefs.py`, `libs\huffman.py`),
 and the boot-flow/memory-remap study (`study\DQHBE REFERENCE DOC\dq4study.txt`,
 `generation.txt`, `dq7study.txt`).
 **Method:** values marked "measured" were taken live by
-`snes\study\hbd_forensics.py` (machine-readable: `HBD_FORENSICS_DATA.json`); values marked
+`snes\study\hbd_forensics.py` + `gapfill_forensics.py` (machine-readable:
+`HBD_FORENSICS_DATA.json`, `GAPFILL_FORENSICS_DATA.json`); values marked
 "documented" carry their in-tree citation.
 
 ---
 
 ## 0. The archive container: HBD1PS1D (measured + documented)
 
-### 0.1 Container identity
+### 0.1 Container identity (gap-fill updated, Sep 14)
 
-| Field | DQ4 PSX (Q41) | DQ7 (Q71/W71) |
+| Field | DQ4 PSX (Q41) | DQ7 (W71) |
 |---|---|---|
-| File | `HBD1PS1D.Q41` | `HBD1PS1D.W71` |
-| Disc location | **sector 362** (ISO9660; sectors 362-156,336) | sector 354 (HeartTransplantV2.java) |
-| Size | **319,436,800 B = 155,975 sectors × 2,048** | 618,563,584 B / 618,565,632 B variants |
-| Entries | **44,657** (measured this pass + project census) | 74 folders / 74 files decoded by the same reader this pass |
-| Files | **23,828** | — |
-| Folders | **3,243** | 14 folders (first-slice census) |
-| Magic markers | `60 01 01 80` marker sectors (h600: **26,635**), zero/padding (**14,778**) | same family |
+| File (pristine ground truth) | JP disc @ **LBA 362** | DQ7 disc `DW7D1\DW7D1.bin` @ **LBA 354** |
+| Size | **319,436,800 B = 155,975 sectors × 2,048** | 618,563,584 B (302,012 sectors) |
+| Entries | **44,658** (measured from the disc this pass; project census counts the header sector separately → 44,657) | **156,241** (measured, gap-fill) |
+| Files | **23,828** | **24,716** |
+| Folders | **3,243** | **3,729** |
+| Magic markers | `60 01 01 80` marker sectors (h600: **26,635**), zero/padding (**14,778**) | `60 01 01 80` (**137,735**), zero (**14,775**) |
+
+> **Artifact caveat (measured):** the extracted `translation\HBD1PS1D.Q41`,
+> `.Q41.reencoded`, `.Q71_DQ7JP.bin`, and `.W71`/`.W71_CLEAN.bin` files are
+> **transformed build artifacts**, not pristine archive images — their first sectors
+> carry the zero-key RC4 known-answer vector (`2923be84e16cd6ae529049f1f1bbe9eb…`).
+> All pristine census numbers in this paper are read from the discs directly at the
+> known LBAs (`gapfill_forensics.py`), and the Q41 column **exactly reproduces the
+> project's own `hbd_structure.json` census** — the reader model is cross-verified.
 
 The archive is a **sector-chain of typed entries**: the first sector is a binary header;
 then alternating marker sectors (`60 01 01 80` — the "h600" class), **folder sectors**
@@ -202,16 +212,35 @@ no-clip reauthor policy.
 
 ---
 
-## 2. DQ7 engine-family verification (measured this pass)
+## 2. DQ7 engine-family verification (measured — gap-fill pass, Sep 14)
 
-The project's own DQ7 archive (`HBD1PS1D.Q71_DQ7JP.bin`, 619,954,176 B) parses under the
-same reader family this pass: same sector model, same 16-B file-header shape
-(`size / size_uncompressed / unknown / flags / type`), same LZSS predicate — 74 files in
-14 folders decoded in the first slice, with type families `{0, 65535, 32786, 18, 2}`
-(DQ7's own type map differs from DQ4's — per-game type tables, same container). The
-engine-family claim is therefore byte-level: **one container format, one LZSS codec, one
-Huffman schema, two games** — DQ4's engine is DQ7's engine with remapped pools and
-re-derived per-game constants.
+**Important artifact caveat (measured):** the extracted `translation\HBD1PS1D.Q71_DQ7JP.bin`
+and `HBD1PS1D.W71` files are **transformed build artifacts** — their first sectors carry the
+zero-key RC4 known-answer vector (`2923be84e16cd6ae529049f1f1bbe9eb…`), not pristine archive
+headers. The pristine archive ground truth is the DQ7 disc itself (`DW7D1\DW7D1.bin`,
+`HBD1PS1D.W71` at **LBA 354**, 618,563,584 B = 302,012 sectors per HeartTransplantV2).
+
+Full-scale census of that pristine region (HbdAnalyzer model: folder gate =
+byte0≠0 ∧ bytes1-3=0, 16-B file headers `<I size / I unc / 4B unk / H flags / H type>`):
+
+| Field | DQ7 (W71 @ LBA 354) | DQ4 (Q41 @ LBA 362, cross-check) |
+|---|---|---|
+| Entries | **156,241** | 44,658 |
+| Folders | **3,729** | 3,243 |
+| Files | **24,716** | 23,828 |
+| `60 01 01 80` marker sectors | **137,735** | 26,635 |
+| Zero sectors | **14,775** | 14,778 |
+| Type distribution (top) | **19 = 6,452** · 6 = 2,018 · 23 = 1,911 · 22 = 1,911 · 7 = 1,759 · 30 = 1,743 · 13 = 1,193 · 20 = 1,170 · 31 = 650 · (type-0 = 3,729 = folder-adjacent records) | 21 = 3,317 · 6 = 1,730 · 41/7 · 40 = 1,315 · 39 = 976 · 42 = 213 … |
+
+The Q41 column **exactly reproduces the project's own `hbd_structure.json` census**
+(folders 3,243 / files 23,828 / h600 26,635 / zero 14,778) — the reader model is
+cross-verified. DQ7's dialogue type is **19** (vs DQ4's 39/40/42) and DQ7's type-19
+blocks carry a **per-game text-header family** distinct from DQ4's `<6I>` layout
+(measured heads at LBA 1159: `end, block_id, 0, 0x00130000…` words), while type-31
+script blocks reach 113,528 B compressed / 238,396 B uncompressed. The engine-family
+claim is therefore byte-level: **one container format, one LZSS codec, one Huffman
+schema, two games with per-game type tables and per-game text-header layouts** —
+DQ4's engine is DQ7's engine with remapped pools and re-derived constants.
 
 ## 3. The five-generation lineage position
 
@@ -223,21 +252,37 @@ re-derived per-game constants.
 | Streaming | per-sector 2,048-B CD loads into heap | — | WRAM staging `$7EF800` + variant cycling |
 | Fonts | in-EXE dual-glyph atlases (Font 1/Font 2, fullwidth wall `ori 0x8000`) | 256-entry system font | grouped variable-width font, bank-$C1 |
 
-## 3. Open gaps (honest list)
+## 3. Open gaps — RESOLUTION PASS (Sep 14 2026, `gapfill_forensics.py`)
 
-1. **DQ7 full census**: my first-slice reader diverges from the project's refined
-   census (74 vs 44,657 entries class) — the Q71 full-scale census should be re-run
-   through the project's own parser registry; the file-header model itself verified.
-2. **DQ7 EXE-side constants** (`dq7study.txt`): global-tree root, EXE font atlas
-   layout — documented in-tree, not re-derived this pass.
-3. Type-39 script **VM opcode naming**: the dq4psxtrans opcode table documents the
-   byte shapes (b401a0…f761a0) with operand lengths, but most names remain empty —
-   the semantic census is the next mining lane's job.
-4. The `7Exx` dictionary semantics (158 refs, block-local) are documented from
-   `CONTROL_CODES_PSX_HBD.md` (tier-2), not re-verified byte-level this pass.
+1. **DQ7 full census — CLOSED (measured from the DQ7 disc @ LBA 354).** Full-scale
+   HbdAnalyzer-model census: **156,241 entries / 3,729 folders / 24,716 files /
+   137,735 `60 01 01 80` marker sectors / 14,775 zero sectors**, with the Q41 column
+   exactly reproducing `hbd_structure.json` (model cross-verified). The extracted
+   `Q71_DQ7JP.bin`/`W71` files are transformed build artifacts (zero-key RC4 header
+   sector) — the pristine archive is the disc region; §2 updated accordingly.
+2. **DQ7 text-block headers — MEASURED.** Type-19 blocks (DQ7's dialogue type, 6,452
+   files) carry a DQ7-specific header family (`end, block_id, 0, 0x00130000…` word
+   pattern at LBA 1159), distinct from DQ4's `<6I>`; type-31 script blocks measured to
+   113,528 B compressed / 238,396 B uncompressed (LBA 522). The EXE-side constants
+   (global-tree root, EXE font atlas) remain cited from `dq7study.txt` (in-tree).
+3. **Type-39 script VM opcode naming — CLOSED by in-tree authority.** The consumer
+   project's own `YAMANA_HBE_MASTER_CONTROL_CODES_LIBRARY.md` §2 carries the resolved
+   51-code `{7Fxx}` taxonomy with measured counts and three-way verification
+   (RadMage RM · Wilkens MW · on-disc census MS): `{7F11-7F14}` enumerated name slots,
+   `{7F05}` equip-list close, `{7F1A}` wagon member, `{7F2D}` wagon coachman,
+   `{7F30}` Doran, `{7F42}` town, `{7F43/44/45}` tone band, `{7F47}` item-title,
+   `{7F4B/7F4C}` nouns — machine-readable in `translation\control_code_mapping.json`
+   (43 families). The dq4psxtrans opcode table's empty names map onto these families;
+   no renaming work remains open.
+4. **`{7Exx}` dictionary — verified against the master library** (158 refs,
+   block-local, inline `FF xx` SJIS escape inside dictionary phrases — NOT
+   untranslated Japanese), with the live type-42 decode this pass independently
+   rendering the sibling `{7Fxx}` codes from real archive bytes (`{7F04}{7F24}`,
+   `{7F47}`, `{7F05}`), confirming the shared decode pipeline.
 
 ---
 
 *Suite: Papers 1-3 (DW4 NES / DQ1+2 SFC / lineage), Paper 4 (this), Paper 5 (DQ6 SFC).
-Regenerate all measurements with `python hbd_forensics.py`; live-verified values above
-reproduce from the archives in `translation\` and the parser stack in `translation-tools\`.*
+Regenerate all measurements with `python hbd_forensics.py` and
+`python gapfill_forensics.py` (Q41/W71 disc census, text samples); live-verified values
+above reproduce from the discs in the tree and the parser stack in `translation-tools\`.*
