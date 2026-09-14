@@ -8,7 +8,7 @@ A technical post-mortem and architecture overview for the ROM hacking and revers
 
 *Dragon Quest IV: Michibikareshi Monotachi* (PSX, Japan, SLPM-869.16 / SLPS-031.70) has stood for nearly 25 years as one of the console scene's most stubborn untranslated titles. Prior efforts frequently broke against the HeartBeat engine’s non-linear memory maps, hardcoded MIPS pointer branches, and delicate sector integrity constraints.
 
-This release represents a bootable retail disc (`dq4_sovereign_master.bin`) built via **LIMINAL LORE**—a sovereign, clean-room agentic toolchain directed by **Lux Aura**. By combining human systems architecture with a coordinated multi-LLM engineering roster, the project achieved a native English text-rendering and font-injection pipeline under a public domain dedication (**CC0 1.0 Universal**).
+This release represents a bootable retail disc (`dq4_sovereign_master.bin`) built via **LIMINAL LORE**—a sovereign, clean-room agentic toolchain directed by **Lux Aura**. By combining human systems architecture with a coordinated multi-LLM engineering roster, the project achieved a native English text-rendering and font-injection pipeline under a public domain dedication (**-CC-BY-NC-SA**).
 
 ---
 
