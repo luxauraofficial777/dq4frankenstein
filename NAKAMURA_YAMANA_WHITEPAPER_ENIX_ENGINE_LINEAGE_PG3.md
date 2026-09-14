@@ -1,6 +1,6 @@
 # THE ENIX ENGINE LINEAGE — Cross-Generation Comparative Analysis
 
-**Paper 3 of 3 — Enix Engine Specification Suite**
+**Paper 3 of 5 — Enix Engine Specification Suite**
 **Doc ID:** VW-SNES-WP-003 · 2026-09-14
 **Scope:** the architectural evolution from Chunsoft's 8-bit Famicom engine (DW1-DW4,
 1986-1992) through Chunsoft's 16-bit transition (DQ5 SFC 1992, DQ I+II SFC 1993) into the
