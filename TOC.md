@@ -62,7 +62,7 @@ Sovereign Native era; `v090`–`v097` are the exploratory DW7-EXE "Frankenstein"
 
 ## 3. Master Reference Libraries — HeartBeat Engine (HBE)
 
-The technical core of the research: three machine-verified lookup libraries that map the
+The technical core of the research: four machine-verified lookup libraries that map the
 entire DQ4 PSX text/script dispatch system of **Manabu Yamana's HeartBeat Engine**.
 
 | File | Size | Content |
@@ -70,6 +70,7 @@ entire DQ4 PSX text/script dispatch system of **Manabu Yamana's HeartBeat Engine
 | `YAMANA_HBE_MASTER_TID_LIBRARY.md` | 181 KB / 1,319 lines | **TID census (largest doc)** — "Exhaustive Decompiled Text Block (TID) & Sub-Block Census." 3,243 physical blocks / 23,828 functional sub-blocks across ~47 type rows; master catalog of **1,111 unique TIDs** in 11 narrative bands (Ch.1–5, party chat 8,052 SIDs, church/facilities, battle/menus); 40 multi-copy TIDs requiring lock-step patching; 24-byte sub-block header spec; critical TIDs incl. Endor mega-block `0x0021` (93,140 B / 1,087 strings), `0x048B` (817 SIDs, freeze hazard), `0x048C` delta-locks, `0x006C` 1,588-byte clamp. |
 | `YAMANA_HBE_MASTER_SID_LIBRARY.md` | 36 KB / 271 lines | **SID matrix** — "Definitive Decompiled String Dispatch & Referrer Memory Matrix." **19,193 total SIDs** across 1,108 blocks + 4 overlays + 403 Type-39 scripts; packed 32-bit ReferrerWord formula; Font 1 / Font 2 dual-blitter model; 51-code `{7Fxx}` taxonomy with measured counts; "Alien Text Syndrome" (`peynriohre-seale`) & Runaway Decode Freeze; critical-SID registry with per-string budgets (`048B:0102`, `048C:0773–0778`, `0474:0054`, `006C:0001`). |
 | `YAMANA_HBE_MASTER_CONTROL_CODES_LIBRARY.md` | 21 KB / 259 lines | **Cross-engine control-code map** — function→code tables for Famicom (DW1/2/4), SFC (DQ1+2, DQ3 13-bit huff, DQ6), PSX DQ4 HBD, and DS DQ4; verified against RadMageIRL hardware measurements (RM), Wilkens tooling (MW), and on-disc census (MS); 51 codes on disc (43 archive + 8 EXE); `7Exx` block-local dictionary refs, `FExx` facility band; conflicts ledger + unresolved-code backlog. |
+| `YAMANA_HBE_MASTER_DUNGEON_WORLD_TRIGGERS_AND_DMA_SUBLAYER_LIBRARY.md` | 55.7 KB / 826 lines | **Dungeon sub-layer DMA map + world event triggers** — "PlayStation 1 Systems Engineering Master Library." 3D spatial DMA pipeline & memory topology (Ch.1–6 floor maps streamed across CD-ROM DMA Ch.3 `0x1F8010B0` into the 2 MB working set); sub-block anatomy of a 3D dungeon map block (Type-21/35/36/39/40); per-chapter dungeon/sublayer DMA library with condition locks & event-flag registers (`0x800735FC` get / `0x80073698` set); Chapter 5 Olin (Oren) survival, recruitment & guest-slot 8 integration (Type-44 block @ `0x800F8430`, `DOOR_BREACH_CAPABLE` `0x800F8418&0x04`, party-chat VM `0x800654B0`); hardware sync/bus-arbitration invariants (CD-ROM Ch.3 handshake + GPU Ch.2 vs Ch.3 arbitration) vs frame-loop spec; machine-readable multi-agent orchestration schemas. |
 | *(supporting, referenced)* `translation/control_code_mapping.json` | — | Machine-readable 43-family PSX control-code mapping (referenced by the CONTROL_CODES library). |
 
 ---
@@ -210,7 +211,7 @@ The "why" — how this was done, the failed predecessors, and the studio/lineage
 
 - **73 blob entries** at root (git tree), 238.7 MB total working tree (measured at audit time).
 - **35 archive/pipeline binaries** — 4 split bundles (`DQ4_Patcher_RebuildB_QuickStart`, `shipB`, `dist_rebuild_b`, `cybergrime`; 24 `.zNN` parts + 4 `.zip`), 6 `frankenstein_pipeline` zips (V.98/V.99/v095/v096/v097 + the 2 B `v090` stub), and the `study.zip` snapshot.
-- **47 Markdown documentation files** covering every layer of the research (3 master HBE libraries, 25 engine-study docs, 5 blueprints, 3 reports, 6 history/method docs, the 4D spec/case corpus + 10-doc 4D.0 subsystem suite counted in the engine-study figure, plus the 5-paper 4E whitepaper suite).
+- **48 Markdown documentation files** covering every layer of the research (4 master HBE libraries, 25 engine-study docs, 5 blueprints, 3 reports, 6 history/method docs, the 4D spec/case corpus + 10-doc 4D.0 subsystem suite counted in the engine-study figure, plus the 5-paper 4E whitepaper suite).
 - **4 PDF renderings** of the analysis docs, plus `dq4.png` banner and `facility_marker_worksheet.json`.
 - Languages (per topics): `python` / `python3`, `cpp`, `java` (jar-based early tooling), plus the emulation-side C++ harness.
 - Topics: romhacking, psx, jrpg, huffman-compression-algorithm, hbd, hbe, translation, translation-tool, and 12 others.
