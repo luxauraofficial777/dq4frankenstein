@@ -41,6 +41,7 @@ referenced by the README (VoidPatcher fast path vs. BuildB / shipB pipeline).
 | `shipB.zip` (+ `shipB.z01`–`.z06`) | ~33 MB | **Ship B build pipeline** — the full `shipB/` distribution (source image expected one level above; `edcre` runner, build scripts, gates). Output `shipB\build\dq4_shipB.bin` + `.cue`. |
 | `dist_rebuild_b.zip` (+ `.z01`–`.z06`) | ~30 MB | **Rebuild B distribution tree** — mirror of the release payload used for the `dq4_rebuildB_sealed.bin` gate suite. |
 | `cybergrime.zip` (+ `.z01`–`.z07`) | ~37 MB | **CyberGrime MIPS emulator harness** — the trace-verified emulation environment used for instrumentation (named-pipe bus `cybergrime_trace`, G0–G8 gate verification). |
+| `cybergrimev1.1.zip` (+ `.z01`) | ~7.8 MB | **CyberGrime v1.1 harness suite** — two-part split of the consolidated v1.1 emulator/harness tree (565 entries): `agent_harness.cpp/h`, `psx_agent_runner.exe`, `psx_headless.exe`, `psx_test_station.exe`, `hypervisor_core.exe`, RAM miner (`batch_ram_miner.py`), `audit_output/control_code_bible.json` + `hbd_block_catalog.md`, build/ test binaries, `BLUEPRINT_ROM_MINING_SUITE_Sep06_2026.md`, and the DQ3 cross-gen compile test. Reassemble (`cybergrimev1.1.z01` + `.zip`) before use. |
 
 ---
 
@@ -210,7 +211,7 @@ The "why" — how this was done, the failed predecessors, and the studio/lineage
 ## Appendix A — Repository Shape (compressed `main` tree)
 
 - **73 blob entries** at root (git tree), 238.7 MB total working tree (measured at audit time).
-- **35 archive/pipeline binaries** — 4 split bundles (`DQ4_Patcher_RebuildB_QuickStart`, `shipB`, `dist_rebuild_b`, `cybergrime`; 24 `.zNN` parts + 4 `.zip`), 6 `frankenstein_pipeline` zips (V.98/V.99/v095/v096/v097 + the 2 B `v090` stub), and the `study.zip` snapshot.
+- **37 archive/pipeline binaries** — 5 split bundles (`DQ4_Patcher_RebuildB_QuickStart`, `shipB`, `dist_rebuild_b`, `cybergrime`, `cybergrimev1.1`; 25 `.zNN` parts + 5 `.zip`), 6 `frankenstein_pipeline` zips (V.98/V.99/v095/v096/v097 + the 2 B `v090` stub), and the `study.zip` snapshot.
 - **48 Markdown documentation files** covering every layer of the research (4 master HBE libraries, 25 engine-study docs, 5 blueprints, 3 reports, 6 history/method docs, the 4D spec/case corpus + 10-doc 4D.0 subsystem suite counted in the engine-study figure, plus the 5-paper 4E whitepaper suite).
 - **4 PDF renderings** of the analysis docs, plus `dq4.png` banner and `facility_marker_worksheet.json`.
 - Languages (per topics): `python` / `python3`, `cpp`, `java` (jar-based early tooling), plus the emulation-side C++ harness.
