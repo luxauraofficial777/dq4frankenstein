@@ -1,7 +1,7 @@
 # Dragon Quest IV: The Zenithian Chronicles — Master Repository Table of Contents
 
 **Repo:** `luxauraofficial777/dq4frankenstein` · **Branch:** `main` · **Current build:** V.99 Rebuild B (Sovereign Native / Live Playable)
-**Compiled:** 2026-09-13 (updated 2026-09-16: added `YAMANA_HBE_HBD_DMA_SUBBLOC_ROUTINE.md`) · **License:** CC BY-NC-SA 4.0
+**Compiled:** 2026-09-13 (updated 2026-09-16: added `YAMANA_HBE_HBD_DMA_SUBBLOC_ROUTINE.md` and the 10-doc `HBE-PSX-ENG-SPEC-2026-V2…V11` suite) · **License:** CC BY-NC-SA 4.0
 
 This document is a complete, annotated map of the repository: every deliverable, every
 pipeline release, every documentation file, and the technical role each one plays in the
@@ -116,6 +116,27 @@ messaging VM — and reconcile it against the recovered binary at hex and instru
 | `YAMANA_HBE_HBD_ARCHITECTURE_ENGINEERING_SPECIFICATION.md` | 31.9 KB / 468 lines | **Formal HBE/HBD architecture whitepaper** (Doc ID `VW-DQLOST-TECHRPT-008`) — byte- and instruction-level engine specification: `.HBD` on-disc container (master header `nsub/nsec/tlen/zero`, 16-byte sub-block records `dlen/ulen/extra/flags/type`, cumulative packing `hdr+cum(dlen)`); **three disjoint container classes** (wide-tree Huffman incl. Endor `0x0021`, algorithmic raw cells/overlays `0x048B`/type-26/44/46/39, fixed-stride sentinel lookup tables) + pristine RAW-passthrough boundary canaries `0x0066–0x006C`; the two-key dispatch rule `(flags==0x0500)∧(type∈{23,24,25,27,39,40,42,44})` replacing the legacy single-flag test; EXE dispatch table (`0x8008F280` resolver, `0x8008F3BC` renderer, `0x8008F7B0` sentinel walk, `0x8008F9A0` planar unpacker, `0x8008FB48` dir re-init, `0x8009A120/240` DMA) and full fixed-residency memory map; C struct definitions, invariants (§6 delta-locks, monotonicity, zero sector shift, headless telemetry). |
 | `YAMANA_HBE_HBD_DMA_SUBBLOC_ROUTINE.md` | 28.5 KB / 304 lines | **PSX DMA sublayer / task-scheduler spec** (Doc ID `HBE-PSX-ENG-SPEC-2026-V1`) — hardware DMA sublayers & bus sync (CD-ROM Ch3 `0x8008F810` ring `0x800E8000` vs GPU Ch2, arbitration `0x80025D10` deferred-blit drain, cache invalidation `0x80018C20`, KSEG1 uncached execution `0xA00E8008`); sub-block container taxonomy & dispatch (WIDE\_HUFFMAN vs DQLZS vs RAW\_PASSTHROUGH, canary audit `0x0066–0x006C`); task scheduler registry `0x800AE5F8` (8-byte stride, 7 subsystems) + 894-node message-directory ring `0x800F5108` (reset loop `0x80031DEC` disassembly, build task `0x80031F0C`); **forensic refutations** (KSEG3 underflow & Form-1 sector-bleed theories disproven byte-level; Sovereign Build 12 "ghost build" root cause — missing `0xEDC8–0x1013F` patch bands + 2,786 sectors left with corrupted EDC/ECC); production specs: Tier-3 MIPS transition-fence trampoline @ `0x80031DEC` (cave `0x8005FAF0`, 40-byte ABI frame) + sector-aware writes with dynamic EDC/ECC regeneration (`_repair_all_touched_edc_ecc`); multi-agent verification contract (invariants I1–I4, Auld Well / Sovereign boot watchdogs). |
 
+#### 4D.0 HBE Subsystem Specification Suite (Doc IDs `HBE-PSX-ENG-SPEC-2026-V2…V11`, 2026-09-16)
+
+Ten consolidated sibling specs completing the engine documentation: the messaging VM, the
+codec trio, the font/rendering contract, overlay residency, the HBD index grammar, the frame
+loop/scheduler, the battle overlay, the audio/media pipeline, the verified-invariants ledger,
+and the corpus glossary/index. All share the evidence-label convention (MEASURED/INFERRED/
+PENDING) and live alongside this section in `DQLOSTTRANSLATION\study\`.
+
+| File | Size | Notes |
+|---|---|---|
+| `YAMANA_HBE_MESSAGING_VM_CONTROL_CODE_DISPATCH_SPEC.md` | 10.1 KB / 170 lines | **(V2) Messaging VM & control-code dispatch** — packed referrer `(BlockID≪20)\|(BitOffset+HTS×8)`, TID/SID census, the 51-code vocabulary (`{7Fxx}` runtime / `{7Exx}` dict / `{FExx}` facility), `%A/%B/%H` format conditionals, plane-switch contract, `+6/+8/+19` desync classes, failure/guard contracts. |
+| `YAMANA_HBE_COMPRESSION_CODEC_SPEC.md` | 6.7 KB / 99 lines | **(V3) Compression codec spec** — the three-class model (WIDE\_HUFFMAN `HTS-0x18` depth 14..9 / DQLZS LZSS / RAW\_PASSTHROUGH) with the two-key dispatch rule `(flags==0x0500)∧(type∈{23,24,25,27,39,40,42,44})`; bit-convention lineage table (DQ1+2 plain-byte, DQ3 MSB-first, DQ6 inverted); `≤+3` overrun contract; EDC/ECC land fix (`_modified_form1_sectors` replaces the 8-sector `range(22,30)` bug). |
+| `YAMANA_HBE_FONT_PLANE_RENDERING_SPEC.md` | 5.3 KB / 85 lines | **(V4) Font-plane & rendering spec** — Font 1 (8×14 ASCII, block `0x048C` @ `0x97AC8`, delta-locks 44/36/50/66, SIDs 773–778) vs Font 2 (16×16 Shift-JIS); plane-latch rules at `0x8008F3BC` (`{7f0b}` switch); ASCII tables Primary `0x800A9FA0` / Secondary `0x80019CE4`; desync + delta-lock + texture-cache failure classes. |
+| `YAMANA_HBE_OVERLAY_RESIDENCY_AND_BANKING_SPEC.md` | 4.6 KB / 76 lines | **(V5) Overlay residency & banking** — 2 MB working set, overlay mount `0x80011F00` via occupancy-blind allocator `0x8009B138` (**DMA clobber** receiver-side hazard), spawn→mount→teardown→re-seed lifecycle, `heely_precheck` standards, Auld Well re-seed failure summary. |
+| `YAMANA_HBE_DISC_INDEX_ARCHIVE_SPEC.md` | 4.7 KB / 95 lines | **(V6) HBD disc-index & archive grammar** — 44,657-entry / 23,828-file / 3,243-folder tree census, 16-B master header + 16-B sub-block records + cumulative `hdr+cum(dlen)` packing, LBA 483–504 index-cell class, type-band↔codec binding, invariants D1–D4. |
+| `YAMANA_HBE_FRAME_LOOP_SCHEDULER_SPEC.md` | 4.9 KB / 87 lines | **(V7) Frame loop & task scheduler** — VBlank/IRQ→event→task bridge (EvMdINTR `0xF2000002`, mode `0x1000`), the 8-entry registered-task registry `0x800AE5F8`/`0x800C2268` with handler map, dispatch `if(flag) handler()` enable-gate semantics, VBlank deferred-blit arbitration `0x80025D10`, invariants L1–L4. |
+| `YAMANA_HBE_BATTLE_OVERLAY_048B_RUNTIME_SPEC.md` | 3.6 KB / 61 lines | **(V8) Battle overlay `0x048B` runtime** — 817 sequences, RAW-cell class, critical-SID budgets (`048B:0102`), mount/evict lifecycle, Runaway-Decode Freeze contract, watchdogs B-1…B-4. |
+| `YAMANA_HBE_SEQQ_MEDIA_PIPELINE_SPEC.md` | 3.6 KB / 63 lines | **(V9) Audio/SEQq & media (XA/FMV/MDEC) pipeline** — proprietary `SEQq`/`qQES` driver (60-B header, DW7-measured), SPU ch4, XA/MDEC entries `0x8008AEF4`/`0x8008CAD0`, stub-era async-event failure (V96 GPU 0.00), watchdogs S-1…S-4. |
+| `YAMANA_HBE_VERIFIED_INVARIANTS_LEDGER.md` | 4.4 KB / 71 lines | **(V10) Verified invariants & do-not-patch ledger** — authoritative hard do-not-patch list (`0x800357D4`/`0x800357EC`/`0x8009E920`/`0x80031E34`, fixed-point sentinels `0xFFFFF000` at `0x800AA5BC`/`0x800C231C`/`0x800C24AC`/`0x800CCF04`), consolidated measured constants table, build invariants I1–I4/K2/D1, Auld Well evidence register. Supersedes inline lists. |
+| `YAMANA_HBE_GLOSSARY_AND_INDEX.md` | 4.6 KB / 69 lines | **(V11) Corpus glossary & navigation index** — 40+ terms (TID/SID/HTS/dqlzs/RAW/delta-lock/Auld Well/EvMdINTR…), FAQ route map, full corpus navigation table. Entry point for the suite. |
+
 ### 4E. Enix Engine Specification Suite — Cross-Generation Whitepapers (Sep 2026)
 The publication-grade whitepaper suite for the foundational Enix engines: **Dragon Warrior IV
 (NES/MMC1)**, **Dragon Quest I & II (SFC)**, **Dragon Quest VI (SFC)**, **DQ7/DQ4 (PSX
@@ -189,7 +210,7 @@ The "why" — how this was done, the failed predecessors, and the studio/lineage
 
 - **73 blob entries** at root (git tree), 238.7 MB total working tree (measured at audit time).
 - **35 archive/pipeline binaries** — 4 split bundles (`DQ4_Patcher_RebuildB_QuickStart`, `shipB`, `dist_rebuild_b`, `cybergrime`; 24 `.zNN` parts + 4 `.zip`), 6 `frankenstein_pipeline` zips (V.98/V.99/v095/v096/v097 + the 2 B `v090` stub), and the `study.zip` snapshot.
-- **37 Markdown documentation files** covering every layer of the research (3 master HBE libraries, 15 engine-study docs, 5 blueprints, 3 reports, 6 history/method docs, the 4D spec/case corpus counted in the engine-study figure, plus the 5-paper 4E whitepaper suite).
+- **47 Markdown documentation files** covering every layer of the research (3 master HBE libraries, 25 engine-study docs, 5 blueprints, 3 reports, 6 history/method docs, the 4D spec/case corpus + 10-doc 4D.0 subsystem suite counted in the engine-study figure, plus the 5-paper 4E whitepaper suite).
 - **4 PDF renderings** of the analysis docs, plus `dq4.png` banner and `facility_marker_worksheet.json`.
 - Languages (per topics): `python` / `python3`, `cpp`, `java` (jar-based early tooling), plus the emulation-side C++ harness.
 - Topics: romhacking, psx, jrpg, huffman-compression-algorithm, hbd, hbe, translation, translation-tool, and 12 others.
