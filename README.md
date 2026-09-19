@@ -46,6 +46,7 @@ This suite represents the synthesis of hundreds of hours of low-level MIPS decom
 * **AI Research & Pair Programming Team:** KIMI (Memory dumps & disassembly), GLM (MIPS dataflow analysis & split-immediates), Claude (Opus) (Pipeline architecture & Huffman packing), Gemini (Font 2 text mining & Class A/B remappers), Nemotron (Monster DB & battle overlay layers). Omen Alpha DQ4 SNES content authoring. Debugging RAM dump mining Omen Alpha & Big Pickle.
 
 VoidPatcherRB1 link: https://drive.google.com/file/d/170jDd31mbEw5TccIznPJ3c_qik8D7XTU/
+VoidPatcherRC1 link: https://drive.google.com/file/d/1u-FuVtSxwWh48eishoscI1Qk_fPFfABk/
 ---
 
 ## 📸 Development & In-Game Showcase
