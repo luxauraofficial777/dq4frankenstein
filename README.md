@@ -4,12 +4,14 @@
 
 # Dragon Quest IV: The Zenithian Chronicles Current Build V.99 Rebuild B,C (Live/Playable)
 ### Multi-Generational Localization Suite & Dual-Platform Re-Authoring Engine
-Deliverables: DQ4_Patcher_RebuildB_QuickStart.z01-z05 .zip dist_rebuild_b.z01-z05 .zip ShipB.zip Native Build Pipeline
+
+**Deliverables:** `DQ4_Patcher_RebuildB_QuickStart.z01-z05 .zip` | `dist_rebuild_b.z01-z05 .zip` | `ShipB.zip` Native Build Pipeline  
 **Created & Architected by Lux Aura**  
 *Maintained under the VoidWalkers Research Project*  
-🎮 **Steam:** [Void Walkers X64](https://store.steampowered.com/app/4979730/Void_Walkers_X64/)
+🎮 **Steam:** [Void Walkers X64](https://store.steampowered.com/app/4979730/Void_Walkers_X64/)  
 [![Romhacking.net: #7711](https://img.shields.io/badge/Romhacking.net-Translation%20%237711-blue)](https://www.romhacking.net/translations/7711/)
 [![YouTube: Devlook](https://img.shields.io/badge/YouTube-Devlook%20Video-red?logo=youtube&logoColor=white)](https://www.youtube.com/watch?v=UE0rsMtogGw)
+
 <div align="center">
   <a href="https://www.youtube.com/watch?v=TqwmlumOSmg">
     <img src="https://img.youtube.com/vi/TqwmlumOSmg/maxresdefault.jpg" alt="DQ4 Frankenstein English Translation Chapter 5" width="750" style="border-radius: 8px;" />
@@ -43,10 +45,12 @@ This suite represents the synthesis of hundreds of hours of low-level MIPS decom
 * **Core Architecture & Sovereign Native Engine:** Conceived, engineered, and finalized by **Lux Aura**.
 * **Foundation Text Extraction & Early Tooling:** Seminal structural research and early patcher tooling by **Markus Schroeder** ([Markus Projects](http://markus-projects.net/dragon-hackst-iv/)) and early extraction tooling by **Mandy Wilkens** ([dq4psxtrans](https://github.com/mwilkens/dq4psxtrans)).
 * **SNES Authoring & ROM Mining:** Big Pickle & Omen Alpha (SNES data mining, DQ1+2+3 corpora, and RAM dump forensics).
-* **AI Research & Pair Programming Team:** KIMI (Memory dumps & disassembly), GLM (MIPS dataflow analysis & split-immediates), Claude (Opus) (Pipeline architecture & Huffman packing), Gemini (Font 2 text mining & Class A/B remappers), Nemotron (Monster DB & battle overlay layers). Omen Alpha DQ4 SNES content authoring. Debugging RAM dump mining Omen Alpha & Big Pickle.
+* **AI Research & Pair Programming Team:** KIMI (Memory dumps & disassembly), GLM (MIPS dataflow analysis & split-immediates), Claude Opus (Pipeline architecture & Huffman packing), Gemini (Font 2 text mining & Class A/B remappers), Nemotron (Monster DB & battle overlay layers). Omen Alpha DQ4 SNES content authoring. Debugging RAM dump mining Omen Alpha & Big Pickle.
 
-VoidPatcherRB1 link: https://drive.google.com/file/d/170jDd31mbEw5TccIznPJ3c_qik8D7XTU/
-VoidPatcherRC1 link: https://drive.google.com/file/d/1u-FuVtSxwWh48eishoscI1Qk_fPFfABk/
+### Pre-Built Patcher Downloads
+* **VoidPatcher RB1:** [Download from Google Drive](https://drive.google.com/file/d/170jDd31mbEw5TccIznPJ3c_qik8D7XTU/)
+* **VoidPatcher RC1:** [Download from Google Drive](https://drive.google.com/file/d/1u-FuVtSxwWh48eishoscI1Qk_fPFfABk/)
+
 ---
 
 ## 📸 Development & In-Game Showcase
@@ -86,35 +90,27 @@ VoidPatcherRC1 link: https://drive.google.com/file/d/1u-FuVtSxwWh48eishoscI1Qk_f
       <td><img src="https://github.com/user-attachments/assets/e4852791-0b1d-4494-9299-46bdfb671e74" alt="Dual-Platform Verification" /></td>
     </tr>
     <tr>
-      <td><img src="<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/473f6f07-499c-45a3-9f93-513cdbe38b1c" />
-" alt="Cutscene Script Inspection" /></td>
-      <td><img src="<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/6f8df401-8533-4107-921b-0609974d7ac8" />
-" alt="Dual-Platform Verification" /></td>
+      <td><img src="https://github.com/user-attachments/assets/473f6f07-499c-45a3-9f93-513cdbe38b1c" alt="Cutscene Script Inspection" /></td>
+      <td><img src="https://github.com/user-attachments/assets/6f8df401-8533-4107-921b-0609974d7ac8" alt="Dual-Platform Verification" /></td>
     </tr>
     <tr>
-          <td><img src="<img width="1600" height="900" alt="image" src="<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/e4b91a3b-24d2-4731-aa1f-8d3837a1280a" />
-" />
-" alt="Cutscene Script Inspection" /></td>
-      <td><img src="<img width="1600" height="900" alt="image" src="<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/1133ed25-4a9e-4f92-ab04-c6f498d66e3b" />
-" />
-" alt="Dual-Platform Verification" /></td>
+      <td><img src="https://github.com/user-attachments/assets/e4b91a3b-24d2-4731-aa1f-8d3837a1280a" alt="Cutscene Script Inspection" /></td>
+      <td><img src="https://github.com/user-attachments/assets/1133ed25-4a9e-4f92-ab04-c6f498d66e3b" alt="Dual-Platform Verification" /></td>
     </tr>
-       <tr>
-          <td><img src="<img width="1600" height="900" alt="image" src="<img width="1600" height="900" alt="image" src="<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/467edfb4-0d96-4259-a334-7b2d63f3e13a" />
-" />
-" />
-" alt="Cutscene Script Inspection" /></td>
-      <td><img src="<img width="1600" height="900" alt="image" src="<img width="1600" height="900" alt="image" src="<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/5177170c-be1d-48c9-ad22-e1c4d040af50" />
-" />
-" />
-" alt="Dual-Platform Verification" /></td>
+    <tr>
+      <td><img src="https://github.com/user-attachments/assets/467edfb4-0d96-4259-a334-7b2d63f3e13a" alt="Cutscene Script Inspection" /></td>
+      <td><img src="https://github.com/user-attachments/assets/5177170c-be1d-48c9-ad22-e1c4d040af50" alt="Dual-Platform Verification" /></td>
     </tr>
   </table>
 </div>
-<img width="662" height="667" alt="image" src="https://github.com/user-attachments/assets/bf30b7e2-d494-4b4c-9723-0f0ad0560f20" />
 
-<img width="376" height="193" alt="image" src="https://github.com/user-attachments/assets/718c10f0-8031-4da8-869c-6119725cc55f" />
+<p align="center">
+  <img width="662" height="667" alt="Memory and Structure Inspection" src="https://github.com/user-attachments/assets/bf30b7e2-d494-4b4c-9723-0f0ad0560f20" />
+</p>
 
+<p align="center">
+  <img width="376" height="193" alt="Parity Confirmation" src="https://github.com/user-attachments/assets/718c10f0-8031-4da8-869c-6119725cc55f" />
+</p>
 
 ---
 
@@ -123,157 +119,29 @@ VoidPatcherRC1 link: https://drive.google.com/file/d/1u-FuVtSxwWh48eishoscI1Qk_f
 ```text
                           ┌────────────────────────┐
                           │   Multi-Generational   │
-                          │     Corpus Bridge      │
+                          │      Corpus Bridge     │
                           └───────────┬────────────┘
                                       │
-               ┌──────────────────────┴──────────────────────┐
-               ▼                                             ▼
-  ┌─────────────────────────┐                   ┌─────────────────────────┐
-  │   PlayStation 1 (PSX)   │                   │  Super Nintendo (SNES)  │
-  │  Sovereign Native RC2   │                   │ "Zenithian Forge" Engine│
-  ├─────────────────────────┤                   ├─────────────────────────┤
-  │ • Pristine SLPM_869.16  │                   │ • DQ3 SFC ExHiROM Host  │
-  │ • In-Place HBD Patcher  │                   │ • Mode 3 Title & Sprites│
-  │ • Class A Overlay Remap │                   │ • 15 Campaign Maps ($E0)│
-  │ • Class B LZS Duplicates│                   │ • Custom Huffman Tree   │
-  │ • Dual-Font UI Engine   │                   │ • LOCN Collision Decode │
-  │ • Mode 2 Form 1 EDC/ECC │                   │ • Native ASM Expansion  │
-  └─────────────────────────┘                   └─────────────────────────┘
-
----
-
-### File 2: `BUILD.md` (Separate Build & Track Guide)
-*Contains the complete PlayStation 1 Native Sovereign Engine documentation, E2E build pipeline steps, Super Famicom Zenithian Forge track, and emulator compatibility table.*
-
-```
-# 🚀 Track A: PlayStation 1 Native Sovereign Engine
-
-The PlayStation 1 release operates directly on the Japanese CD-ROM image in **Mode 2, Form 1** (2,352 bytes/sector, 2,048 bytes user data). Every modified dialogue block, menu, and overlay module is compressed to fit inside or below its pristine byte budget.
-
----
-
-## 🔨 Build Instructions (E2E Pipeline)
-
-### Prerequisites
-* **Python 3.8+** with `numpy` installed (`pip install numpy`).
-* Clean Japanese PS1 CD-ROM image:
-  * **File:** `Dragon Quest IV - Michibikareshi Mono Tachi (Japan).bin`
-  * **Size:** `368,057,424` bytes
-  * **CRC32:** `3D67C858`
-  * **SHA-256:** `100D87DB9DEADF8F9FA4BB891D3A5D0BB112ACBF5ADBCBC93C637848ED9C7531`
-
- # DQ4 Frankenstein — Dragon Quest IV (PSX) English Localization
-**Lux Aura & The VoidWalkers Research Project**
-
-Two ways to play the English localization on your own Japanese disc:
-
-| Path | Time | Needs |
-|---|---|---|
-| **VoidPatcher** (recommended) | ~2 min | Just the patcher exe — nothing to install |
-| **BuildB pipeline** | ~80 min | Python 3.8+ (+numpy), edcre.exe |
-
-> We distribute **no copyrighted content**. You supply your own pristine Japanese disc
-> image; our tools transform **your** copy.
-
----
-
-## Your input image
-
-`Dragon Quest IV - Michibikareshi Mono Tachi (Japan).bin` (PSX, SLPM_869.16)
-
-| Hash | Value |
-|---|---|
-| SHA-1 | `85064625AFA12219880FC8D07047A3CC1C595CB9` |
-| SHA-256 | `100D87DB9DEADF8F9FA4BB891D3A5D0BB112ACBF5ADBCBC93C637848ED9C7531` |
-
----
-
-## Option A — VoidPatcher (fast path)
-
-### Install
-1. Download `VoidPatcher_RB1.exe` — a single self-contained executable.
-2. Done. No runtime, no Python, no dependencies.
-
-### Usage
-1. Run `VoidPatcher_RB1.exe`.
-2. **TARGET DISC IMAGE** → browse to (or type) your pristine image's path.
-   It's validated on selection (size + SLPM_869.16 boot reference).
-3. Leave **SEALED PAYLOAD (DEFAULT)** selected.
-4. Press **[ >>> APPLY PATCH <<< ]** and watch the stage panel (~2 min).
-5. Output appears next to the exe:
-   - `dq4_zenithian_english_RB1.bin` + `.cue`
-   - The final SHA-256 gate guarantees your output equals the verified master
-     (`AC9F94A13A5627C30013FB0D13C88CD96F4BCEC878A2DA6E7B1978E1CD4E5703`).
-
-     Exit 0 = every verification gate passed.
-
-The patcher refuses non-pristine sources (already-patched masters, known-bad images)
-with a specific message, and never writes to your source image.
-
----
-
-## Option B — BuildB pipeline (build from source)
-
-### Install
-1. Clone / download this repo.
-2. Python 3.8+ and `pip install numpy`.
-3. Download `edcre.exe` (PSX EDC/ECC recalculator) and place it at `shipB\edcre\edcre.exe`
-   — without it the build completes but EDC/ECC steps are skipped (output not hardware-safe).
-4. Place your pristine image in the repo root (one level above `shipB\`).
-
-### Usage
-- ~80 minutes. Output: `shipB\build\dq4_shipB.bin` + `.cue` (SHA-256 printed at the end).
-- Resume: `--from-step 4g` · Reuse dialogue: `--skip-dialogue` ·
-  Custom corpus: `--corpus your_translation.json` ·
-  Finish the seal: `--g11-dumps dump1.bin dump2.bin`
-- The build runs hard verification gates (G2 dispatch integrity, G10 corpus census,
-  G5 EDC/ECC) and the same-tree 048C rebuild with delta-lock assertions.
-
----
-
-## Playing
-
-1. DuckStation (retail PSX BIOS, e.g. SCPH-1001 — no custom BIOS needed).
-2. File → Open Disc → the generated `.cue`.
-3. Verify: title → prologue → Chapter 1; dialogue, battles, sound, saving.
-4. Real hardware: burn the `.bin/.cue` to a CD-R at 4x–8x (modchipped/softmodded consoles).
-
-## Reporting bugs
-
-Include: in-game location + description; for freezes, the DuckStation log (timestamp,
-failing LBA range, CD-ROM buffer status) plus paired RAM dumps; and your master's SHA-256.
-
-## Credits & links
-
-Full credits in [`shipB/CREDITS.md`](shipB/CREDITS.md).
-
-**Follow Lux Aura** — the record label / publisher:
-[Bandcamp](https://luxaura.bandcamp.com) ·
-[Facebook](https://www.facebook.com/LuxAuraOfficial/) ·
-[YouTube](https://www.youtube.com/LuxAuraOfficial) ·
-[Steam (via SteamDB)](https://steamdb.info/publisher/Lux+Aura/)
-
-## Legal
-
-DQ4: Michibikareshi Mono Tachi © 1998 HeartBeat / Enix. All trademarks belong to their
-respective owners. This project ships tools only — no game assets, no BIOS, no copyrighted
-binary. It requires and transforms the user's own legally obtained disc image.
-
-*ORDER. PRECISION. FIDELITY.*
-
-Headless / scriptable:
-
-### Quick Start
-Place your pristine `.bin` file in the repository root or `ship/` folder, then run:
-
-```bash
-# Windows
+                ┌─────────────────────┴─────────────────────┐
+                ▼                                           ▼
+  ┌───────────────────────────┐               ┌───────────────────────────┐
+  │    PlayStation 1 (PSX)    │               │   Super Nintendo (SNES)   │
+  │   Sovereign Native RC2    │               │  "Zenithian Forge" Engine │
+  ├───────────────────────────┤               ├───────────────────────────┤
+  │ • Pristine SLPM_869.16    │               │ • DQ3 SFC ExHiROM Host    │
+  │ • In-Place HBD Patcher    │               │ • Mode 3 Title & Sprites  │
+  │ • Class A Overlay Remap   │               │ • 15 Campaign Maps ($E0)  │
+  │ • Class B LZS Duplicates  │               │ • Custom Huffman Tree     │
+  │ • Dual-Font UI Engine     │               │ • LOCN Collision Decode   │
+  │ • Mode 2 Form 1 EDC/ECC   │               │ • Native ASM Expansion    │
+  └───────────────────────────┘               └───────────────────────────┘
+🚀 Track A: PlayStation 1 Native Sovereign EngineThe PlayStation 1 release operates directly on the Japanese CD-ROM image in Mode 2, Form 1 (2,352 bytes/sector, 2,048 bytes user data). Every modified dialogue block, menu, and overlay module is compressed to fit inside or below its pristine byte budget.🔨 Build Instructions & User GuideTarget Source Disc ImageDragon Quest IV - Michibikareshi Mono Tachi (Japan).bin (PSX, SLPM_869.16)PropertyValueFile Size368,057,424 bytesCRC323D67C858SHA-185064625AFA12219880FC8D07047A3CC1C595CB9SHA-256100D87DB9DEADF8F9FA4BB891D3A5D0BB112ACBF5ADBCBC93C637848ED9C7531Notice: We distribute no copyrighted content. You supply your own pristine Japanese disc image; our tools transform your copy.Two Ways to PlayPathTimeRequirementsOption A: VoidPatcher (Recommended)~2 minJust the patcher executable — zero setupOption B: BuildB Pipeline~80 minPython 3.8+ (numpy), edcre.exeOption A — VoidPatcher (Fast Path)Setup & ExecutionDownload VoidPatcher_RB1.exe or VoidPatcher_RC1.exe (standalone binary).Run the executable.TARGET DISC IMAGE → Browse to or type your pristine image path. (Validated on selection via byte-size and SLPM_869.16 boot header).Leave SEALED PAYLOAD (DEFAULT) selected.Press [ >>> APPLY PATCH <<< ] and monitor progress (~2 minutes).Generated output files will appear next to the executable:dq4_zenithian_english_RB1.bin + .cueMaster SHA-256 Check: AC9F94A13A5627C30013FB0D13C88CD96F4BCEC878A2DA6E7B1978E1CD4E5703Exit code 0 confirms all verification gates passed.The patcher refuses non-pristine sources (already patched or bad dumps) and never modifies your original source image.Option B — BuildB Pipeline (Build from Source)Prerequisites & SetupClone or download this repository.Ensure Python 3.8+ is installed with numpy:Bashpip install numpy
+Place edcre.exe (PSX EDC/ECC recalculator) at shipB\edcre\edcre.exe.(Required for hardware-safe sector parity recalculation).Place your clean Japanese disc image in the repository root (one level above shipB\).Headless / Scriptable Quick StartPlace your pristine .bin file in the repository root or ship/ directory, then run:Bash# Windows
 build.bat
 
 # Linux / macOS
 python ship/build.py
-
-[STEP -1] Ship Parity Gate (verify_ship_parity.py)
+Advanced Pipeline ParametersFull rebuild: ~80 minutes. Output: shipB\build\dq4_shipB.bin + .cue.Resume from step: --from-step 4gReuse dialogue cache: --skip-dialogueCustom corpus translation: --corpus your_translation.jsonFinalize seal: --g11-dumps dump1.bin dump2.binE2E Pipeline Stages & Verification GatesPlaintext[STEP -1] Ship Parity Gate (verify_ship_parity.py)
 └── Validates 156-file mirror integrity across root and ship/ distributions.
 
 [STEP 0] Pre-Flight Corpus & Marker Validation (validate_corpus.py + g8_marker_parity.py)
@@ -326,3 +194,4 @@ python ship/build.py
 [STEP 6 & 7] Post-Build Gates & Release Sealing
 └── Runs G2 dispatch gate, G10 corpus census, and G5 full-disc parity sweeps.
 └── Asserts G11 post-battle RAM residency before labeling a tagged release.
+🎮 Playing & VerificationEmulator (DuckStation): Use retail PSX BIOS (SCPH-1001 or region-equivalent). Load disc via File -> Open Disc -> .cue.Smoke Test Sequence: Title screen → Prologue → Chapter 1; confirm battle text, dialogue windows, sound effects, and church saving.Real Hardware: Burn .bin/.cue to quality CD-R media at 4x–8x speed for modchipped or softmodded PS1/PS2 consoles.🐛 Bug Reporting GuidelinesWhen submitting issue reports, please provide:Exact in-game location, chapter, and reproduction steps.For crash/freeze events: DuckStation log output (timestamp, failing LBA sector range, CD-ROM buffer status) paired with a RAM state dump.SHA-256 checksum of your built master image.📜 Credits & LinksFull attribution details can be found in shipB/CREDITS.md.Follow Lux Aura:Bandcamp · Facebook · YouTube · Steam Publisher Page⚖️ Legal DisclaimerDragon Quest IV: Michibikareshi Mono Tachi © 1998, 2001 HeartBeat / Enix. All trademarks and copyrights belong to their respective owners.This repository provides reverse-engineering and patch-authoring tools only. No proprietary game assets, retail executables, BIOS images, or copyrighted binaries are distributed. Operation requires a legally acquired original retail disc.ORDER. PRECISION. FIDELITY.
