@@ -85,6 +85,30 @@ VoidPatcherRC1 link: https://drive.google.com/file/d/1u-FuVtSxwWh48eishoscI1Qk_f
       <td><img src="https://github.com/user-attachments/assets/825e9342-4aa0-4261-9404-7bde62591931" alt="Cutscene Script Inspection" /></td>
       <td><img src="https://github.com/user-attachments/assets/e4852791-0b1d-4494-9299-46bdfb671e74" alt="Dual-Platform Verification" /></td>
     </tr>
+    <tr>
+      <td><img src="<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/473f6f07-499c-45a3-9f93-513cdbe38b1c" />
+" alt="Cutscene Script Inspection" /></td>
+      <td><img src="<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/6f8df401-8533-4107-921b-0609974d7ac8" />
+" alt="Dual-Platform Verification" /></td>
+    </tr>
+    <tr>
+          <td><img src="<img width="1600" height="900" alt="image" src="<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/e4b91a3b-24d2-4731-aa1f-8d3837a1280a" />
+" />
+" alt="Cutscene Script Inspection" /></td>
+      <td><img src="<img width="1600" height="900" alt="image" src="<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/1133ed25-4a9e-4f92-ab04-c6f498d66e3b" />
+" />
+" alt="Dual-Platform Verification" /></td>
+    </tr>
+       <tr>
+          <td><img src="<img width="1600" height="900" alt="image" src="<img width="1600" height="900" alt="image" src="<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/467edfb4-0d96-4259-a334-7b2d63f3e13a" />
+" />
+" />
+" alt="Cutscene Script Inspection" /></td>
+      <td><img src="<img width="1600" height="900" alt="image" src="<img width="1600" height="900" alt="image" src="<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/5177170c-be1d-48c9-ad22-e1c4d040af50" />
+" />
+" />
+" alt="Dual-Platform Verification" /></td>
+    </tr>
   </table>
 </div>
 <img width="662" height="667" alt="image" src="https://github.com/user-attachments/assets/bf30b7e2-d494-4b4c-9723-0f0ad0560f20" />
