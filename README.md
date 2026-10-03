@@ -14,7 +14,7 @@
 
 <div align="center">
   <a href="https://www.youtube.com/watch?v=61JCe-p90_I">
-    <img src="https://www.youtube.com/watch?v=61JCe-p90_I/maxresdefault.jpg" alt="" width="750" style="border-radius: 8px;" />
+    <img src="https://img.youtube.com/vi/61JCe-p90_I/maxresdefault.jpg" alt="" width="750" style="border-radius: 8px;" />
   </a>
   <p><em>🎬 <b>Watch:</b> 
 DQ4 Frankenstein (Dragon Quest 4 PSX English Translation V1.0A-TEST)</em></p>
