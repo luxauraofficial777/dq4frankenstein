@@ -10,13 +10,14 @@
 *Maintained under the VoidWalkers Research Project*  
 🎮 **Steam:** [Void Walkers X64](https://store.steampowered.com/app/4979730/Void_Walkers_X64/)  
 [![Romhacking.net: #7711](https://img.shields.io/badge/Romhacking.net-Translation%20%237711-blue)](https://www.romhacking.net/translations/7711/)
-[![YouTube: Devlook](https://img.shields.io/badge/YouTube-Devlook%20Video-red?logo=youtube&logoColor=white)](https://www.youtube.com/watch?v=UE0rsMtogGw)
+[![YouTube: Devlook](https://img.shields.io/badge/YouTube-Devlook%20Video-red?logo=youtube&logoColor=white)](https://www.youtube.com/watch?v=61JCe-p90_I)
 
 <div align="center">
-  <a href="https://www.youtube.com/watch?v=TqwmlumOSmg">
+  <a href="https://www.youtube.com/watch?v=61JCe-p90_I">
     <img src="https://img.youtube.com/vi/TqwmlumOSmg/maxresdefault.jpg" alt="DQ4 Frankenstein English Translation Chapter 5" width="750" style="border-radius: 8px;" />
   </a>
-  <p><em>🎬 <b>Watch:</b> DQ4 Frankenstein English Translation Chapter 5 (Rebuild C)</em></p>
+  <p><em>🎬 <b>Watch:</b> 
+DQ4 Frankenstein (Dragon Quest 4 PSX English Translation V1.0A-TEST)</em></p>
 </div>
 
 ---
