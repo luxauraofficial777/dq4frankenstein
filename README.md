@@ -52,7 +52,25 @@ This suite represents the synthesis of hundreds of hours of low-level MIPS decom
  Legal disclaimer:
 No Derivative Copyright: No copywrite claim. There is no legal grounds for a fan translation or ROM hack to persue enforceable copyright ownership over an unauthorized derivative work of Enix’s proprietary intellectual property. This fan translation is licensed by Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)
 https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode
-Offsets Aren't Intellectual Property: MIPS instruction offsets, disc sector boundaries, and hardware register mappings are immutable facts dictated by Sony's PlayStation hardware and Heart Beat's compiled binary. Nobody owns them.
+Offsets Aren't Intellectual Property: MIPS instruction offsets, disc sector boundaries, and hardware register mappings are immutable facts dictated by Sony's PlayStation hardware and Heart Beat's compiled binary. Nobody facts or mathematical equations. ### Proprietary Architecture, File Formats, and Expired Patents
+
+* **The MIPS Instruction Set Architecture (ISA):** The PlayStation 1's LSI R3000A CPU implements the 32-bit MIPS I instruction set. The fundamental patents governing the MIPS I/II architectures—originally filed in the 1980s and 1990s by MIPS Computer Systems / Stanford University—operate under standard 20-year utility patent limits and have long since expired into the public domain. Disassembling, analyzing, or re-encoding MIPS I machine instructions does not infringe upon any active patent claims, nor can any third-party romhacker claim proprietary ownership over standard MIPS opcodes, register conventions ($a0–$a3, $v0–$v1, $sp, $ra), or KSEG0 addressing ranges dictated by hardware.
+* **The HBD/HBE Archive Container & Script Formats:** The proprietary data containers (`.HBD`, `.HBE`) and bytecode script overlays utilized on the `SLPM-869.16` disc image were engineered by the defunct Japanese development studio **HeartBeat** for publisher **Enix** (now **Square Enix Holdings Co., Ltd.**). The file structures, Huffman compression trees, script pointers, and archive tables are the intellectual property of Square Enix. Neither the archive definitions nor the binary split intermediates derived from them belong to any fan translator or third-party tooling author. Documenting or reversing these binary formats constitutes functional protocol interoperability under reverse-engineering fair use, but no private romhacker holds enforceable copyright over the layout of HeartBeat's compiled archives.
+
+This repository complies with legal doctrine: 1. 17 U.S.C. § 102(b) — The Statutory Root of the Merger Doctrine
+Statutory Text:
+"In no case does copyright protection for an original work of authorship extend to any idea, procedure, process, system, method of operation, concept, principle, or discovery, regardless of the form in which it is described, explained, illustrated, or embodied in such work."
+
+2. 35 U.S.C. § 154(a)(2) — Patent Term Limits (Public Domain)
+Statutory Text:
+"Subject to the payment of fees under this title, such grant shall be for a term beginning on the date on which the patent issues and ending 20 years from the date on which the application for the patent was filed in the United States..."
+
+“Under 17 U.S.C. § 102(b) and the software merger doctrine (Computer Associates v. Altai, 982 F.2d 693; Lexmark v. Static Control, 387 F.3d 522), data partitions, file-split boundaries, and instruction offsets dictated strictly by Sony hardware constraints and original executable pointer limits merge with functional operation and are legally uncopyrightable.”
+* **Copyright Ineligibility & The Merger Doctrine (17 U.S.C. § 102(b)):** 
+  Under 17 U.S.C. § 102(b) and established software copyright precedent (*Computer Associates Int'l, Inc. v. Altai, Inc.*, 982 F.2d 693; *Lexmark Int'l, Inc. v. Static Control Components, Inc.*, 387 F.3d 522), copyright protection does not extend to any "procedure, process, system, [or] method of operation." Data partition schemes, disc sector split boundaries, LBA offsets, and pointer tables are mathematically and functionally dictated by Sony's PlayStation hardware and the compiled Japanese binary. Under the Merger Doctrine and *scènes à faire*, functional constraints merge with the idea and are legally uncopyrightable.
+
+* **Patent Term Expiration (35 U.S.C. § 154(a)(2)):** 
+  Pursuant to 35 U.S.C. § 154, United States utility patents are limited to a 20-year term from their filing date. All foundational patents covering the 32-bit MIPS I Instruction Set Architecture (ISA) and the R3000 CPU pipeline have expired and reside in the public domain. Disassembling, inspecting, and patching MIPS I machine instructions infringes on no active patent claims, and no private individual can assert proprietary control over MIPS opcodes, register conventions, or hardware-dictated memory maps.
 
 ### Pre-Built Patcher Downloads
 * **VoidPatcher RB1:** [Download from Google Drive](https://drive.google.com/file/d/170jDd31mbEw5TccIznPJ3c_qik8D7XTU/)
