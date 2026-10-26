@@ -48,6 +48,13 @@ This suite represents the synthesis of hundreds of hours of low-level MIPS decom
 * **SNES Authoring & ROM Mining:** Big Pickle & Omen Alpha (SNES data mining, DQ1+2+3 corpora, and RAM dump forensics).
 * **AI Research & Pair Programming Team:** KIMI (Memory dumps & disassembly), GLM (MIPS dataflow analysis & split-immediates), Claude Opus (Pipeline architecture & Huffman packing), Gemini (Font 2 text mining & Class A/B remappers), Nemotron (Monster DB & battle overlay layers). Omen Alpha DQ4 SNES content authoring. Debugging RAM dump mining Omen Alpha & Big Pickle.
 
+
+ Legal disclaimer:
+No Derivative Copyright: No copywrite claim. There is no legal grounds for a fan translation or ROM hack to persue enforceable copyright ownership over an unauthorized derivative work of Enix’s proprietary intellectual property. This fan translation is licensed by Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)
+https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode](https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode
+
+Offsets Aren't Intellectual Property: MIPS instruction offsets, disc sector boundaries, and hardware register mappings are immutable facts dictated by Sony's PlayStation hardware and Heart Beat's compiled binary. Nobody owns them.
+
 ### Pre-Built Patcher Downloads
 * **VoidPatcher RB1:** [Download from Google Drive](https://drive.google.com/file/d/170jDd31mbEw5TccIznPJ3c_qik8D7XTU/)
 * **VoidPatcher RC1:** [Download from Google Drive](https://drive.google.com/file/d/1u-FuVtSxwWh48eishoscI1Qk_fPFfABk/)
