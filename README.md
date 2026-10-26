@@ -51,8 +51,7 @@ This suite represents the synthesis of hundreds of hours of low-level MIPS decom
 
  Legal disclaimer:
 No Derivative Copyright: No copywrite claim. There is no legal grounds for a fan translation or ROM hack to persue enforceable copyright ownership over an unauthorized derivative work of Enix’s proprietary intellectual property. This fan translation is licensed by Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)
-https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode](https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode
-
+https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode
 Offsets Aren't Intellectual Property: MIPS instruction offsets, disc sector boundaries, and hardware register mappings are immutable facts dictated by Sony's PlayStation hardware and Heart Beat's compiled binary. Nobody owns them.
 
 ### Pre-Built Patcher Downloads
